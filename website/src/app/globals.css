@@ -1,3 +1,58 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --background: 255, 255, 255;
+  --foreground: 0, 0, 0;
+  --primary: 59, 130, 246;
+  --primary-foreground: 255, 255, 255;
+  --secondary: 226, 232, 240;
+  --secondary-foreground: 15, 23, 42;
+  --accent: 249, 250, 251;
+  --accent-foreground: 15, 23, 42;
+}
+
+.dark {
+  --background: 15, 23, 42;
+  --foreground: 255, 255, 255;
+  --primary: 59, 130, 246;
+  --primary-foreground: 255, 255, 255;
+  --secondary: 51, 65, 85;
+  --secondary-foreground: 226, 232, 240;
+  --accent: 30, 41, 59;
+  --accent-foreground: 226, 232, 240;
+}
+
+@layer base {
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+@layer utilities {
+  .bg-background {
+    background-color: rgb(var(--background));
+  }
+  .text-foreground {
+    color: rgb(var(--foreground));
+  }
+  .bg-primary {
+    background-color: rgb(var(--primary));
+  }
+  .text-primary-foreground {
+    color: rgb(var(--primary-foreground));
+  }
+  .bg-secondary {
+    background-color: rgb(var(--secondary));
+  }
+  .text-secondary-foreground {
+    color: rgb(var(--secondary-foreground));
+  }
+  .bg-accent {
+    background-color: rgb(var(--accent));
+  }
+  .text-accent-foreground {
+    color: rgb(var(--accent-foreground));
+  }
+}

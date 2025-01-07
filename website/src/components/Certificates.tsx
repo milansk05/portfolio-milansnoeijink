@@ -26,7 +26,7 @@ const Certificates = () => {
 
     return (
         <section id="certificaten" className="mb-20">
-            <h2 className="text-3xl font-bold text-center mb-8">Certificaten</h2>
+            <h2 className="text-3xl font-bold text-center mb-8 text-foreground">Certificaten</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {visibleCertificates.map((cert, index) => (
                     <motion.a
@@ -34,7 +34,7 @@ const Certificates = () => {
                         href={cert.href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="bg-white hover:bg-slate-100 rounded-lg shadow flex items-center gap-5 p-4 transition-colors"
+                        className="bg-accent hover:bg-accent/90 rounded-lg shadow-lg flex items-center gap-5 p-4 transition-colors"
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.5, delay: index * 0.1 }}
@@ -48,9 +48,9 @@ const Certificates = () => {
                             className="rounded-lg"
                         />
                         <div>
-                            <p className="font-bold">{cert.title}</p>
-                            <p className="text-sm text-gray-600">Behaald op {cert.date}</p>
-                            <p className="text-sm text-gray-600">Code: {cert.code}</p>
+                            <p className="font-bold text-accent-foreground">{cert.title}</p>
+                            <p className="text-sm text-accent-foreground/80">Behaald op {cert.date}</p>
+                            <p className="text-sm text-accent-foreground/80">Code: {cert.code}</p>
                         </div>
                     </motion.a>
                 ))}
@@ -59,7 +59,7 @@ const Certificates = () => {
                 <div className="text-center mt-8">
                     <button
                         onClick={() => setShowAll(!showAll)}
-                        className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition-colors"
+                        className="bg-primary text-primary-foreground px-6 py-2 rounded-full hover:bg-primary/90 transition-colors"
                     >
                         {showAll ? "Toon minder" : "Toon meer"}
                     </button>

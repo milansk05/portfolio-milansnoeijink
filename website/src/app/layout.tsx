@@ -1,8 +1,13 @@
 import type { Metadata } from "next"
-import { Inter } from 'next/font/google'
+import { Bricolage_Grotesque } from 'next/font/google'
 import "./globals.css"
+import { DarkModeProvider } from '../components/DarkModeContext'
 
-const inter = Inter({ subsets: ["latin"] })
+const bricolage = Bricolage_Grotesque({
+  subsets: ["latin"],
+  display: 'swap',
+  variable: '--font-bricolage',
+})
 
 export const metadata: Metadata = {
   title: "Milan Snoeijink Portfolio",
@@ -15,8 +20,12 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="nl" className="scroll-smooth">
-      <body className={inter.className}>{children}</body>
+    <html lang="nl">
+      <body className={`${bricolage.className} antialiased`}>
+        <DarkModeProvider>
+          {children}
+        </DarkModeProvider>
+      </body>
     </html>
   )
 }
