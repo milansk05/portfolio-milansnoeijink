@@ -1,13 +1,13 @@
-import Header from "../components/Header"
-import Hero from "../components/Hero"
-import About from "../components/About"
-import Expertise from "../components/Expertise"
-import Skills from "../components/Skills"
-import Certificates from "../components/Certificates"
-import Portfolio from "../components/Portfolio"
-import Contact from "../components/Contact"
-import Footer from "../components/Footer"
-import BackToTop from "../components/BackToTop"
+import Header from "../src/components/Header"
+import Hero from "../src/components/Hero"
+import About from "../src/components/About"
+import Expertise from "../src/components/Expertise"
+import Skills from "../src/components/Skills"
+import Certificates from "../src/components/Certificates"
+import Portfolio from "../src/components/Portfolio"
+import Contact from "../src/components/Contact"
+import Footer from "../src/components/Footer"
+import BackToTop from "../src/components/BackToTop"
 
 export default function Home() {
   return (

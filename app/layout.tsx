@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
 import { Bricolage_Grotesque } from 'next/font/google'
 import "./globals.css"
-import { DarkModeProvider } from '../components/DarkModeContext'
+import { DarkModeProvider } from '../src/components/DarkModeContext'
 
 const bricolage = Bricolage_Grotesque({
   subsets: ["latin"],
