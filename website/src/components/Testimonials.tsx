@@ -34,7 +34,7 @@ const Testimonials = () => {
                         transition={{ duration: 0.5, delay: index * 0.1 }}
                         viewport={{ once: true }}
                     >
-                        <p className="text-gray-600 dark:text-gray-300 mb-4">"{testimonial.content}"</p>
+                        <p className="text-gray-600 dark:text-gray-300 mb-4">&quot;{testimonial.content}&quot;</p>
                         <div>
                             <p className="font-semibold dark:text-white">{testimonial.name}</p>
                             <p className="text-sm text-gray-500 dark:text-gray-400">{testimonial.role}</p>
