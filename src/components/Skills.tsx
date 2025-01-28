@@ -31,12 +31,17 @@ const skills = [
     },
     {
         name: "Twig",
-        image: "/images/twig-1.png",
+        image: "/images/twig-logo.png",
         proficiency: 70,
     },
     {
         name: "SQL",
         image: "/images/sql-logo-6f2e527e.webp",
+        proficiency: 85,
+    },
+    {
+        name: "Prisma DB",
+        image: "/images/prismaHD.png",
         proficiency: 85,
     },
     {
@@ -69,13 +74,13 @@ const Skills = () => {
                 {skills.map((skill, index) => (
                     <motion.div
                         key={skill.name}
-                        className="bg-accent rounded-lg p-6 shadow-lg flex items-center space-x-4"
+                        className="bg-card rounded-lg p-6 shadow-lg flex items-center space-x-4 text-card-foreground"
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.5, delay: index * 0.1 }}
                         viewport={{ once: true }}
                     >
-                        <div className="bg-white dark:bg-gray-700 rounded-lg p-2 w-16 h-16 flex items-center justify-center">
+                        <div className="bg-background dark:bg-muted rounded-lg p-2 w-16 h-16 flex items-center justify-center">
                             <Image
                                 src={skill.image || "/placeholder.svg"}
                                 alt={`${skill.name} logo`}

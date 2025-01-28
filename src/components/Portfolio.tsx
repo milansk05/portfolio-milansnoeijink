@@ -7,7 +7,7 @@ const Portfolio = () => {
         <section id="portfolio" className="mb-20">
             <h2 className="text-3xl font-bold text-center mb-8 text-foreground">Mijn portfolio</h2>
             <motion.div
-                className="bg-accent rounded-lg shadow-lg p-12 text-center"
+                className="bg-card rounded-lg shadow-lg p-12 text-center text-card-foreground"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}

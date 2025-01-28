@@ -8,7 +8,7 @@ const Contact = () => {
         <section id="contact" className="mb-20">
             <h2 className="text-3xl font-bold text-center mb-8 text-foreground">Contacteer mij</h2>
             <motion.div
-                className="bg-accent rounded-lg shadow-lg overflow-hidden"
+                className="bg-card rounded-lg shadow-lg overflow-hidden text-card-foreground"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
@@ -63,7 +63,7 @@ const Contact = () => {
                             </button>
                         </form>
                     </div>
-                    <div className="md:w-1/2 bg-accent p-8 flex flex-col justify-center">
+                    <div className="md:w-1/2 bg-muted p-8 flex flex-col justify-center text-muted-foreground">
                         <div className="mb-8">
                             <h4 className="text-xl font-bold mb-4 text-accent-foreground">Stage bij HQ-Online</h4>
                             <p className="flex items-center text-accent-foreground/80">

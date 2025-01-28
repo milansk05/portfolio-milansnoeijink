@@ -6,7 +6,7 @@ const About = () => {
     return (
         <motion.section
             id="overmij"
-            className="mb-20 p-10 bg-accent rounded-lg shadow"
+            className="mb-20 p-10 bg-card rounded-lg shadow text-card-foreground"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
