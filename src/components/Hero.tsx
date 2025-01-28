@@ -27,7 +27,7 @@ const Hero = () => {
                 <a href="https://www.linkedin.com/in/milan-snoeijink-797315292/" target="_blank" rel="noopener noreferrer" className="bg-secondary text-secondary-foreground px-6 py-2 rounded-full hover:bg-secondary/90 transition-colors">
                     LinkedIn Profiel
                 </a>
-                <a href="/files/CV Milan Snoeijink Software Developer.pdf" download="Milan_Snoeijink_CV" className="bg-accent text-accent-foreground px-6 py-2 rounded-full hover:bg-accent/90 transition-colors">
+                <a href="/files/CV Milan Snoeijink Software Developer.pdf" download="Milan_Snoeijink_CV" className="bg-secondary text-accent-foreground px-6 py-2 rounded-full hover:bg-secondary/50 transition-colors">
                     Download CV
                 </a>
             </motion.div>

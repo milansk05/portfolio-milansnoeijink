@@ -63,24 +63,24 @@ const Contact = () => {
                             </button>
                         </form>
                     </div>
-                    <div className="md:w-1/2 bg-muted p-8 flex flex-col justify-center text-muted-foreground">
+                    <div className="md:w-1/2 p-8 flex flex-col justify-center">
                         <div className="mb-8">
                             <h4 className="text-xl font-bold mb-4 text-accent-foreground">Stage bij HQ-Online</h4>
-                            <p className="flex items-center text-accent-foreground/80">
+                            <p className="flex items-center text-secondary">
                                 <Briefcase className="mr-2" size={20} />
                                 Ik loop momenteel stage bij HQ-Online.
                             </p>
                         </div>
                         <div className="mb-8">
                             <h4 className="text-xl font-bold mb-4 text-accent-foreground">Open voor projecten</h4>
-                            <p className="flex items-center text-accent-foreground/80">
+                            <p className="flex items-center text-secondary">
                                 <Briefcase className="mr-2" size={20} />
                                 Ik sta altijd open voor leuke projecten.
                             </p>
                         </div>
                         <div>
                             <h4 className="text-xl font-bold mb-4 text-accent-foreground">E-mail</h4>
-                            <p className="flex items-center text-accent-foreground/80">
+                            <p className="flex items-center">
                                 <Mail className="mr-2" size={20} />
                                 snoeijinkmilan@gmail.com
                             </p>
