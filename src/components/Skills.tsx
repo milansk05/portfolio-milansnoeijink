@@ -4,14 +4,61 @@ import Image from "next/image"
 import { motion } from "framer-motion"
 
 const skills = [
-    { name: "Bootstrap", image: "/images/bootstrap.png", proficiency: 80 },
-    { name: "PHP", image: "/images/php-logo-4694fbe1.webp", proficiency: 75 },
-    { name: "Twig", image: "/images/twig-logo.png", proficiency: 70 },
-    { name: "SQL", image: "/images/sql-logo-6f2e527e.webp", proficiency: 85 },
-    { name: "HTML", image: "/images/html-logo-0f5d6bc7.webp", proficiency: 90 },
-    { name: "CSS", image: "/images/css-logo-7cd08696.webp", proficiency: 85 },
-    { name: "JavaScript", image: "/images/javascript-logo-58842eab.webp", proficiency: 80 },
-    { name: "Tailwind CSS", image: "/images/tailwind-logo-23f154a0.webp", proficiency: 75 },
+    {
+        name: "React",
+        image: "/images/react-original-wordmark-icon-840x1024-vhmauxp6.png",
+        proficiency: 85,
+    },
+    {
+        name: "Next.js",
+        image: "/images/nextjs-light.png",
+        proficiency: 80,
+    },
+    {
+        name: "TypeScript",
+        image: "/images/Typescript_logo_2020.png",
+        proficiency: 75,
+    },
+    {
+        name: "Bootstrap",
+        image: "/images/bootstrap.png",
+        proficiency: 80,
+    },
+    {
+        name: "PHP",
+        image: "/images/php-logo-4694fbe1.webp",
+        proficiency: 75,
+    },
+    {
+        name: "Twig",
+        image: "/images/twig-logo.png",
+        proficiency: 70,
+    },
+    {
+        name: "SQL",
+        image: "/images/sql-logo-6f2e527e.webp",
+        proficiency: 85,
+    },
+    {
+        name: "HTML",
+        image: "/images/html-logo-0f5d6bc7.webp",
+        proficiency: 90,
+    },
+    {
+        name: "CSS",
+        image: "/images/css-logo-7cd08696.webp",
+        proficiency: 85,
+    },
+    {
+        name: "JavaScript",
+        image: "/images/javascript-logo-58842eab.webp",
+        proficiency: 80,
+    },
+    {
+        name: "Tailwind CSS",
+        image: "/images/tailwind-logo-23f154a0.webp",
+        proficiency: 75,
+    },
 ]
 
 const Skills = () => {
@@ -30,8 +77,8 @@ const Skills = () => {
                     >
                         <div className="bg-white dark:bg-gray-700 rounded-lg p-2 w-16 h-16 flex items-center justify-center">
                             <Image
-                                src={skill.image}
-                                alt={skill.name}
+                                src={skill.image || "/placeholder.svg"}
+                                alt={`${skill.name} logo`}
                                 width={48}
                                 height={48}
                                 className="object-contain"
