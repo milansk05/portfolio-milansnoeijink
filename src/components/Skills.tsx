@@ -11,7 +11,7 @@ const skills = [
     },
     {
         name: "Next.js",
-        image: "/images/nextjs-light.png",
+        image: "/images/nextjs-icon.webp",
         proficiency: 80,
     },
     {
@@ -21,7 +21,7 @@ const skills = [
     },
     {
         name: "Bootstrap",
-        image: "/images/bootstrap.png",
+        image: "/images/5968672.png",
         proficiency: 80,
     },
     {
@@ -31,7 +31,7 @@ const skills = [
     },
     {
         name: "Twig",
-        image: "/images/twig-logo.png",
+        image: "/images/twig-1.png",
         proficiency: 70,
     },
     {

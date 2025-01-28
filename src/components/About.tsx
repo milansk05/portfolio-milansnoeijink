@@ -14,7 +14,13 @@ const About = () => {
         >
             <h2 className="text-3xl font-bold text-center mb-8 text-accent-foreground">Over mij</h2>
             <p className="text-accent-foreground max-w-2xl mx-auto text-center">
-                Hey, ik ben Milan Snoeijink, een enthousiaste softwareontwikkelaar in opleiding aan de Bit Academy in Groningen. Ik ben gepassioneerd over het schrijven van efficiënte code en het bedenken van creatieve oplossingen. Bij de Bit Academy werk ik aan uitdagende projecten en help ik mee om de volgende generatie ontwikkelaars te inspireren. Neem gerust een kijkje op mijn website om mijn projecten en mijn reis in de digitale wereld te ontdekken. Voor vragen of samenwerkingen ben ik altijd bereikbaar!
+                Hey! Ik ben Milan Snoeijink, een gedreven derdejaars student Software Development aan de Bit Academy in
+                Groningen. Mijn passie ligt bij het ontwikkelen van efficiënte, creatieve oplossingen voor complexe problemen.
+                In mijn tijd bij de Bit Academy heb ik aan diverse uitdagende projecten gewerkt, waardoor ik een brede kennis
+                heb opgebouwd in verschillende programmeertalen en frameworks. Ik vind het geweldig om nieuwe technologieën te
+                verkennen en toe te passen in mijn projecten. Naast mijn studie ben ik altijd op zoek naar kansen om mijn
+                vaardigheden verder te ontwikkelen en bij te dragen aan innovatieve projecten. Heb je een interessant project of
+                wil je gewoon eens van gedachten wisselen over tech? Neem gerust contact met me op!
             </p>
         </motion.section>
     )
