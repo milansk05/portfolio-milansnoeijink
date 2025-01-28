@@ -9,15 +9,122 @@ const certificates = [
         href: "https://www.nexed.com/verify?certId=625495f0-eee7-466b-a42e-569c5f0fe592",
         title: "Command line",
         date: "Sep 13, 2022",
-        code: "625495f0-eee7-466b-a42e-569c5f0fe592"
+        code: "625495f0-eee7-466b-a42e-569c5f0fe592",
     },
     {
         href: "https://www.nexed.com/verify?certId=cadfafe3-d2c3-4a67-bd9e-4ead7d407cfd",
         title: "HTML/CSS Beginner",
         date: "Sep 21, 2022",
-        code: "cadfafe3-d2c3-4a67-bd9e-4ead7d407cfd"
+        code: "cadfafe3-d2c3-4a67-bd9e-4ead7d407cfd",
     },
-    // ... Add all other certificates here
+    {
+        href: "https://www.nexed.com/verify?certId=975b8d44-2423-4f3e-876c-53e5b3b9ec27",
+        title: "MySQL Beginner",
+        date: "Oct 7, 2022",
+        code: "975b8d44-2423-4f3e-876c-53e5b3b9ec27",
+    },
+    {
+        href: "https://www.nexed.com/verify?certId=656031bb-972a-4e9c-adc3-84898e78e8b9",
+        title: "HTML/CSS Advanced",
+        date: "Dec 6, 2022",
+        code: "656031bb-972a-4e9c-adc3-84898e78e8b9",
+    },
+    {
+        href: "https://www.nexed.com/verify?certId=cdf73f4e-afdf-4ebf-a339-b94d1b3f25a8",
+        title: "Git",
+        date: "Jan 19, 2023",
+        code: "cdf73f4e-afdf-4ebf-a339-b94d1b3f25a8",
+    },
+    {
+        href: "https://www.nexed.com/verify?certId=42fc424d-2c5e-4fb9-978a-8c4a4c453d71",
+        title: "JavaScript Beginner",
+        date: "Jan 24, 2023",
+        code: "42fc424d-2c5e-4fb9-978a-8c4a4c453d71",
+    },
+    {
+        href: "https://www.nexed.com/verify?certId=83eeac69-d889-4656-b03e-2a2e332d5fb4",
+        title: "Bootstrap",
+        date: "Mar 7, 2023",
+        code: "83eeac69-d889-4656-b03e-2a2e332d5fb4",
+    },
+    {
+        href: "https://www.nexed.com/verify?certId=e206da99-a169-4892-8557-8d2c5157ef1f",
+        title: "JavaScript Novice",
+        date: "Apr 19, 2023",
+        code: "e206da99-a169-4892-8557-8d2c5157ef1f",
+    },
+    {
+        href: "https://www.nexed.com/verify?certId=f509520c-cd00-46ef-8800-cf7a0dcca9cb",
+        title: "PHP Beginner",
+        date: "Jun 27, 2023",
+        code: "f509520c-cd00-46ef-8800-cf7a0dcca9cb",
+    },
+    {
+        href: "https://www.nexed.com/verify?certId=018cfd41-abc2-78a4-95ac-d668f4bc9451",
+        title: "Scrum",
+        date: "Jul 12, 2023",
+        code: "018cfd41-abc2-78a4-95ac-d668f4bc9451",
+    },
+    {
+        href: "https://www.nexed.com/verify?certId=018cfd41-b8f2-7097-80a8-d4b939cad2dc",
+        title: "PHP Web",
+        date: "Sep 20, 2023",
+        code: "018cfd41-b8f2-7097-80a8-d4b939cad2dc",
+    },
+    {
+        href: "https://www.nexed.com/verify?certId=018cfd41-c59f-70bb-a7cd-d5eedbc261ad",
+        title: "PHP Novice",
+        date: "Sep 25, 2023",
+        code: "018cfd41-c59f-70bb-a7cd-d5eedbc261ad",
+    },
+    {
+        href: "https://www.nexed.com/verify?certId=018cfd41-d317-7ed3-97ef-6d8e65b8e320",
+        title: "JavaScript Introductie",
+        date: "Sep 27, 2023",
+        code: "018cfd41-d317-7ed3-97ef-6d8e65b8e320",
+    },
+    {
+        href: "https://www.nexed.com/verify?certId=018cfd41-e595-7dfd-ae77-cae416a04975",
+        title: "Database PDO",
+        date: "Sep 29, 2023",
+        code: "018cfd41-e595-7dfd-ae77-cae416a04975",
+    },
+    {
+        href: "https://www.nexed.com/verify?certId=018cfd41-f47b-78a3-bc74-667aa84ecabe",
+        title: "Fullstack Webdeveloper",
+        date: "Dec 10, 2023",
+        code: "018cfd41-f47b-78a3-bc74-667aa84ecabe",
+    },
+    {
+        href: "https://www.nexed.com/verify?certId=018cfd42-019a-7c76-b5a2-fdd23ce48ed1",
+        title: "Database Advanced",
+        date: "Dec 20, 2023",
+        code: "018cfd42-019a-7c76-b5a2-fdd23ce48ed1",
+    },
+    {
+        href: "https://www.nexed.com/verify?certId=018cfd42-0f47-7733-8827-12f43836fc4b",
+        title: "HTML Pro",
+        date: "Jan 12, 2024",
+        code: "018cfd42-0f47-7733-8827-12f43836fc4b",
+    },
+    {
+        href: "https://www.nexed.com/verify?certId=018ea35b-e8df-79a1-82f9-295e1ea4aff9",
+        title: "Object Oriented Programming Intro",
+        date: "Apr 2, 2024",
+        code: "018ea35b-e8df-79a1-82f9-295e1ea4aff9",
+    },
+    {
+        href: "https://www.nexed.com/verify?certId=019011a5-c551-7497-ba87-e7bd2a080d64",
+        title: "Unit Testing met PHP",
+        date: "Apr 11, 2024",
+        code: "019011a5-c551-7497-ba87-e7bd2a080d64",
+    },
+    {
+        href: "https://www.nexed.com/verify?certId=018fb9b2-bb71-791d-aec0-e3b501fe7ce3",
+        title: "Reguliere Expressies",
+        date: "May 27, 2024",
+        code: "018fb9b2-bb71-791d-aec0-e3b501fe7ce3",
+    },
 ]
 
 const Certificates = () => {
@@ -40,13 +147,7 @@ const Certificates = () => {
                         transition={{ duration: 0.5, delay: index * 0.1 }}
                         viewport={{ once: true }}
                     >
-                        <Image
-                            src="/bitlogo.jpg"
-                            alt="Bit Academy Logo"
-                            width={96}
-                            height={60}
-                            className="rounded-lg"
-                        />
+                        <Image src="/images/bitlogo.jpg" alt="Bit Academy Logo" width={96} height={60} className="rounded-lg" />
                         <div>
                             <p className="font-bold text-accent-foreground">{cert.title}</p>
                             <p className="text-sm text-accent-foreground/80">Behaald op {cert.date}</p>
