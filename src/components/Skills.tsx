@@ -31,7 +31,7 @@ const skills = [
     },
     {
         name: "Twig",
-        image: "/images/twig-logo.png",
+        image: "/images/twig-1.png",
         proficiency: 70,
     },
     {
