@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import { Menu, X, Sun, Moon } from "lucide-react"
-import DarkModeToggle from "./DarkModeToggle"
 import { useDarkMode } from "./DarkModeContext"
 
 const Header = () => {

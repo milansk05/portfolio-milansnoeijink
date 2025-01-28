@@ -1,7 +1,7 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { User, Briefcase, Mail } from "lucide-react"
+import { Briefcase, Mail } from "lucide-react"
 
 const Contact = () => {
     return (
