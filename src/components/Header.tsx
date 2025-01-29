@@ -4,6 +4,7 @@ import { useState, useEffect } from "react"
 import Link from "next/link"
 import { Menu, X, Sun, Moon } from "lucide-react"
 import { useDarkMode } from "./DarkModeContext"
+import { smoothScroll } from "../utils/smoothScroll"
 
 const Header = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -41,6 +42,7 @@ const Header = () => {
                     <Link
                         href="#contact"
                         className="hidden md:block bg-primary text-primary-foreground px-4 py-2 rounded-full hover:bg-primary/90 transition-colors"
+                        onClick={(e) => smoothScroll(e, "contact")}
                     >
                         Contact opnemen
                     </Link>
@@ -80,14 +82,25 @@ const NavLink = ({
     text,
     mobile,
     closeMenu,
-}: { href: string; text: string; mobile?: boolean; closeMenu?: () => void }) => (
-    <Link
-        href={href}
-        className={`text-foreground hover:text-primary ${mobile ? "text-lg py-2" : ""}`}
-        onClick={mobile ? closeMenu : undefined}
-    >
-        {text}
-    </Link>
-)
+}: { href: string; text: string; mobile?: boolean; closeMenu?: () => void }) => {
+    const handleClick = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+        if (href.startsWith("#")) {
+            smoothScroll(e, href.slice(1))
+            if (mobile && closeMenu) {
+                closeMenu()
+            }
+        }
+    }
+
+    return (
+        <Link
+            href={href}
+            className={`text-foreground hover:text-primary ${mobile ? "text-lg py-2" : ""}`}
+            onClick={handleClick}
+        >
+            {text}
+        </Link>
+    )
+}
 
 export default Header
