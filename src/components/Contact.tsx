@@ -1,7 +1,8 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { Briefcase, Mail } from "lucide-react"
+import { User, Briefcase, Mail } from "lucide-react"
+import { Linkedin, Github, Instagram } from "lucide-react"
 
 const Contact = () => {
     return (
@@ -66,24 +67,56 @@ const Contact = () => {
                     <div className="md:w-1/2 p-8 flex flex-col justify-center">
                         <div className="mb-8">
                             <h4 className="text-xl font-bold mb-4 text-accent-foreground">Stage bij HQ-Online</h4>
-                            <p className="flex items-center text-secondary">
+                            <p className="flex items-center text-accent-foreground/80">
                                 <Briefcase className="mr-2" size={20} />
                                 Ik loop momenteel stage bij HQ-Online.
                             </p>
                         </div>
                         <div className="mb-8">
                             <h4 className="text-xl font-bold mb-4 text-accent-foreground">Open voor projecten</h4>
-                            <p className="flex items-center text-secondary">
+                            <p className="flex items-center text-accent-foreground/80">
                                 <Briefcase className="mr-2" size={20} />
                                 Ik sta altijd open voor leuke projecten.
                             </p>
                         </div>
-                        <div>
+                        <div className="mb-8">
                             <h4 className="text-xl font-bold mb-4 text-accent-foreground">E-mail</h4>
-                            <p className="flex items-center">
+                            <a
+                                href="mailto:snoeijinkmilan@gmail.com"
+                                className="flex items-center hover:text-accent-foreground transition-colors"
+                            >
                                 <Mail className="mr-2" size={20} />
                                 snoeijinkmilan@gmail.com
-                            </p>
+                            </a>
+                        </div>
+                        <div>
+                            <h4 className="text-xl font-bold mb-4 text-accent-foreground">Sociale Media</h4>
+                            <div className="flex space-x-4">
+                                <a
+                                    href="https://www.linkedin.com/in/milan-snoeijink-797315292/"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-accent-foreground/80 hover:text-accent-foreground transition-colors"
+                                >
+                                    <Linkedin size={24} />
+                                </a>
+                                <a
+                                    href="https://github.com/milansk05"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-accent-foreground/80 hover:text-accent-foreground transition-colors"
+                                >
+                                    <Github size={24} />
+                                </a>
+                                <a
+                                    href="https://www.instagram.com/milan.sk19/"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="hover:text-accent-foreground transition-colors"
+                                >
+                                    <Instagram size={24} />
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>

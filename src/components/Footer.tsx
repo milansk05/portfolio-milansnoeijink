@@ -13,7 +13,7 @@ const Footer = () => {
                         <Link href="https://github.com/milansk05" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
                             <Github className="w-6 h-6 text-accent-foreground hover:text-primary transition-colors" />
                         </Link>
-                        <Link href="https://www.instagram.com/milan.snoeijink/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                        <Link href="https://www.instagram.com/milan.sk19/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
                             <Instagram className="w-6 h-6 text-accent-foreground hover:text-primary transition-colors" />
                         </Link>
                         <Link href="https://www.linkedin.com/in/milan-snoeijink-797315292/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
