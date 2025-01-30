@@ -10,7 +10,7 @@ const bricolage = Bricolage_Grotesque({
 })
 
 export const metadata: Metadata = {
-  title: "Milan Snoeijink Portfolio",
+  title: "Milan Snoeijink - Portfolio",
   description: "Portfolio website van Milan Snoeijink, Software Developer bij Bit Academy Noorderpoort",
 }
 
