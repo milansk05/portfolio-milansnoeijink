@@ -8,7 +8,6 @@ export const smoothScroll = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
             behavior: "smooth",
             block: "start",
         })
-        // Update URL without page reload
         window.history.pushState(null, "", `#${targetId}`)
     }
 }
