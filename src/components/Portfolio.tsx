@@ -1,31 +1,88 @@
 "use client"
 
+import { useState } from "react"
 import { motion } from "framer-motion"
+import Image from "next/image"
+import Modal from "@/components/Modal"
+
+const projects = [
+    {
+        id: 1,
+        title: "Portfolio Website",
+        description: "Mijn persoonlijke portfolio website",
+        image: "/images/portfoliowebsite_voorbeeld.png",
+        details: {
+            description:
+                "Deze portfolio website is gebouwd om mijn vaardigheden en projecten te showcasen. Het is een volledig responsive single-page applicatie die moderne web development technieken en best practices demonstreert.",
+            technologies: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Framer Motion"],
+            features: [
+                "Responsive design voor alle schermformaten",
+                "Dark mode ondersteuning",
+                "Dynamische certificaten sectie met filtering",
+                "Animaties en overgangen voor een vloeiende gebruikerservaring",
+                "SEO geoptimaliseerd",
+                "Toegankelijk en gebruiksvriendelijk",
+            ],
+            implementation:
+                "De website is gebouwd met Next.js, wat server-side rendering en optimale prestaties mogelijk maakt. React wordt gebruikt voor de UI componenten, terwijl TypeScript zorgt voor type-veiligheid en verbeterde ontwikkelaarservaring. Tailwind CSS is gebruikt voor de styling, wat snelle ontwikkeling en consistentie in het ontwerp mogelijk maakt. Framer Motion is geïmplementeerd voor vloeiende animaties en overgangen.",
+        },
+    },
+    // Hier kunnen meer projecten worden toegevoegd in de toekomst
+]
 
 const Portfolio = () => {
+    const [selectedProject, setSelectedProject] = useState<(typeof projects)[0] | null>(null)
+
     return (
         <section id="portfolio" className="mb-20">
-            <h2 className="text-3xl font-bold text-center mb-8 text-foreground">Mijn portfolio</h2>
-            <motion.div
-                className="bg-card rounded-lg shadow-lg p-12 text-center text-card-foreground"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
-            >
-                <h3 className="text-xl font-semibold mb-4 text-accent-foreground">Projecten komen binnenkort</h3>
-                <p className="text-accent-foreground/80 mb-6">
-                    Ik ben momenteel bezig met het ontwikkelen van nieuwe projecten. Kom binnenkort terug om mijn laatste werk te
-                    bekijken!
-                </p>
-                <a
-                    href="https://github.com/milansk05"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="bg-primary text-primary-foreground px-6 py-2 rounded-full hover:bg-primary/90 transition-colors inline-block"
-                >
-                    Bezoek mijn GitHub
-                </a>
-            </motion.div>
+            <h2 className="text-3xl font-bold text-center mb-2 text-foreground">Mijn portfolio</h2>
+            <p className="text-center text-muted-foreground mb-8">Klik op een project om meer details te zien</p>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {projects.map((project) => (
+                    <motion.div
+                        key={project.id}
+                        className="bg-card rounded-lg shadow-lg overflow-hidden cursor-pointer"
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        onClick={() => setSelectedProject(project)}
+                    >
+                        <Image
+                            src={project.image || "/placeholder.svg"}
+                            alt={project.title}
+                            width={400}
+                            height={300}
+                            className="w-full h-48 object-cover"
+                        />
+                        <div className="p-4">
+                            <h3 className="text-xl font-semibold mb-2 text-accent-foreground">{project.title}</h3>
+                            <p className="text-accent-foreground/80">{project.description}</p>
+                        </div>
+                    </motion.div>
+                ))}
+            </div>
+            <Modal isOpen={!!selectedProject} onClose={() => setSelectedProject(null)} title={selectedProject?.title || ""}>
+                {selectedProject && (
+                    <div className="bg-card text-card-foreground rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+                        <div className="space-y-4 p-6">
+                            <p className="text-accent-foreground">{selectedProject.details.description}</p>
+                            <h4 className="text-lg font-semibold text-accent-foreground">Technologieën</h4>
+                            <ul className="list-disc list-inside text-accent-foreground/80">
+                                {selectedProject.details.technologies.map((tech, index) => (
+                                    <li key={index}>{tech}</li>
+                                ))}
+                            </ul>
+                            <h4 className="text-lg font-semibold text-accent-foreground">Kenmerken</h4>
+                            <ul className="list-disc list-inside text-accent-foreground/80">
+                                {selectedProject.details.features.map((feature, index) => (
+                                    <li key={index}>{feature}</li>
+                                ))}
+                            </ul>
+                            <h4 className="text-lg font-semibold text-accent-foreground">Implementatie</h4>
+                            <p className="text-accent-foreground/80">{selectedProject.details.implementation}</p>
+                        </div>
+                    </div>
+                )}
+            </Modal>
         </section>
     )
 }
