@@ -66,10 +66,13 @@ const Contact = () => {
                     </div>
                     <div className="md:w-1/2 p-8 flex flex-col justify-center">
                         <div className="mb-8">
-                            <h4 className="text-xl font-bold mb-4 text-accent-foreground">Stage bij HQ-Online</h4>
+                            <h4 className="text-xl font-bold mb-4 text-accent-foreground">Stage</h4>
                             <p className="flex items-center text-accent-foreground/80">
                                 <Briefcase className="mr-2" size={20} />
-                                Ik loop momenteel stage bij HQ-Online.
+                                Ik loop momenteel stage bij&nbsp;
+                                <a href="https://www.hq-online.nl" className="text-[#ed7100] hover:underline">
+                                    HQ-Online
+                                </a>.
                             </p>
                         </div>
                         <div className="mb-8">
