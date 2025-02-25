@@ -207,7 +207,9 @@ const Certificates = () => {
                         className="bg-card hover:bg-card/90 rounded-lg shadow-lg flex items-center gap-5 p-4 transition-colors text-card-foreground"
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.5, delay: index * 0.1 }}
+                        transition={{ duration: 0.5, delay: index * 0.05 }}
+                        whileHover={{ scale: 1.10 }}
+                        whileTap={{ scale: 0.90 }}
                     >
                         <Image src="/images/bitlogo.jpg" alt="Bit Academy Logo" width={96} height={60} className="rounded-lg" />
                         <div>

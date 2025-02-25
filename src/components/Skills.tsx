@@ -7,7 +7,7 @@ const skills = [
     {
         name: "React",
         image: "/images/react-original-wordmark-icon-840x1024-vhmauxp6.png",
-        proficiency: 85,
+        proficiency: 80,
     },
     {
         name: "Next.js",
@@ -17,7 +17,7 @@ const skills = [
     {
         name: "TypeScript",
         image: "/images/Typescript_logo_2020.png",
-        proficiency: 75,
+        proficiency: 70,
     },
     {
         name: "Bootstrap",
@@ -27,12 +27,12 @@ const skills = [
     {
         name: "PHP",
         image: "/images/php-logo-4694fbe1.webp",
-        proficiency: 75,
+        proficiency: 80,
     },
     {
         name: "Twig",
         image: "/images/twig-1.png",
-        proficiency: 70,
+        proficiency: 60,
     },
     {
         name: "SQL",
@@ -42,7 +42,7 @@ const skills = [
     {
         name: "Prisma DB",
         image: "/images/prismaHD.png",
-        proficiency: 85,
+        proficiency: 75,
     },
     {
         name: "HTML",
@@ -52,7 +52,7 @@ const skills = [
     {
         name: "CSS",
         image: "/images/css-logo-7cd08696.webp",
-        proficiency: 85,
+        proficiency: 80,
     },
     {
         name: "JavaScript",
@@ -62,7 +62,7 @@ const skills = [
     {
         name: "Tailwind CSS",
         image: "/images/tailwind-logo-23f154a0.webp",
-        proficiency: 75,
+        proficiency: 85,
     },
 ]
 

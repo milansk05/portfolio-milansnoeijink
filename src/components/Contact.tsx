@@ -89,7 +89,7 @@ const Contact = () => {
                             <h4 className="text-xl font-bold mb-4 text-accent-foreground">E-mail</h4>
                             <a
                                 href="mailto:snoeijinkmilan@gmail.com"
-                                className="flex items-center hover:text-accent-foreground transition-colors"
+                                className="flex items-center hover:text-accent-foreground transition-colors hover:underline"
                             >
                                 <Mail className="mr-2" size={20} />
                                 snoeijinkmilan@gmail.com

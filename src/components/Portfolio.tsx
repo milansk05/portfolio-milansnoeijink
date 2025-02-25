@@ -31,14 +31,14 @@ const projects = [
         id: 2,
         title: "Komt binnenkort",
         description: "Nieuw project wordt binnenkort toegevoegd",
-        image: null, // Geen afbeelding -> achtergrond blijft zichtbaar
+        image: null,
         details: null,
     },
     {
         id: 3,
         title: "Komt binnenkort",
         description: "Nog een project in ontwikkeling...",
-        image: null, // Geen afbeelding -> achtergrond blijft zichtbaar
+        image: null,
         details: null,
     },
 ]
@@ -59,7 +59,6 @@ const Portfolio = () => {
                         whileTap={{ scale: project.details ? 0.95 : 1 }}
                         onClick={() => project.details && setSelectedProject(project)}
                     >
-                        {/* Afbeelding of lege div met vaste hoogte */}
                         {project.image ? (
                             <Image
                                 src={project.image}
@@ -74,7 +73,6 @@ const Portfolio = () => {
                             </div>
                         )}
 
-                        {/* Inhoud blijft altijd op dezelfde plek */}
                         <div className="p-4 text-center">
                             <h3 className="text-xl font-semibold mb-2 text-accent-foreground">{project.title}</h3>
                             <p className="text-accent-foreground/80">{project.description}</p>
