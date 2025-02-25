@@ -11,7 +11,7 @@ const Contact = () => {
     const [formData, setFormData] = useState<{ name: string; email: string; message: string }>({ name: "", email: "", message: "" });
     const [isSending, setIsSending] = useState(false);
     const [success, setSuccess] = useState<boolean | null>(null);
-    const [captchaValue, setCaptchaValue] = useState<string | null>(null);
+    // const [captchaValue, setCaptchaValue] = useState<string | null>(null);
 
     useEffect(() => {
         if (success !== null) {
@@ -114,12 +114,12 @@ const Contact = () => {
                                     className="w-full px-3 py-2 text-black bg-gray-50 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
                                 ></textarea>
                             </div>
-                            <div className="mb-4 flex justify-center">
+                            {/* <div className="mb-4 flex justify-center">
                                 <ReCAPTCHA
                                     sitekey="6LcuW-IqAAAAAHTXkiZXRdhwTeXyXvxeGPIsZ9ZH"
                                     onChange={(value) => setCaptchaValue(value)}
                                 />
-                            </div>
+                            </div> */}
                             <button
                                 type="submit"
                                 disabled={isSending}
