@@ -7,9 +7,9 @@ import { Briefcase, Mail } from "lucide-react";
 import { Linkedin, Github, Instagram } from "lucide-react";
 
 const Contact = () => {
-    const [formData, setFormData] = useState({ name: "", email: "", message: "" });
+    const [formData, setFormData] = useState<{ name: string; email: string; message: string }>({ name: "", email: "", message: "" });
     const [isSending, setIsSending] = useState(false);
-    const [success, setSuccess] = useState(null);
+    const [success, setSuccess] = useState<boolean | null>(null);
 
     useEffect(() => {
         if (success !== null) {
@@ -18,11 +18,11 @@ const Contact = () => {
         }
     }, [success]);
 
-    const handleChange = (e) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setIsSending(true);
 
