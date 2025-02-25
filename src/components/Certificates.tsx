@@ -180,17 +180,15 @@ const Certificates = () => {
     return (
         <section id="certificaten" className="mb-20">
             <h2 className="text-3xl font-bold text-center mb-2 text-foreground">Certificaten</h2>
-            <p className="text-md text-center mb-5 text-foreground">
-                Klik op een certificaat om de echtheid te verifiëren op de officiële website
-            </p>
+            <p className="text-center text-muted-foreground mb-8">Klik op een certificaat om de echtheid te verifiëren op de officiële website</p>
             <div className="flex flex-wrap justify-center gap-2 mb-6">
                 {sortButtons.map((button) => (
                     <button
                         key={button.value}
                         onClick={() => setSortType(button.value)}
                         className={`px-4 py-2 rounded-full ${sortType === button.value
-                                ? "bg-primary text-primary-foreground"
-                                : "bg-secondary text-secondary-foreground"
+                            ? "bg-primary text-primary-foreground"
+                            : "bg-secondary text-secondary-foreground"
                             }`}
                     >
                         {button.label}
