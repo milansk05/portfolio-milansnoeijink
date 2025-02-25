@@ -210,6 +210,8 @@ const Certificates = () => {
                         transition={{ duration: 0.5, delay: index * 0.05 }}
                         whileHover={{ scale: 1.10 }}
                         whileTap={{ scale: 0.90 }}
+                        viewport={{ once: true }}
+                        whileInView={{ opacity: 1, y: 0 }}
                     >
                         <Image src="/images/bitlogo.jpg" alt="Bit Academy Logo" width={96} height={60} className="rounded-lg" />
                         <div>

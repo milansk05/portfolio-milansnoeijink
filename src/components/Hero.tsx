@@ -21,15 +21,33 @@ const Hero = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.2 }}
             >
-                <Link href="#contact" className="bg-primary text-primary-foreground px-6 py-2 rounded-full hover:bg-primary/90 transition-colors">
-                    Contact Opnemen
-                </Link>
-                <a href="https://www.linkedin.com/in/milan-snoeijink-797315292/" target="_blank" rel="noopener noreferrer" className="bg-secondary text-secondary-foreground px-6 py-2 rounded-full hover:bg-secondary/90 transition-colors">
-                    LinkedIn Profiel
-                </a>
-                <a href="/files/CV Milan Snoeijink Software Developer.pdf" download="Milan_Snoeijink_CV" className="bg-secondary text-accent-foreground px-6 py-2 rounded-full hover:bg-secondary/50 transition-colors">
-                    Download CV
-                </a>
+                <div className="flex flex-wrap gap-4 justify-center">
+                    <a
+                        href="https://github.com/milansk05"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="bg-[#333] text-white px-6 py-2 rounded-full hover:bg-[#555] transition-colors"
+                    >
+                        GitHub Profiel
+                    </a>
+
+                    <a
+                        href="https://www.linkedin.com/in/milan-snoeijink-797315292/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="bg-[#0077B5] text-white px-6 py-2 rounded-full hover:bg-[#005E93] transition-colors"
+                    >
+                        LinkedIn Profiel
+                    </a>
+
+                    <a
+                        href="/files/CV Milan Snoeijink Software Developer.pdf"
+                        download="Milan_Snoeijink_CV"
+                        className="bg-[#4CAF50] text-white px-6 py-2 rounded-full hover:bg-[#388E3C] transition-colors"
+                    >
+                        Download CV
+                    </a>
+                </div>
             </motion.div>
         </section>
     )

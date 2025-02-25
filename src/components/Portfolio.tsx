@@ -58,6 +58,7 @@ const Portfolio = () => {
                         whileHover={{ scale: project.details ? 1.05 : 1 }}
                         whileTap={{ scale: project.details ? 0.95 : 1 }}
                         onClick={() => project.details && setSelectedProject(project)}
+                        viewport={{ once: true }}
                     >
                         {project.image ? (
                             <Image
