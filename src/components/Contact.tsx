@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import emailjs from "@emailjs/browser";
-import ReCAPTCHA from "react-google-recaptcha";
+// import ReCAPTCHA from "react-google-recaptcha";
 import { motion } from "framer-motion";
 import { Mail, Briefcase } from "lucide-react";
 import { Linkedin, Github, Instagram } from "lucide-react";
