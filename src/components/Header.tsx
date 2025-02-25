@@ -6,25 +6,37 @@ import { Menu, X, Sun, Moon } from "lucide-react"
 import { useDarkMode } from "./DarkModeContext"
 import { smoothScroll } from "../utils/smoothScroll"
 
+interface NavLinkProps {
+    href: string;
+    text: string;
+    mobile?: boolean;
+    closeMenu?: () => void;
+}
+
 const Header = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false)
     const [isScrolled, setIsScrolled] = useState(false)
     const { darkMode, toggleDarkMode } = useDarkMode()
 
-    const toggleMenu = () => setIsMenuOpen(!isMenuOpen)
+    const toggleMenu = () => {
+        setIsMenuOpen(!isMenuOpen)
+        document.body.style.overflow = isMenuOpen ? "auto" : "hidden"
+    }
 
     useEffect(() => {
-        const handleScroll = () => {
-            setIsScrolled(window.scrollY > 10)
-        }
+        const handleScroll = () => setIsScrolled(window.scrollY > 10)
         window.addEventListener("scroll", handleScroll)
         return () => window.removeEventListener("scroll", handleScroll)
     }, [])
 
+    useEffect(() => {
+        if (!isMenuOpen) document.body.style.overflow = "auto"
+    }, [isMenuOpen])
+
     return (
         <header
-            className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? "bg-background/80 backdrop-blur-sm shadow-sm" : "bg-transparent"
-                }`}
+            className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 
+            ${isScrolled || isMenuOpen ? "bg-background shadow-sm" : "bg-background/90 backdrop-blur-sm"}`}
         >
             <div className="container mx-auto px-4 py-4 flex justify-between items-center">
                 <h1 className="text-2xl font-bold text-foreground">Milan Snoeijink</h1>
@@ -55,13 +67,28 @@ const Header = () => {
                     </button>
                 </div>
             </div>
+
             {isMenuOpen && (
-                <div className="md:hidden absolute top-full left-0 right-0 bg-background border-t border-secondary">
-                    <nav className="flex flex-col items-center space-y-4 py-4">
-                        <NavLinks mobile={true} closeMenu={() => setIsMenuOpen(false)} />
-                    </nav>
-                </div>
+                <div
+                    className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40"
+                    onClick={toggleMenu}
+                ></div>
             )}
+
+            <div
+                className={`fixed top-0 right-0 h-full w-64 bg-background shadow-lg transform ${isMenuOpen ? "translate-x-0" : "translate-x-full"
+                    } transition-transform duration-300 z-50`}
+            >
+                <div className="flex justify-between items-center p-4 border-b border-secondary bg-background">
+                    <h1 className="text-xl font-bold text-foreground">Menu</h1>
+                    <button onClick={toggleMenu} aria-label="Sluit menu">
+                        <X size={24} className="text-foreground" />
+                    </button>
+                </div>
+                <nav className="flex flex-col items-start space-y-4 py-6 px-4">
+                    <NavLinks mobile={true} closeMenu={toggleMenu} />
+                </nav>
+            </div>
         </header>
     )
 }
@@ -77,15 +104,11 @@ const NavLinks = ({ mobile = false, closeMenu = () => { } }) => (
     </>
 )
 
-const NavLink = ({
-    href,
-    text,
-    mobile,
-    closeMenu,
-}: { href: string; text: string; mobile?: boolean; closeMenu?: () => void }) => {
+const NavLink: React.FC<NavLinkProps> = ({ href, text, mobile = false, closeMenu }) => {
     const handleClick = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
         if (href.startsWith("#")) {
-            smoothScroll(e, href.slice(1))
+            e.preventDefault()
+            document.querySelector(href)?.scrollIntoView({ behavior: "smooth" })
             if (mobile && closeMenu) {
                 closeMenu()
             }
@@ -95,7 +118,7 @@ const NavLink = ({
     return (
         <Link
             href={href}
-            className={`text-foreground hover:text-primary ${mobile ? "text-lg py-2" : ""}`}
+            className={`text-foreground hover:text-primary ${mobile ? "text-lg py-2 w-full text-left" : ""}`}
             onClick={handleClick}
         >
             {text}

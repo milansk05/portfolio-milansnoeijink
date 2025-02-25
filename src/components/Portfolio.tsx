@@ -27,7 +27,20 @@ const projects = [
                 "De website is gebouwd met Next.js, wat server-side rendering en optimale prestaties mogelijk maakt. React wordt gebruikt voor de UI componenten, terwijl TypeScript zorgt voor type-veiligheid en verbeterde ontwikkelaarservaring. Tailwind CSS is gebruikt voor de styling, wat snelle ontwikkeling en consistentie in het ontwerp mogelijk maakt. Framer Motion is geïmplementeerd voor vloeiende animaties en overgangen.",
         },
     },
-    // Hier kunnen meer projecten worden toegevoegd in de toekomst
+    {
+        id: 2,
+        title: "Komt binnenkort",
+        description: "Nieuw project wordt binnenkort toegevoegd",
+        image: null, // Geen afbeelding -> achtergrond blijft zichtbaar
+        details: null,
+    },
+    {
+        id: 3,
+        title: "Komt binnenkort",
+        description: "Nog een project in ontwikkeling...",
+        image: null, // Geen afbeelding -> achtergrond blijft zichtbaar
+        details: null,
+    },
 ]
 
 const Portfolio = () => {
@@ -41,19 +54,28 @@ const Portfolio = () => {
                 {projects.map((project) => (
                     <motion.div
                         key={project.id}
-                        className="bg-card rounded-lg shadow-lg overflow-hidden cursor-pointer"
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                        onClick={() => setSelectedProject(project)}
+                        className="bg-card rounded-lg shadow-lg overflow-hidden cursor-pointer flex flex-col"
+                        whileHover={{ scale: project.details ? 1.05 : 1 }}
+                        whileTap={{ scale: project.details ? 0.95 : 1 }}
+                        onClick={() => project.details && setSelectedProject(project)}
                     >
-                        <Image
-                            src={project.image || "/placeholder.svg"}
-                            alt={project.title}
-                            width={400}
-                            height={300}
-                            className="w-full h-48 object-cover"
-                        />
-                        <div className="p-4">
+                        {/* Afbeelding of lege div met vaste hoogte */}
+                        {project.image ? (
+                            <Image
+                                src={project.image}
+                                alt={project.title}
+                                width={400}
+                                height={300}
+                                className="w-full h-48 object-cover"
+                            />
+                        ) : (
+                            <div className="w-full h-48 bg-muted flex items-center justify-center">
+                                <p className="text-muted-foreground"></p>
+                            </div>
+                        )}
+
+                        {/* Inhoud blijft altijd op dezelfde plek */}
+                        <div className="p-4 text-center">
                             <h3 className="text-xl font-semibold mb-2 text-accent-foreground">{project.title}</h3>
                             <p className="text-accent-foreground/80">{project.description}</p>
                         </div>
@@ -61,7 +83,7 @@ const Portfolio = () => {
                 ))}
             </div>
             <Modal isOpen={!!selectedProject} onClose={() => setSelectedProject(null)} title={selectedProject?.title || ""}>
-                {selectedProject && (
+                {selectedProject && selectedProject.details && (
                     <div className="bg-card text-card-foreground rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
                         <div className="space-y-4 p-6">
                             <p className="text-accent-foreground">{selectedProject.details.description}</p>

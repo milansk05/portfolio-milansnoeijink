@@ -67,10 +67,13 @@ const Contact = () => {
                     <div className="md:w-1/2 p-8 flex flex-col justify-center">
                         <div className="mb-8">
                             <h4 className="text-xl font-bold mb-4 text-accent-foreground">Stage</h4>
-                            <p className="flex items-center text-accent-foreground/80">
-                                <Briefcase className="mr-2" size={20} />
-                                Ik loop momenteel stage bij&nbsp;
-                                <a href="https://www.hq-online.nl" className="text-[#ed7100] hover:underline">
+                            <p className="flex flex-wrap items-center text-accent-foreground/80">
+                                <Briefcase className="mr-2 flex-shrink-0" size={20} />
+                                <span className="whitespace-nowrap">Ik loop momenteel stage bij</span>&nbsp;
+                                <a
+                                    href="https://www.hq-online.nl"
+                                    className="text-[#ed7100] hover:underline whitespace-nowrap"
+                                >
                                     HQ-Online
                                 </a>.
                             </p>

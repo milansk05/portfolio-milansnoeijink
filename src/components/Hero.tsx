@@ -13,7 +13,7 @@ const Hero = () => {
             >
                 <h2 className="text-3xl font-bold mb-4 text-foreground">Hallo, ik ben Milan</h2>
                 <h1 className="text-5xl font-extrabold mb-2 text-foreground">Milan Snoeijink</h1>
-                <p className="text-xl text-secondary-foreground mb-6">Software Developer bij Bit Academy Noorderpoort</p>
+                <p className="text-xl text-secondary-foreground mb-6">Student Software Developer bij Bit Academy Noorderpoort</p>
             </motion.div>
             <motion.div
                 className="flex flex-col md:flex-row justify-center space-y-4 md:space-y-0 md:space-x-4 mb-10"
