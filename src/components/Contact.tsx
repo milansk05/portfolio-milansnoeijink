@@ -83,7 +83,7 @@ const Contact = () => {
                                     value={formData.name}
                                     onChange={handleChange}
                                     required
-                                    className="w-full px-3 py-2 text-black bg-secondary/50 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                                    className="w-full px-3 py-2 text-black bg-gray-50 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
                                 />
                             </div>
                             <div className="mb-4">
@@ -97,7 +97,7 @@ const Contact = () => {
                                     value={formData.email}
                                     onChange={handleChange}
                                     required
-                                    className="w-full px-3 py-2 text-black bg-secondary/50 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                                    className="w-full px-3 py-2 text-black bg-gray-50 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
                                 />
                             </div>
                             <div className="mb-4">
@@ -111,12 +111,12 @@ const Contact = () => {
                                     onChange={handleChange}
                                     rows={4}
                                     required
-                                    className="w-full px-3 py-2 text-black bg-secondary/50 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                                    className="w-full px-3 py-2 text-black bg-gray-50 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
                                 ></textarea>
                             </div>
                             <div className="mb-4 flex justify-center">
                                 <ReCAPTCHA
-                                    sitekey="6LexVeIqAAAAAPT7AN9EtTrEphdGbYjfRBzGAnNi"
+                                    sitekey="6LcuW-IqAAAAAHTXkiZXRdhwTeXyXvxeGPIsZ9ZH"
                                     onChange={(value) => setCaptchaValue(value)}
                                 />
                             </div>
