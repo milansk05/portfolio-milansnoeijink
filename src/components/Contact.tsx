@@ -26,17 +26,17 @@ const Contact = () => {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        if (!captchaValue) {
-            setSuccess(false);
-            return;
-        }
+        // if (!captchaValue) {
+        //     setSuccess(false);
+        //     return;
+        // }
 
         setIsSending(true);
 
         const templateParams = {
             to_name: "Milan Snoeijink",
-            from_name: formData.name,
-            from_email: formData.email,
+            name: formData.name,
+            email: formData.email,
             message: formData.message,
         };
 
