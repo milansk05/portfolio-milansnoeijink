@@ -39,6 +39,7 @@ const Changelog = () => {
                 const data = await response.json()
                 setCommits(data.slice(0, 10)) // Laatste 10 commits
             } catch (err) {
+                console.error("Fout bij het ophalen van commits:", err) // ✅ Log de fout
                 setError(true)
             }
             setLoading(false)
