@@ -66,7 +66,7 @@ const Contact = () => {
                     <div className="md:w-1/2 p-8">
                         <form onSubmit={handleSubmit}>
                             <div className="mb-4">
-                                <label htmlFor="name" className="block text-sm font-medium text-accent-foreground/80 mb-1">
+                                <label htmlFor="name" className="block text-sm font-medium mb-1">
                                     Naam
                                 </label>
                                 <input
@@ -80,7 +80,7 @@ const Contact = () => {
                                 />
                             </div>
                             <div className="mb-4">
-                                <label htmlFor="email" className="block text-sm font-medium text-accent-foreground/80 mb-1">
+                                <label htmlFor="email" className="block text-sm font-medium mb-1">
                                     E-mail
                                 </label>
                                 <input
@@ -94,7 +94,7 @@ const Contact = () => {
                                 />
                             </div>
                             <div className="mb-4">
-                                <label htmlFor="message" className="block text-sm font-medium text-accent-foreground/80 mb-1">
+                                <label htmlFor="message" className="block text-sm font-medium mb-1">
                                     Bericht
                                 </label>
                                 <textarea

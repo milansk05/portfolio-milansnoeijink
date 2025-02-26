@@ -202,7 +202,7 @@ const Certificates = () => {
                         href={cert.href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="bg-card hover:bg-card/90 rounded-lg shadow-lg flex items-center gap-5 p-4 transition-colors text-card-foreground"
+                        className="bg-card hover:bg-card rounded-lg shadow-lg flex items-center gap-5 p-4 transition-colors text-card-foreground"
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.5, delay: index * 0.05 }}
@@ -211,7 +211,7 @@ const Certificates = () => {
                         viewport={{ once: true }}
                         whileInView={{ opacity: 1, y: 0 }}
                     >
-                        <Image src="/images/BIT-Academy-Logo-1024x1024.webp" alt="Bit Academy Logo" width={96} height={60} className="rounded-lg dark:bg-white" />
+                        <Image src="/images/BIT-Academy-Logo-1024x1024.webp" alt="Bit Academy Logo" width={96} height={60} className="rounded-lg bg-white" />
                         <div>
                             <p className="font-bold text-accent-foreground">{cert.title}</p>
                             <p className="text-sm text-accent-foreground/80">Behaald op {cert.date}</p>
