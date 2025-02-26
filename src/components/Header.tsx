@@ -80,7 +80,7 @@ const Header = () => {
                     } transition-transform duration-300 z-50`}
             >
                 <div className="flex justify-between items-center p-4 border-b border-secondary bg-background">
-                    <h1 className="text-xl font-bold text-foreground">Menu</h1>
+                    <h1 className="text-xl font-bold text-foreground">Navigatie menu</h1>
                     <button onClick={toggleMenu} aria-label="Sluit menu">
                         <X size={24} className="text-foreground" />
                     </button>

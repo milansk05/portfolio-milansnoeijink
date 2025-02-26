@@ -211,7 +211,7 @@ const Certificates = () => {
                         viewport={{ once: true }}
                         whileInView={{ opacity: 1, y: 0 }}
                     >
-                        <Image src="/images/bitlogo.jpg" alt="Bit Academy Logo" width={96} height={60} className="rounded-lg" />
+                        <Image src="/images/BIT-Academy-Logo-1024x1024.webp" alt="Bit Academy Logo" width={96} height={60} className="rounded-lg dark:bg-white" />
                         <div>
                             <p className="font-bold text-accent-foreground">{cert.title}</p>
                             <p className="text-sm text-accent-foreground/80">Behaald op {cert.date}</p>

@@ -5,6 +5,11 @@ import { motion } from "framer-motion"
 
 const skills = [
     {
+        name: "Wordpress",
+        image: "/images/wordpress.png",
+        proficiency: 70,
+    },
+    {
         name: "React",
         image: "/images/react-original-wordmark-icon-840x1024-vhmauxp6.png",
         proficiency: 80,
@@ -38,11 +43,6 @@ const skills = [
         name: "SQL",
         image: "/images/sql-logo-6f2e527e.webp",
         proficiency: 85,
-    },
-    {
-        name: "Prisma DB",
-        image: "/images/prismaHD.png",
-        proficiency: 75,
     },
     {
         name: "HTML",
@@ -80,13 +80,13 @@ const Skills = () => {
                         transition={{ duration: 0.5, delay: index * 0.1 }}
                         viewport={{ once: true }}
                     >
-                        <div className="bg-background dark:bg-muted rounded-lg p-2 w-16 h-16 flex items-center justify-center">
+                        <div className="bg-transparent dark:bg-white rounded-lg p-2 w-16 h-16 flex items-center justify-center">
                             <Image
                                 src={skill.image || "/placeholder.svg"}
                                 alt={`${skill.name} logo`}
                                 width={48}
                                 height={48}
-                                className="object-contain"
+                                className="object-contain bg-transparent"
                                 loading="lazy"
                             />
                         </div>
