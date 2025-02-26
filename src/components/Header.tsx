@@ -4,24 +4,22 @@ import { useState, useEffect } from "react"
 import Link from "next/link"
 import { Menu, X, Sun, Moon } from "lucide-react"
 import { useDarkMode } from "./DarkModeContext"
-import { smoothScroll } from "../utils/smoothScroll"
 
 interface NavLinkProps {
-    href: string;
-    text: string;
-    mobile?: boolean;
-    closeMenu?: () => void;
+    href: string
+    text: string
+    mobile?: boolean
+    closeMenu?: () => void
+    activeSection?: string
 }
+
+const sections = ["overmij", "expertise", "certificaten", "portfolio", "contact"]
 
 const Header = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false)
     const [isScrolled, setIsScrolled] = useState(false)
+    const [activeSection, setActiveSection] = useState("")
     const { darkMode, toggleDarkMode } = useDarkMode()
-
-    const toggleMenu = () => {
-        setIsMenuOpen(!isMenuOpen)
-        document.body.style.overflow = isMenuOpen ? "auto" : "hidden"
-    }
 
     useEffect(() => {
         const handleScroll = () => setIsScrolled(window.scrollY > 10)
@@ -30,8 +28,25 @@ const Header = () => {
     }, [])
 
     useEffect(() => {
-        if (!isMenuOpen) document.body.style.overflow = "auto"
-    }, [isMenuOpen])
+        const observerOptions = { root: null, rootMargin: "-50% 0px -50% 0px", threshold: 0 }
+
+        const observer = new IntersectionObserver((entries) => {
+            const visibleSection = entries.find((entry) => entry.isIntersecting)?.target.id
+            if (visibleSection) setActiveSection(visibleSection)
+        }, observerOptions)
+
+        sections.forEach((section) => {
+            const element = document.getElementById(section)
+            if (element) observer.observe(element)
+        })
+
+        return () => {
+            sections.forEach((section) => {
+                const element = document.getElementById(section)
+                if (element) observer.unobserve(element)
+            })
+        }
+    }, [])
 
     return (
         <header
@@ -41,7 +56,7 @@ const Header = () => {
             <div className="container mx-auto px-4 py-4 flex justify-between items-center">
                 <h1 className="text-2xl font-bold text-foreground">Milan Snoeijink</h1>
                 <nav className="hidden md:flex space-x-6">
-                    <NavLinks />
+                    <NavLinks activeSection={activeSection} />
                 </nav>
                 <div className="flex items-center space-x-4">
                     <button
@@ -54,12 +69,11 @@ const Header = () => {
                     <Link
                         href="#contact"
                         className="hidden md:block bg-primary text-primary-foreground px-4 py-2 rounded-full hover:bg-primary/90 transition-colors"
-                        onClick={(e) => smoothScroll(e, "contact")}
                     >
                         Contact opnemen
                     </Link>
                     <button
-                        onClick={toggleMenu}
+                        onClick={() => setIsMenuOpen(!isMenuOpen)}
                         className="md:hidden text-foreground"
                         aria-label={isMenuOpen ? "Sluit menu" : "Open menu"}
                     >
@@ -68,12 +82,7 @@ const Header = () => {
                 </div>
             </div>
 
-            {isMenuOpen && (
-                <div
-                    className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40"
-                    onClick={toggleMenu}
-                ></div>
-            )}
+            {isMenuOpen && <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40" onClick={() => setIsMenuOpen(false)}></div>}
 
             <div
                 className={`fixed top-0 right-0 h-full w-64 bg-background shadow-lg transform ${isMenuOpen ? "translate-x-0" : "translate-x-full"
@@ -81,44 +90,44 @@ const Header = () => {
             >
                 <div className="flex justify-between items-center p-4 border-b border-secondary bg-background">
                     <h1 className="text-xl font-bold text-foreground">Navigatie menu</h1>
-                    <button onClick={toggleMenu} aria-label="Sluit menu">
+                    <button onClick={() => setIsMenuOpen(false)} aria-label="Sluit menu">
                         <X size={24} className="text-foreground" />
                     </button>
                 </div>
                 <nav className="flex flex-col items-start space-y-4 py-6 px-4">
-                    <NavLinks mobile={true} closeMenu={toggleMenu} />
+                    <NavLinks mobile={true} closeMenu={() => setIsMenuOpen(false)} activeSection={activeSection} />
                 </nav>
             </div>
         </header>
     )
 }
 
-const NavLinks = ({ mobile = false, closeMenu = () => { } }) => (
+const NavLinks = ({ mobile = false, closeMenu = () => { }, activeSection = "" }) => (
     <>
-        <NavLink href="/" text="Home" mobile={mobile} closeMenu={closeMenu} />
-        <NavLink href="#overmij" text="Over mij" mobile={mobile} closeMenu={closeMenu} />
-        <NavLink href="#expertise" text="Expertise" mobile={mobile} closeMenu={closeMenu} />
-        <NavLink href="#certificaten" text="Certificaten" mobile={mobile} closeMenu={closeMenu} />
-        <NavLink href="#portfolio" text="Portfolio" mobile={mobile} closeMenu={closeMenu} />
-        <NavLink href="#contact" text="Contact" mobile={mobile} closeMenu={closeMenu} />
+        <NavLink href="/" text="Home" mobile={mobile} closeMenu={closeMenu} activeSection={activeSection} />
+        <NavLink href="#overmij" text="Over mij" mobile={mobile} closeMenu={closeMenu} activeSection={activeSection} />
+        <NavLink href="#expertise" text="Expertise" mobile={mobile} closeMenu={closeMenu} activeSection={activeSection} />
+        <NavLink href="#certificaten" text="Certificaten" mobile={mobile} closeMenu={closeMenu} activeSection={activeSection} />
+        <NavLink href="#portfolio" text="Portfolio" mobile={mobile} closeMenu={closeMenu} activeSection={activeSection} />
+        <NavLink href="#contact" text="Contact" mobile={mobile} closeMenu={closeMenu} activeSection={activeSection} />
     </>
 )
 
-const NavLink: React.FC<NavLinkProps> = ({ href, text, mobile = false, closeMenu }) => {
+const NavLink: React.FC<NavLinkProps> = ({ href, text, mobile = false, closeMenu, activeSection }) => {
+    const isActive = href.startsWith("#") && activeSection === href.replace("#", "")
+
     const handleClick = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
         if (href.startsWith("#")) {
             e.preventDefault()
             document.querySelector(href)?.scrollIntoView({ behavior: "smooth" })
-            if (mobile && closeMenu) {
-                closeMenu()
-            }
+            if (mobile && closeMenu) closeMenu()
         }
     }
 
     return (
         <Link
             href={href}
-            className={`text-foreground hover:text-primary ${mobile ? "text-lg py-2 w-full text-left" : ""}`}
+            className={`text-foreground hover:text-primary ${isActive ? "font-semibold underline" : ""} ${mobile ? "text-lg py-2 w-full text-left" : ""}`}
             onClick={handleClick}
         >
             {text}

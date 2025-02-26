@@ -54,7 +54,9 @@ const Contact = () => {
 
     return (
         <section id="contact" className="mb-20">
-            <h2 className="text-3xl font-bold text-center mb-8 text-foreground">Contacteer mij</h2>
+            <h2 className="text-3xl font-bold text-center mb-2 text-foreground">Contacteer mij</h2>
+            <p className="text-center text-muted-foreground mb-8">
+                Heb je vragen, een interessant project, of wil je gewoon even kennismaken?<br></br> Stuur me een bericht via het contactformulier of neem contact op via e-mail of sociale media. Ik hoor graag van je!</p>
             <motion.div
                 className="bg-card rounded-lg shadow-lg overflow-hidden text-card-foreground"
                 initial={{ opacity: 0, y: 20 }}

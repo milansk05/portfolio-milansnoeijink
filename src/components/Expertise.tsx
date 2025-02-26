@@ -33,7 +33,8 @@ const expertiseItems = [
 const Expertise = () => {
     return (
         <section id="expertise" className="mb-20">
-            <h2 className="text-3xl font-bold text-center mb-8 text-foreground">Mijn expertise</h2>
+            <h2 className="text-3xl font-bold text-center mb-2 text-foreground">Mijn expertise</h2>
+            <p className="text-center text-muted-foreground mb-8">Bekijk hier mijn expertise op het gebied van projectmanagement, design en probleemoplossing.</p>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                 {expertiseItems.map((item, index) => (
                     <motion.div

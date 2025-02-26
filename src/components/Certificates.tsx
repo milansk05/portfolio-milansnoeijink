@@ -174,18 +174,25 @@ const sortButtons: { label: string; value: string }[] = [
 const Certificates = () => {
     const [showAll, setShowAll] = useState(false)
     const [sortType, setSortType] = useState("date")
+
     const sortedCertificates = categorizeAndSortCertificates(certificates, sortType)
-    const visibleCertificates = showAll ? sortedCertificates : sortedCertificates.slice(0, 6)
+    const hasMoreThanSix = sortedCertificates.length > 6
+    const visibleCertificates = showAll || !hasMoreThanSix ? sortedCertificates : sortedCertificates.slice(0, 6)
 
     return (
         <section id="certificaten" className="mb-20">
             <h2 className="text-3xl font-bold text-center mb-2 text-foreground">Certificaten</h2>
-            <p className="text-center text-muted-foreground mb-8">Klik op een certificaat om de echtheid te verifiëren op de officiële website</p>
+            <p className="text-center text-muted-foreground mb-8">
+                Klik op een certificaat om de echtheid te verifiëren op de officiële website
+            </p>
             <div className="flex flex-wrap justify-center gap-2 mb-6">
                 {sortButtons.map((button) => (
                     <button
                         key={button.value}
-                        onClick={() => setSortType(button.value)}
+                        onClick={() => {
+                            setSortType(button.value)
+                            setShowAll(false) // Reset "Toon meer" als categorie verandert
+                        }}
                         className={`px-4 py-2 rounded-full ${sortType === button.value
                             ? "bg-primary text-primary-foreground"
                             : "bg-secondary text-secondary-foreground"
@@ -206,12 +213,18 @@ const Certificates = () => {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.5, delay: index * 0.05 }}
-                        whileHover={{ scale: 1.10 }}
-                        whileTap={{ scale: 0.90 }}
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
                         viewport={{ once: true }}
                         whileInView={{ opacity: 1, y: 0 }}
                     >
-                        <Image src="/images/BIT-Academy-Logo-1024x1024.webp" alt="Bit Academy Logo" width={96} height={60} className="rounded-lg bg-white" />
+                        <Image
+                            src="/images/BIT-Academy-Logo-1024x1024.webp"
+                            alt="Bit Academy Logo"
+                            width={96}
+                            height={60}
+                            className="rounded-lg bg-white"
+                        />
                         <div>
                             <p className="font-bold text-accent-foreground">{cert.title}</p>
                             <p className="text-sm text-accent-foreground/80">Behaald op {cert.date}</p>
@@ -221,7 +234,7 @@ const Certificates = () => {
                     </motion.a>
                 ))}
             </div>
-            {certificates.length > 6 && (
+            {hasMoreThanSix && (
                 <div className="text-center mt-8">
                     <button
                         onClick={() => setShowAll(!showAll)}
