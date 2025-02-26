@@ -58,7 +58,7 @@ const Header = () => {
             <div className="container mx-auto px-4 py-4 flex justify-between items-center">
                 <h1 className="text-2xl font-bold text-foreground">Milan Snoeijink</h1>
 
-                {/* ✅ Verberg bepaalde links als we op de Changelog-pagina zijn */}
+                {/* Verberg bepaalde links als we op de Changelog-pagina zijn */}
                 <nav className="hidden md:flex space-x-6">
                     {pathname !== "/changelog" ? (
                         <NavLinks activeSection={activeSection} />

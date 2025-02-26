@@ -37,9 +37,9 @@ const Changelog = () => {
                 const response = await fetch("/api/changelog")
                 if (!response.ok) throw new Error("Failed to fetch commits")
                 const data = await response.json()
-                setCommits(data.slice(0, 10)) // Laatste 10 commits
+                setCommits(data.slice(0, 30)) // Laatste 30 commits
             } catch (err) {
-                console.error("Fout bij het ophalen van commits:", err) // ✅ Log de fout
+                console.error("Fout bij het ophalen van commits:", err)
                 setError(true)
             }
             setLoading(false)
@@ -54,7 +54,7 @@ const Changelog = () => {
             <Header />
             <section className="container mx-auto px-4 py-10 max-w-3xl pt-24">
                 <h1 className="text-3xl font-bold mb-6 text-foreground">📜 Changelog</h1>
-                <p className="mb-6 text-muted-foreground">Bekijk de laatste updates en wijzigingen in het project.</p>
+                <p className="mb-6 text-muted-foreground">Bekijk de laatste (30) updates en wijzigingen in het project.</p>
 
                 {loading && <p>Bezig met laden...</p>}
                 {error && <p className="text-red-500">Kon de changelog niet laden.</p>}
