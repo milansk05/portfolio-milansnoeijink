@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
+import { usePathname } from "next/navigation"
 import { Menu, X, Sun, Moon } from "lucide-react"
 import { useDarkMode } from "./DarkModeContext"
 
@@ -20,6 +21,7 @@ const Header = () => {
     const [isScrolled, setIsScrolled] = useState(false)
     const [activeSection, setActiveSection] = useState("")
     const { darkMode, toggleDarkMode } = useDarkMode()
+    const pathname = usePathname() // Haal de huidige pagina op
 
     useEffect(() => {
         const handleScroll = () => setIsScrolled(window.scrollY > 10)
@@ -55,9 +57,21 @@ const Header = () => {
         >
             <div className="container mx-auto px-4 py-4 flex justify-between items-center">
                 <h1 className="text-2xl font-bold text-foreground">Milan Snoeijink</h1>
+
+                {/* ✅ Verberg bepaalde links als we op de Changelog-pagina zijn */}
                 <nav className="hidden md:flex space-x-6">
-                    <NavLinks activeSection={activeSection} />
+                    {pathname !== "/changelog" ? (
+                        <NavLinks activeSection={activeSection} />
+                    ) : (
+                        <Link
+                            href="/"
+                            className="hidden md:block bg-primary text-primary-foreground px-4 py-2 rounded-full hover:bg-primary/90 transition-colors"
+                        >
+                            ⬅️ Terug naar Home
+                        </Link>
+                    )}
                 </nav>
+
                 <div className="flex items-center space-x-4">
                     <button
                         onClick={toggleDarkMode}
@@ -66,12 +80,16 @@ const Header = () => {
                     >
                         {darkMode ? <Sun size={20} /> : <Moon size={20} />}
                     </button>
-                    <Link
-                        href="#contact"
-                        className="hidden md:block bg-primary text-primary-foreground px-4 py-2 rounded-full hover:bg-primary/90 transition-colors"
-                    >
-                        Contact opnemen
-                    </Link>
+
+                    {pathname !== "/changelog" && (
+                        <Link
+                            href="#contact"
+                            className="hidden md:block bg-primary text-primary-foreground px-4 py-2 rounded-full hover:bg-primary/90 transition-colors"
+                        >
+                            Contact opnemen
+                        </Link>
+                    )}
+
                     <button
                         onClick={() => setIsMenuOpen(!isMenuOpen)}
                         className="md:hidden text-foreground"
@@ -94,8 +112,19 @@ const Header = () => {
                         <X size={24} className="text-foreground" />
                     </button>
                 </div>
+
                 <nav className="flex flex-col items-start space-y-4 py-6 px-4">
-                    <NavLinks mobile={true} closeMenu={() => setIsMenuOpen(false)} activeSection={activeSection} />
+                    {pathname !== "/changelog" ? (
+                        <NavLinks mobile={true} closeMenu={() => setIsMenuOpen(false)} activeSection={activeSection} />
+                    ) : (
+                        <Link
+                            href="/"
+                            className="text-foreground hover:text-primary text-lg py-2 w-full text-left"
+                            onClick={() => setIsMenuOpen(false)}
+                        >
+                            ⬅️ Terug naar Home
+                        </Link>
+                    )}
                 </nav>
             </div>
         </header>
@@ -110,6 +139,9 @@ const NavLinks = ({ mobile = false, closeMenu = () => { }, activeSection = "" })
         <NavLink href="#certificaten" text="Certificaten" mobile={mobile} closeMenu={closeMenu} activeSection={activeSection} />
         <NavLink href="#portfolio" text="Portfolio" mobile={mobile} closeMenu={closeMenu} activeSection={activeSection} />
         <NavLink href="#contact" text="Contact" mobile={mobile} closeMenu={closeMenu} activeSection={activeSection} />
+        <Link href="/changelog" className={`text-foreground hover:text-primary ${activeSection === "changelog" ? "font-semibold underline" : ""}`}>
+            Changelog
+        </Link>
     </>
 )
 
