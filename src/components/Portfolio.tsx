@@ -29,10 +29,18 @@ const projects = [
     },
     {
         id: 2,
-        title: "Komt binnenkort",
-        description: "Nieuw project wordt binnenkort toegevoegd",
-        image: null,
-        details: null,
+        title: "NextJS Chat App",
+        description: "Een real-time chat applicatie met Next.js",
+        image: "/images/",
+        details: {
+            description:
+                "Komt binnenkort!",
+            technologies: ["Komt binnenkort!"],
+            features: ["Komt binnenkort!"
+            ],
+            implementation:
+                "Komt binnenkort!",
+        },
     },
     {
         id: 3,

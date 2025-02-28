@@ -37,7 +37,7 @@ const Changelog = () => {
                 const response = await fetch("/api/changelog")
                 if (!response.ok) throw new Error("Failed to fetch commits")
                 const data = await response.json()
-                setCommits(data.slice(0, 30)) // Laatste 30 commits
+                setCommits(data.slice(0, 30))
             } catch (err) {
                 console.error("Fout bij het ophalen van commits:", err)
                 setError(true)
@@ -82,7 +82,7 @@ const Changelog = () => {
                                                 Door <span className="font-semibold">{commit.commit.author.name}</span>
                                             </p>
                                         </div>
-                                        <span className="text-xs bg-secondary text-secondary-foreground px-3 py-1 rounded-full font-mono">
+                                        <span className="text-xs bg-secondary text-secondary-foreground px-3 py-3 rounded-full font-mono">
                                             {commit.sha.slice(0, 7)}
                                         </span>
                                     </li>
