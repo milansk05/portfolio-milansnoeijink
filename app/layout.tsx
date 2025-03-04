@@ -23,6 +23,7 @@ export default function RootLayout({
   return (
     <html lang="nl">
       <body className={`${bricolage.className} antialiased`}>
+        <SpeedInsights />
         <DarkModeProvider>
           {children}
         </DarkModeProvider>
@@ -30,5 +31,3 @@ export default function RootLayout({
     </html>
   )
 }
-
-<SpeedInsights/>
