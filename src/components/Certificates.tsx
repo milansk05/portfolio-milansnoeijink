@@ -167,6 +167,13 @@ const certificates: Certificate[] = [
         code: "01954c7c-52a4-704a-8add-60880786ac61",
         category: "frontend",
     },
+    {
+        href: "https://www.nexed.com/verify?certId=01955c8e-9214-7a0a-9fde-c367e481adec",
+        title: "End-to-End Testing",
+        date: "Mar 4, 2025",
+        code: "01955c8e-9214-7a0a-9fde-c367e481adec",
+        category: "other",
+    },
 ]
 
 const sortButtons: { label: string; value: string }[] = [
