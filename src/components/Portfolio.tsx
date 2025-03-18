@@ -29,25 +29,24 @@ const projects = [
     },
     {
         id: 2,
-        title: "NextJS Chat App",
-        description: "Een real-time chat applicatie met Next.js",
-        image: "/images/",
+        title: "Realworks Wonen API",
+        description: "Een API voor het ophalen van woninginformatie",
+        image: "",
         details: {
             description:
-                "Komt binnenkort!",
-            technologies: ["Komt binnenkort!"],
-            features: ["Komt binnenkort!"
+                "Komt binnenkort...",
+            technologies: [],
+            features: [
             ],
             implementation:
-                "Komt binnenkort!",
+                "",
         },
     },
     {
         id: 3,
-        title: "Komt binnenkort",
-        description: "Nog een project in ontwikkeling...",
-        image: null,
-        details: null,
+        title: "Komt binnenkort...",
+        description: "Een real-time chat applicatie met Next.js",
+        image: "",
     },
 ]
 
