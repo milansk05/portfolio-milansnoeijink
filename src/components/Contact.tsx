@@ -29,9 +29,8 @@ const Contact = () => {
 
         try {
             const templateParams = {
-                to_name: "Milan Snoeijink",
-                from_name: formData.name,
-                from_email: formData.email,
+                name: formData.name,
+                email: formData.email,
                 message: formData.message
             };
 
