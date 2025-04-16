@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
+import Achievement from './Achievement'
 
 // De Konami Code sequentie: ↑ ↑ ↓ ↓ ← → ← → B A
 const KONAMI_CODE = [
@@ -17,6 +18,7 @@ const EasterEgg = () => {
     const [keysPressed, setKeysPressed] = useState<string[]>([])
     const [showEasterEgg, setShowEasterEgg] = useState(false)
     const [konamiTriggered, setKonamiTriggered] = useState(false)
+    const [showAchievement, setShowAchievement] = useState(false)
 
     useEffect(() => {
         // Functie om toetsaanslagen te verwerken
@@ -37,25 +39,24 @@ const EasterEgg = () => {
 
             if (isKonamiCode && !konamiTriggered) {
                 setKonamiTriggered(true)
+
+                // Toon achievement en easter egg tegelijkertijd
+                setShowAchievement(true)
                 setShowEasterEgg(true)
 
-                // Speel een geluid af (optioneel)
-                const audio = new Audio('/sounds/meow.mp3')
-                audio.volume = 0.5
-                audio.play().catch(() => {
-                    // Negeer fouten als de browser audio afspelen blokkeert
-                    console.log('Autoplay geblokkeerd of audio niet gevonden')
-                })
+                // Speel beide geluiden na elkaar af
+                playCombinedSounds();
 
-                // Verberg de Easter egg na 5 seconden
+                // Verberg de Easter egg na 10 seconden
                 setTimeout(() => {
                     setShowEasterEgg(false)
+                    setShowAchievement(false)
 
                     // Reset na een seconde om opnieuw te kunnen triggeren
                     setTimeout(() => {
                         setKonamiTriggered(false)
                     }, 1000)
-                }, 5000)
+                }, 10000)
             }
         }
 
@@ -68,27 +69,60 @@ const EasterEgg = () => {
         }
     }, [keysPressed, konamiTriggered])
 
+    // Functie om beide geluiden samen af te spelen
+    const playCombinedSounds = () => {
+        try {
+            // Eerst het achievement geluid
+            const achievementSound = new Audio('/sounds/achievement.mp3')
+            achievementSound.volume = 0.5
+
+            // Dan het meow geluid na een korte vertraging
+            achievementSound.onended = () => {
+                setTimeout(() => {
+                    const meowSound = new Audio('/sounds/meow.mp3')
+                    meowSound.volume = 0.5
+                    meowSound.play().catch(err => console.log('Meow geluid afspelen mislukt:', err))
+                }, 300) // korte pauze tussen de geluiden
+            }
+
+            // Start met het eerste geluid
+            achievementSound.play().catch(err => {
+                console.log('Achievement geluid afspelen mislukt:', err)
+
+                // Als achievement geluid mislukt, probeer direct het meow geluid
+                const meowSound = new Audio('/sounds/meow.mp3')
+                meowSound.volume = 0.7
+                meowSound.play().catch(err => console.log('Meow geluid afspelen mislukt:', err))
+            })
+        } catch (error) {
+            console.log('Geluid afspelen mislukt', error)
+        }
+    }
+
     return (
         <>
             <AnimatePresence>
                 {showEasterEgg && (
                     <motion.div
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        exit={{ opacity: 0, scale: 0.8 }}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
                         transition={{ duration: 0.5 }}
-                        className="fixed inset-0 flex items-center justify-center z-50 bg-black/80"
-                        onClick={() => setShowEasterEgg(false)}
+                        className="fixed inset-0 flex items-center justify-center z-40 bg-black/80"
+                        onClick={() => {
+                            setShowEasterEgg(false)
+                            setShowAchievement(false)
+                        }}
                     >
                         <motion.div
                             className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg max-w-md text-center"
-                            initial={{ y: 50 }}
-                            animate={{ y: 0 }}
-                            transition={{ type: "spring", bounce: 0.4 }}
+                            initial={{ y: 50, opacity: 0 }}
+                            animate={{ y: 0, opacity: 1 }}
+                            transition={{ type: "spring", bounce: 0.4, delay: 0.2 }}
                         >
                             <div className="relative w-64 h-64 mx-auto mb-4 overflow-hidden rounded-lg">
                                 <Image
-                                    src="/images/cat.jpg"
+                                    src="/images/cat.jpg" // Plaats hier een foto van je kat
                                     alt="Mijn kat"
                                     fill
                                     style={{ objectFit: 'cover' }}
@@ -97,12 +131,13 @@ const EasterEgg = () => {
                             </div>
                             <h3 className="text-2xl font-bold mb-2 text-gray-800 dark:text-white">Miauw! Je hebt me gevonden!</h3>
                             <p className="text-gray-600 dark:text-gray-300 mb-4">
-                                Ik ben Milan&apos;s kat. Ik heb me verstopt in deze website 🐈
+                                Dit is mijn kat! De geheime bewaker van deze website.
                             </p>
                             <button
                                 onClick={(e) => {
                                     e.stopPropagation()
                                     setShowEasterEgg(false)
+                                    setShowAchievement(false)
                                 }}
                                 className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition"
                             >
@@ -121,6 +156,17 @@ const EasterEgg = () => {
                     </motion.div>
                 )}
             </AnimatePresence>
+
+            {/* Minecraft Achievement - op een hogere z-index zodat het bovenop de easter egg achtergrond komt */}
+            {showEasterEgg && (
+                <Achievement
+                    title="Kat Ontdekker"
+                    description="Je hebt de geheime kat gevonden!"
+                    icon="/images/achievement-icon.png"
+                    show={showAchievement}
+                    onClose={() => setShowAchievement(false)}
+                />
+            )}
         </>
     )
 }
