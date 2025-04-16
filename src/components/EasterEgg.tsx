@@ -97,7 +97,7 @@ const EasterEgg = () => {
                             </div>
                             <h3 className="text-2xl font-bold mb-2 text-gray-800 dark:text-white">Miauw! Je hebt me gevonden!</h3>
                             <p className="text-gray-600 dark:text-gray-300 mb-4">
-                                Ik ben Milan's kat. Ik heb me verstopt in deze website 🐈
+                                Ik ben Milan&apos;s kat. Ik heb me verstopt in deze website 🐈
                             </p>
                             <button
                                 onClick={(e) => {

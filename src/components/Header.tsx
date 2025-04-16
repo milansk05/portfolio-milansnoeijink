@@ -9,7 +9,6 @@ import { smoothScroll } from "@/utils/smoothScroll"
 import DarkModeToggle from "./DarkModeToggle"
 
 const Header = () => {
-    const { darkMode } = useDarkMode()
     const pathname = usePathname()
 
     return (

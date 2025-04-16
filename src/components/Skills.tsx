@@ -80,7 +80,7 @@ const Skills = () => {
             </div>
 
             {visibleSkills.length === 0 ? (
-                <p className="text-center text-muted-foreground">Geen vaardigheden gevonden voor "{searchTerm}".</p>
+                <p className="text-center text-muted-foreground">Geen vaardigheden gevonden voor &quot;{searchTerm}&quot;.</p>
             ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     {visibleSkills.map((skill, index) => (
