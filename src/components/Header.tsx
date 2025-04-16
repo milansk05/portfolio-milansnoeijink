@@ -2,7 +2,6 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { useDarkMode } from "./DarkModeContext"
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/app-sidebar"
 import { smoothScroll } from "@/utils/smoothScroll"
