@@ -3,6 +3,8 @@ import { Bricolage_Grotesque } from 'next/font/google'
 import "./globals.css"
 import { DarkModeProvider } from '../src/components/DarkModeContext'
 import { SpeedInsights } from "@vercel/speed-insights/next"
+import EasterEgg from "@/components/EasterEgg"
+import AnimatedBackground from "@/components/AnimatedBackground"
 
 const bricolage = Bricolage_Grotesque({
   subsets: ["latin"],
@@ -22,10 +24,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="nl">
-      <body className={`${bricolage.className} antialiased`}>
+      <body className={`${bricolage.className} antialiased relative`}>
         <SpeedInsights />
         <DarkModeProvider>
+          <AnimatedBackground />
           {children}
+          <EasterEgg />
         </DarkModeProvider>
       </body>
     </html>

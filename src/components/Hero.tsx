@@ -1,6 +1,7 @@
 "use client"
 
 import { motion } from "framer-motion"
+import PrintCV from "./PrintCV"
 
 const Hero = () => {
     return (
@@ -46,6 +47,8 @@ const Hero = () => {
                     >
                         Download CV
                     </a>
+
+                    <PrintCV />
                 </div>
             </motion.div>
         </section>

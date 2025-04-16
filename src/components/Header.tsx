@@ -2,13 +2,14 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { Sun, Moon } from "lucide-react"
 import { useDarkMode } from "./DarkModeContext"
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/app-sidebar"
+import { smoothScroll } from "@/utils/smoothScroll"
+import DarkModeToggle from "./DarkModeToggle"
 
 const Header = () => {
-    const { darkMode, toggleDarkMode } = useDarkMode()
+    const { darkMode } = useDarkMode()
     const pathname = usePathname()
 
     return (
@@ -34,13 +35,7 @@ const Header = () => {
                     </nav>
 
                     <div className="flex items-center space-x-4">
-                        <button
-                            onClick={toggleDarkMode}
-                            className="p-2 rounded-full bg-secondary text-secondary-foreground hover:bg-secondary/80 transition-colors"
-                            aria-label={darkMode ? "Schakel naar light mode" : "Schakel naar dark mode"}
-                        >
-                            {darkMode ? <Sun size={20} /> : <Moon size={20} />}
-                        </button>
+                        <DarkModeToggle />
                         <Link
                             href="#contact"
                             className="hidden md:block bg-primary text-primary-foreground px-4 py-2 rounded-full hover:bg-primary/90 transition-colors"
@@ -59,7 +54,19 @@ const Header = () => {
 }
 
 const NavLink = ({ href, text }: { href: string; text: string }) => {
-    return <Link href={href} className="text-foreground hover:text-primary">{text}</Link>
+    const isAnchorLink = href.startsWith('#');
+
+    return isAnchorLink ? (
+        <a
+            href={href}
+            className="text-foreground hover:text-primary"
+            onClick={(e) => smoothScroll(e, href.substring(1))}
+        >
+            {text}
+        </a>
+    ) : (
+        <Link href={href} className="text-foreground hover:text-primary">{text}</Link>
+    );
 }
 
 export default Header

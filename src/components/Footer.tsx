@@ -8,6 +8,12 @@ const Footer = () => {
                 <div className="flex flex-col md:flex-row justify-between items-center">
                     <p className="text-center md:text-left mb-4 md:mb-0">
                         © {new Date().getFullYear()} Milan Snoeijink
+                        <span
+                            className="hidden sm:inline text-xs text-accent-foreground/30 ml-2 cursor-pointer hover:text-accent-foreground/80 transition-colors"
+                            title="↑↑↓↓←→←→BA"
+                        >
+                            🐱
+                        </span>
                     </p>
                     <div className="flex space-x-4">
                         <Link href="https://github.com/milansk05" target="_blank" rel="noopener noreferrer" aria-label="GitHub">

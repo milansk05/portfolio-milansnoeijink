@@ -3,13 +3,26 @@
 import { useState, useEffect } from "react";
 import emailjs from "@emailjs/browser";
 import { motion } from "framer-motion";
-import { Mail, Briefcase } from "lucide-react";
+import { Mail, Briefcase, AlertCircle } from "lucide-react";
 import { Linkedin, Github, Instagram } from "lucide-react";
 
+type FormData = {
+    name: string;
+    email: string;
+    message: string
+}
+
+type FormErrors = {
+    name?: string;
+    email?: string;
+    message?: string;
+}
+
 const Contact = () => {
-    const [formData, setFormData] = useState<{ name: string; email: string; message: string }>({ name: "", email: "", message: "" });
+    const [formData, setFormData] = useState<FormData>({ name: "", email: "", message: "" });
     const [isSending, setIsSending] = useState(false);
     const [success, setSuccess] = useState<boolean | null>(null);
+    const [errors, setErrors] = useState<FormErrors>({});
 
     useEffect(() => {
         if (success !== null) {
@@ -19,11 +32,45 @@ const Contact = () => {
     }, [success]);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
+        const { name, value } = e.target;
+        setFormData({ ...formData, [name]: value });
+
+        // Wis de fout als de gebruiker begint te typen
+        if (errors[name as keyof FormErrors]) {
+            setErrors({ ...errors, [name]: undefined });
+        }
+    };
+
+    const validateForm = (): FormErrors => {
+        const errors: FormErrors = {};
+
+        if (!formData.name.trim()) {
+            errors.name = "Naam is verplicht";
+        }
+
+        if (!formData.email.trim()) {
+            errors.email = "E-mail is verplicht";
+        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+            errors.email = "Voer een geldig e-mailadres in";
+        }
+
+        if (!formData.message.trim()) {
+            errors.message = "Bericht is verplicht";
+        } else if (formData.message.trim().length < 10) {
+            errors.message = "Bericht moet minimaal 10 tekens bevatten";
+        }
+
+        return errors;
     };
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+
+        const validationErrors = validateForm();
+        if (Object.keys(validationErrors).length > 0) {
+            setErrors(validationErrors);
+            return;
+        }
 
         setIsSending(true);
 
@@ -43,6 +90,7 @@ const Contact = () => {
             console.log("Email sent successfully:", response);
             setSuccess(true);
             setFormData({ name: "", email: "", message: "" });
+            setErrors({});
         } catch (error) {
             setSuccess(false);
             console.error("Error sending email:", error);
@@ -76,9 +124,17 @@ const Contact = () => {
                                     name="name"
                                     value={formData.name}
                                     onChange={handleChange}
-                                    required
-                                    className="w-full px-3 py-2 text-black bg-gray-50 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                                    className={`w-full px-3 py-2 text-black bg-gray-50 rounded-md focus:outline-none focus:ring-2 ${errors.name ? "border-2 border-red-500 focus:ring-red-300" : "focus:ring-primary"
+                                        }`}
+                                    aria-invalid={errors.name ? "true" : "false"}
+                                    aria-describedby={errors.name ? "name-error" : undefined}
                                 />
+                                {errors.name && (
+                                    <div id="name-error" className="mt-1 flex items-center text-sm text-red-500">
+                                        <AlertCircle className="h-4 w-4 mr-1" />
+                                        {errors.name}
+                                    </div>
+                                )}
                             </div>
                             <div className="mb-4">
                                 <label htmlFor="email" className="block text-sm font-medium mb-1">
@@ -90,9 +146,17 @@ const Contact = () => {
                                     name="email"
                                     value={formData.email}
                                     onChange={handleChange}
-                                    required
-                                    className="w-full px-3 py-2 text-black bg-gray-50 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                                    className={`w-full px-3 py-2 text-black bg-gray-50 rounded-md focus:outline-none focus:ring-2 ${errors.email ? "border-2 border-red-500 focus:ring-red-300" : "focus:ring-primary"
+                                        }`}
+                                    aria-invalid={errors.email ? "true" : "false"}
+                                    aria-describedby={errors.email ? "email-error" : undefined}
                                 />
+                                {errors.email && (
+                                    <div id="email-error" className="mt-1 flex items-center text-sm text-red-500">
+                                        <AlertCircle className="h-4 w-4 mr-1" />
+                                        {errors.email}
+                                    </div>
+                                )}
                             </div>
                             <div className="mb-4">
                                 <label htmlFor="message" className="block text-sm font-medium mb-1">
@@ -104,22 +168,34 @@ const Contact = () => {
                                     value={formData.message}
                                     onChange={handleChange}
                                     rows={4}
-                                    required
-                                    className="w-full px-3 py-2 text-black bg-gray-50 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                                    className={`w-full px-3 py-2 text-black bg-gray-50 rounded-md focus:outline-none focus:ring-2 ${errors.message ? "border-2 border-red-500 focus:ring-red-300" : "focus:ring-primary"
+                                        }`}
+                                    aria-invalid={errors.message ? "true" : "false"}
+                                    aria-describedby={errors.message ? "message-error" : undefined}
                                 ></textarea>
+                                {errors.message && (
+                                    <div id="message-error" className="mt-1 flex items-center text-sm text-red-500">
+                                        <AlertCircle className="h-4 w-4 mr-1" />
+                                        {errors.message}
+                                    </div>
+                                )}
                             </div>
                             <button
                                 type="submit"
                                 disabled={isSending}
-                                className="w-full bg-primary text-primary-foreground px-4 py-2 rounded-md hover:opacity-80 transition"
+                                className="w-full bg-primary text-primary-foreground px-4 py-2 rounded-md hover:opacity-80 transition disabled:opacity-50 disabled:cursor-not-allowed"
                             >
                                 {isSending ? "Versturen..." : "Verstuur"}
                             </button>
                         </form>
                         {success !== null && (
-                            <p className={`mt-4 text-center ${success ? "text-green-500" : "text-red-500"}`}>
-                                {success ? "Je bericht is verzonden!" : "Er is iets misgegaan. Probeer opnieuw."}
-                            </p>
+                            <div className={`mt-4 p-3 rounded-md ${success ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700"} flex items-center`}>
+                                {success ? (
+                                    <>✅ Je bericht is verzonden! Ik neem zo snel mogelijk contact met je op.</>
+                                ) : (
+                                    <>❌ Er is iets misgegaan. Probeer opnieuw of neem contact op via e-mail.</>
+                                )}
+                            </div>
                         )}
                     </div>
                     <div className="md:w-1/2 p-8 flex flex-col justify-center">
@@ -148,13 +224,31 @@ const Contact = () => {
                         <div>
                             <h4 className="text-xl font-bold mb-4 text-accent-foreground">Sociale Media</h4>
                             <div className="flex space-x-4">
-                                <a href="https://www.linkedin.com/in/milan-snoeijink-797315292/" target="_blank" rel="noopener noreferrer" className="text-accent-foreground/80 hover:text-accent-foreground transition-colors">
+                                <a
+                                    href="https://www.linkedin.com/in/milan-snoeijink-797315292/"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-accent-foreground/80 hover:text-accent-foreground transition-colors"
+                                    aria-label="LinkedIn profiel"
+                                >
                                     <Linkedin size={24} />
                                 </a>
-                                <a href="https://github.com/milansk05" target="_blank" rel="noopener noreferrer" className="text-accent-foreground/80 hover:text-accent-foreground transition-colors">
+                                <a
+                                    href="https://github.com/milansk05"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-accent-foreground/80 hover:text-accent-foreground transition-colors"
+                                    aria-label="GitHub profiel"
+                                >
                                     <Github size={24} />
                                 </a>
-                                <a href="https://www.instagram.com/milan.sk19/" target="_blank" rel="noopener noreferrer" className="hover:text-accent-foreground transition-colors">
+                                <a
+                                    href="https://www.instagram.com/milan.sk19/"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="hover:text-accent-foreground transition-colors"
+                                    aria-label="Instagram profiel"
+                                >
                                     <Instagram size={24} />
                                 </a>
                             </div>

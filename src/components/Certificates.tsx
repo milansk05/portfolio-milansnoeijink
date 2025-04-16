@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Image from "next/image"
 import { motion } from "framer-motion"
 import { type Certificate, categorizeAndSortCertificates } from "../utils/certificateUtils"
@@ -195,10 +195,27 @@ const sortButtons: { label: string; value: string }[] = [
 const Certificates = () => {
     const [showAll, setShowAll] = useState(false)
     const [sortType, setSortType] = useState("date")
+    const [loading, setLoading] = useState(true)
+
+    useEffect(() => {
+        // Simuleer laadtijd voor data
+        const timer = setTimeout(() => setLoading(false), 500)
+        return () => clearTimeout(timer)
+    }, [])
 
     const sortedCertificates = categorizeAndSortCertificates(certificates, sortType)
     const hasMoreThanSix = sortedCertificates.length > 6
     const visibleCertificates = showAll || !hasMoreThanSix ? sortedCertificates : sortedCertificates.slice(0, 6)
+
+    if (loading) {
+        return (
+            <section id="certificaten" className="mb-20 min-h-[400px] flex flex-col items-center justify-center">
+                <h2 className="text-3xl font-bold text-center mb-2 text-foreground">Certificaten</h2>
+                <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-primary mt-10"></div>
+                <p className="text-muted-foreground mt-4">Certificaten laden...</p>
+            </section>
+        )
+    }
 
     return (
         <section id="certificaten" className="mb-20">
