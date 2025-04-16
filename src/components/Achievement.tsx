@@ -14,6 +14,9 @@ interface AchievementProps {
 const Achievement = ({ title, description, icon = "/images/achievement-icon.png", show }: AchievementProps) => {
     if (!show) return null
 
+    // Check if the icon is an emoji (simple check for non-URL format)
+    const isEmoji = !icon.startsWith('/') && !icon.startsWith('http');
+
     return (
         <motion.div
             className="fixed top-8 right-8 z-50 flex items-center gap-3 bg-gray-800/90 border-2 border-gray-900 rounded-md px-4 py-3 shadow-lg w-80"
@@ -24,13 +27,19 @@ const Achievement = ({ title, description, icon = "/images/achievement-icon.png"
         >
             {/* Achievement icon */}
             <div className="flex-shrink-0 relative w-10 h-10 bg-gradient-to-br from-amber-500 to-yellow-600 rounded-md overflow-hidden border border-yellow-700">
-                <Image
-                    src={icon}
-                    alt="Achievement Icon"
-                    width={40}
-                    height={40}
-                    className="object-contain"
-                />
+                {isEmoji ? (
+                    <div className="absolute inset-0 flex items-center justify-center text-2xl">
+                        {icon}
+                    </div>
+                ) : (
+                    <Image
+                        src={icon}
+                        alt="Achievement Icon"
+                        width={40}
+                        height={40}
+                        className="object-contain"
+                    />
+                )}
             </div>
 
             {/* Achievement text */}

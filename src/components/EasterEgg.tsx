@@ -133,16 +133,6 @@ const EasterEgg = () => {
                             <p className="text-gray-600 dark:text-gray-300 mb-4">
                                 Dit is mijn kat! De geheime bewaker van deze website.
                             </p>
-                            <button
-                                onClick={(e) => {
-                                    e.stopPropagation()
-                                    setShowEasterEgg(false)
-                                    setShowAchievement(false)
-                                }}
-                                className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition"
-                            >
-                                Terug naar de website
-                            </button>
 
                             <motion.div
                                 className="absolute top-2 right-2"
@@ -162,7 +152,7 @@ const EasterEgg = () => {
                 <Achievement
                     title="Kat Ontdekker"
                     description="Je hebt de geheime kat gevonden!"
-                    icon="/images/achievement-icon.png"
+                    icon="😸"
                     show={showAchievement}
                     onClose={() => setShowAchievement(false)}
                 />
