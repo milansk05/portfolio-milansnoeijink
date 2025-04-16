@@ -11,7 +11,7 @@ interface AchievementProps {
     onClose: () => void
 }
 
-const Achievement = ({ title, description, icon = "/images/achievement-icon.png", show, onClose }: AchievementProps) => {
+const Achievement = ({ title, description, icon = "/images/achievement-icon.png", show }: AchievementProps) => {
     if (!show) return null
 
     return (

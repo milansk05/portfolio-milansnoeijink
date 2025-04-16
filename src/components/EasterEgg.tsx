@@ -47,7 +47,7 @@ const EasterEgg = () => {
                 // Speel beide geluiden na elkaar af
                 playCombinedSounds();
 
-                // Verberg de Easter egg na 10 seconden
+                // Verberg de Easter egg na 8 seconden
                 setTimeout(() => {
                     setShowEasterEgg(false)
                     setShowAchievement(false)
@@ -56,7 +56,7 @@ const EasterEgg = () => {
                     setTimeout(() => {
                         setKonamiTriggered(false)
                     }, 1000)
-                }, 10000)
+                }, 8000) // 8 seconden
             }
         }
 
