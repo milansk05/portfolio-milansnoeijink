@@ -1,9 +1,10 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useMemo } from "react"
 import Image from "next/image"
-import { motion } from "framer-motion"
+import { motion, AnimatePresence } from "framer-motion"
 import { type Certificate, categorizeAndSortCertificates } from "../utils/certificateUtils"
+import { Search, Award, Calendar, Filter, X, ExternalLink } from "lucide-react"
 
 const certificates: Certificate[] = [
     {
@@ -183,19 +184,32 @@ const certificates: Certificate[] = [
     },
 ]
 
-const sortButtons: { label: string; value: string }[] = [
-    { label: "Alles", value: "date" },
-    { label: "Front-end", value: "frontend" },
-    { label: "Back-end", value: "backend" },
-    { label: "Fullstack", value: "fullstack" },
-    { label: "Functioneel", value: "functional" },
-    { label: "Overig", value: "other" },
+type SortButton = { label: string; value: string; icon: React.ComponentType<any> };
+
+// Custom filter buttons met iconen
+const sortButtons: SortButton[] = [
+    { label: "Alles", value: "date", icon: Filter },
+    { label: "Front-end", value: "frontend", icon: Award },
+    { label: "Back-end", value: "backend", icon: Award },
+    { label: "Fullstack", value: "fullstack", icon: Award },
+    { label: "Functioneel", value: "functional", icon: Award },
+    { label: "Overig", value: "other", icon: Award },
 ]
 
-const Certificates = () => {
+// Hulpfunctie om certificaat categorieën te tellen
+const countCertificatesByCategory = (certs: Certificate[]) => {
+    return certs.reduce((counts, cert) => {
+        counts[cert.category] = (counts[cert.category] || 0) + 1;
+        return counts;
+    }, {} as Record<string, number>);
+}
+
+const ImprovedCertificates = () => {
     const [showAll, setShowAll] = useState(false)
     const [sortType, setSortType] = useState("date")
     const [loading, setLoading] = useState(true)
+    const [searchTerm, setSearchTerm] = useState("")
+    const [selectedCertificate, setSelectedCertificate] = useState<Certificate | null>(null)
 
     useEffect(() => {
         // Simuleer laadtijd voor data
@@ -203,9 +217,114 @@ const Certificates = () => {
         return () => clearTimeout(timer)
     }, [])
 
-    const sortedCertificates = categorizeAndSortCertificates(certificates, sortType)
-    const hasMoreThanSix = sortedCertificates.length > 6
-    const visibleCertificates = showAll || !hasMoreThanSix ? sortedCertificates : sortedCertificates.slice(0, 6)
+    // Bereken categorie-aantallen
+    const categoryCounts = useMemo(() =>
+        countCertificatesByCategory(certificates), []);
+
+    // Filter certificaten op zoekopdracht en sorteertype
+    const filteredCertificates = useMemo(() => {
+        let filtered = certificates;
+
+        // Zoekfilter toepassen
+        if (searchTerm) {
+            const lowerSearchTerm = searchTerm.toLowerCase();
+            filtered = filtered.filter(cert =>
+                cert.title.toLowerCase().includes(lowerSearchTerm) ||
+                cert.category.toLowerCase().includes(lowerSearchTerm)
+            );
+        }
+
+        // Categorie filter toepassen
+        return categorizeAndSortCertificates(filtered, sortType);
+    }, [searchTerm, sortType]);
+
+    const hasMoreThanSix = filteredCertificates.length > 6
+    const visibleCertificates = showAll || !hasMoreThanSix ? filteredCertificates : filteredCertificates.slice(0, 6)
+
+    // Groepeer certificaten per jaar
+    const certificatesByYear = useMemo(() => {
+        return visibleCertificates.reduce((groups, cert) => {
+            const year = new Date(cert.date).getFullYear().toString();
+            if (!groups[year]) groups[year] = [];
+            groups[year].push(cert);
+            return groups;
+        }, {} as Record<string, Certificate[]>);
+    }, [visibleCertificates]);
+
+    // Jaartallen in omgekeerde volgorde (nieuwste eerst)
+    const years = useMemo(() =>
+        Object.keys(certificatesByYear).sort((a, b) => parseInt(b) - parseInt(a)),
+        [certificatesByYear]
+    );
+
+    // Details modal voor certificaten
+    const renderCertificateModal = () => {
+        if (!selectedCertificate) return null;
+
+        return (
+            <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+                <motion.div
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.9 }}
+                    className="bg-card rounded-xl p-6 max-w-md w-full shadow-xl text-card-foreground"
+                >
+                    <div className="flex justify-between items-center mb-4">
+                        <h3 className="text-xl font-bold text-accent-foreground">Certificaat Details</h3>
+                        <button
+                            onClick={() => setSelectedCertificate(null)}
+                            className="p-1 rounded-full hover:bg-secondary transition-colors"
+                        >
+                            <X size={20} />
+                        </button>
+                    </div>
+
+                    <div className="flex justify-center mb-6">
+                        <div className="w-32 h-32 bg-white rounded-lg p-2 flex items-center justify-center shadow-md">
+                            <Image
+                                src="/images/BIT-Academy-Logo-1024x1024.webp"
+                                alt="Bit Academy Logo"
+                                width={100}
+                                height={100}
+                                className="object-contain"
+                            />
+                        </div>
+                    </div>
+
+                    <h4 className="text-lg font-bold text-center mb-4 text-accent-foreground">{selectedCertificate.title}</h4>
+
+                    <div className="space-y-4">
+                        <div className="flex items-center gap-2 text-accent-foreground/80">
+                            <Calendar size={18} />
+                            <span>Behaald op {selectedCertificate.date}</span>
+                        </div>
+
+                        <div className="flex items-center gap-2 text-accent-foreground/80">
+                            <Award size={18} />
+                            <span className="capitalize">Categorie: {selectedCertificate.category}</span>
+                        </div>
+
+                        <div className="flex flex-col gap-1 text-accent-foreground/80">
+                            <p className="text-sm">Certificaat Code:</p>
+                            <code className="bg-secondary p-2 rounded text-xs font-mono break-all">{selectedCertificate.code}</code>
+                        </div>
+                    </div>
+
+                    <div className="mt-6">
+                        <a
+                            href={selectedCertificate.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center justify-center gap-2 w-full bg-primary text-primary-foreground py-2 rounded-lg hover:bg-primary/90 transition-colors"
+                        >
+                            <ExternalLink size={18} />
+                            Verifiëren op Nexed
+                        </a>
+                    </div>
+                </motion.div>
+            </div>
+        );
+    };
 
     if (loading) {
         return (
@@ -221,9 +340,66 @@ const Certificates = () => {
         <section id="certificaten" className="mb-20">
             <h2 className="text-3xl font-bold text-center mb-2 text-foreground">Certificaten</h2>
             <p className="text-center text-muted-foreground mb-8">
-                Klik op een certificaat om de echtheid te verifiëren op de officiële website
+                Klik op een certificaat om details te bekijken en om de echtheid te verifiëren
             </p>
-            <div className="flex flex-wrap justify-center gap-2 mb-6">
+
+            {/* Statistieken en categorieën */}
+            <div className="mb-8 bg-card rounded-lg p-6 shadow-lg">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {/* Statistieken */}
+                    <div>
+                        <h3 className="text-lg font-semibold mb-4 flex items-center text-accent-foreground">
+                            <Award size={20} className="mr-2 text-primary" />
+                            Certificaten Overzicht
+                        </h3>
+                        <div className="grid grid-cols-3 gap-4">
+                            <div className="bg-secondary/50 rounded-lg p-4 text-center">
+                                <p className="text-2xl font-bold text-accent-foreground">{certificates.length}</p>
+                                <p className="text-xs text-muted-foreground">Totaal</p>
+                            </div>
+                            <div className="bg-secondary/50 rounded-lg p-4 text-center">
+                                <p className="text-2xl font-bold text-accent-foreground">{categoryCounts.frontend || 0}</p>
+                                <p className="text-xs text-muted-foreground">Frontend</p>
+                            </div>
+                            <div className="bg-secondary/50 rounded-lg p-4 text-center">
+                                <p className="text-2xl font-bold text-accent-foreground">{categoryCounts.backend || 0}</p>
+                                <p className="text-xs text-muted-foreground">Backend</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Filter en zoeken */}
+                    <div>
+                        <h3 className="text-lg font-semibold mb-4 flex items-center text-accent-foreground">
+                            <Filter size={20} className="mr-2 text-primary" />
+                            Filteren en Zoeken
+                        </h3>
+
+                        {/* Zoekbalk */}
+                        <div className="relative mb-4">
+                            <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
+                            <input
+                                type="text"
+                                placeholder="Zoek op titel of categorie..."
+                                value={searchTerm}
+                                onChange={(e) => setSearchTerm(e.target.value)}
+                                className="w-full pl-10 pr-10 py-2 bg-secondary rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+                            />
+                            {searchTerm && (
+                                <button
+                                    onClick={() => setSearchTerm("")}
+                                    className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                                >
+                                    <X size={18} />
+                                </button>
+                            )}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {/* Filter knoppen */}
+            <div className="flex flex-wrap justify-center gap-2 mb-8">
                 {sortButtons.map((button) => (
                     <button
                         key={button.value}
@@ -231,59 +407,131 @@ const Certificates = () => {
                             setSortType(button.value)
                             setShowAll(false) // Reset "Toon meer" als categorie verandert
                         }}
-                        className={`px-4 py-2 rounded-full ${sortType === button.value
-                            ? "bg-primary text-primary-foreground"
-                            : "bg-secondary text-secondary-foreground"
+                        className={`flex items-center gap-2 px-4 py-2 rounded-full transition-all ${sortType === button.value
+                                ? "bg-primary text-primary-foreground shadow-md"
+                                : "bg-secondary text-secondary-foreground hover:bg-secondary/80"
                             }`}
                     >
+                        <button.icon size={16} />
                         {button.label}
+                        {button.value !== "date" && categoryCounts[button.value] && (
+                            <span className="ml-1 text-xs px-2 py-0.5 rounded-full bg-secondary/20 backdrop-blur-sm">
+                                {categoryCounts[button.value]}
+                            </span>
+                        )}
                     </button>
                 ))}
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {visibleCertificates.map((cert, index) => (
-                    <motion.a
-                        key={cert.code}
-                        href={cert.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="bg-card hover:bg-card rounded-lg shadow-lg flex items-center gap-5 p-4 transition-colors text-card-foreground"
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.5, delay: index * 0.05 }}
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.9 }}
-                        viewport={{ once: true }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                    >
-                        <Image
-                            src="/images/BIT-Academy-Logo-1024x1024.webp"
-                            alt="Bit Academy Logo"
-                            width={96}
-                            height={60}
-                            className="rounded-lg bg-white"
-                        />
-                        <div>
-                            <p className="font-bold text-accent-foreground">{cert.title}</p>
-                            <p className="text-sm text-accent-foreground/80">Behaald op {cert.date}</p>
-                            <p className="text-sm text-accent-foreground/80">Code: {cert.code}</p>
-                            <p className="text-sm text-accent-foreground/80 capitalize">Categorie: {cert.category}</p>
+
+            {/* Geen resultaten bericht */}
+            {visibleCertificates.length === 0 && (
+                <div className="text-center py-12 bg-card rounded-lg shadow-md">
+                    <Image
+                        src="/images/BIT-Academy-Logo-1024x1024.webp"
+                        alt="Bit Academy Logo"
+                        width={80}
+                        height={80}
+                        className="mx-auto mb-4 opacity-20"
+                    />
+                    <h3 className="text-xl font-semibold mb-2 text-accent-foreground">Geen certificaten gevonden</h3>
+                    <p className="text-muted-foreground">
+                        {searchTerm
+                            ? `Geen certificaten gevonden voor "${searchTerm}".`
+                            : `Geen certificaten in de categorie "${sortButtons.find(b => b.value === sortType)?.label}".`}
+                    </p>
+                </div>
+            )}
+
+            {/* Certificaten gegroepeerd per jaar */}
+            {visibleCertificates.length > 0 && (
+                <motion.div
+                    className="space-y-8"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.5 }}
+                >
+                    {years.map(year => (
+                        <div key={year} className="mb-8">
+                            <div className="flex items-center mb-4">
+                                <h3 className="text-xl font-bold text-accent-foreground">{year}</h3>
+                                <div className="ml-4 h-px flex-grow bg-border"></div>
+                                <span className="ml-2 bg-secondary text-secondary-foreground text-sm px-3 py-1 rounded-full">
+                                    {certificatesByYear[year].length} certificaten
+                                </span>
+                            </div>
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                {certificatesByYear[year].map((cert, index) => (
+                                    <motion.div
+                                        key={cert.code}
+                                        initial={{ opacity: 0, y: 20 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        transition={{ duration: 0.3, delay: index * 0.05 }}
+                                        className="group cursor-pointer"
+                                        onClick={() => setSelectedCertificate(cert)}
+                                    >
+                                        <div className="bg-card hover:bg-card/80 rounded-lg shadow-md overflow-hidden transition-all duration-300 group-hover:shadow-lg group-hover:translate-y-[-2px] border border-transparent group-hover:border-primary/20">
+                                            <div className="p-4 flex items-center gap-4">
+                                                <div className="flex-shrink-0 w-12 h-12 bg-white rounded-md p-1 flex items-center justify-center shadow-sm group-hover:shadow">
+                                                    <Image
+                                                        src="/images/BIT-Academy-Logo-1024x1024.webp"
+                                                        alt="Bit Academy Logo"
+                                                        width={40}
+                                                        height={40}
+                                                        className="object-contain"
+                                                    />
+                                                </div>
+
+                                                <div className="flex-grow min-w-0">
+                                                    <h4 className="font-medium text-accent-foreground truncate group-hover:text-primary transition-colors">{cert.title}</h4>
+                                                    <div className="flex flex-wrap items-center gap-2 mt-1">
+                                                        <span className="text-xs text-muted-foreground">{cert.date}</span>
+                                                        <span className="inline-block h-1 w-1 rounded-full bg-muted-foreground"></span>
+                                                        <span className="text-xs px-2 py-0.5 rounded-full bg-primary/10 text-primary capitalize">
+                                                            {cert.category}
+                                                        </span>
+                                                    </div>
+                                                </div>
+
+                                                <div className="flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity">
+                                                    <ExternalLink size={16} className="text-primary" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </motion.div>
+                                ))}
+                            </div>
                         </div>
-                    </motion.a>
-                ))}
-            </div>
+                    ))}
+                </motion.div>
+            )}
+
+            {/* Toon meer/minder knop */}
             {hasMoreThanSix && (
-                <div className="text-center mt-8">
+                <div className="text-center mt-10">
                     <button
                         onClick={() => setShowAll(!showAll)}
-                        className="bg-primary text-primary-foreground px-6 py-2 rounded-full hover:bg-primary/90 transition-colors"
+                        className="group relative px-6 py-2 overflow-hidden rounded-full bg-primary text-primary-foreground hover:bg-primary/90 transition-colors"
                     >
-                        {showAll ? "Toon minder" : "Toon meer"}
+                        <span className="relative z-10 flex items-center gap-2">
+                            {showAll ? "Toon minder" : `Toon alle ${filteredCertificates.length} certificaten`}
+                        </span>
+                        <motion.div
+                            className="absolute inset-0 bg-gradient-to-r from-primary/0 via-primary-foreground/20 to-primary/0"
+                            initial={{ x: "-100%" }}
+                            animate={{ x: "100%" }}
+                            transition={{ repeat: Infinity, duration: 1.5, ease: "linear" }}
+                        />
                     </button>
                 </div>
             )}
+
+            {/* Certificate Detail Modal */}
+            <AnimatePresence>
+                {selectedCertificate && renderCertificateModal()}
+            </AnimatePresence>
         </section>
     )
 }
 
-export default Certificates
+export default ImprovedCertificates

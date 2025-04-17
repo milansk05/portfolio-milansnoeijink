@@ -12,11 +12,13 @@ type DarkModeContextType = {
 const DarkModeContext = createContext<DarkModeContextType | undefined>(undefined)
 
 export const DarkModeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    const [darkMode, setDarkMode] = useState(false)
+    const [darkMode, setDarkMode] = useState(true) // Initialiseer op true voor standaard dark mode
     const [isTransitioning, setIsTransitioning] = useState(false)
 
     useEffect(() => {
-        const isDarkMode = localStorage.getItem("darkMode") === "true"
+        const savedDarkMode = localStorage.getItem("darkMode")
+        const isDarkMode = savedDarkMode !== null ? savedDarkMode === "true" : true
+
         setDarkMode(isDarkMode)
         document.documentElement.classList.toggle("dark", isDarkMode)
     }, [])

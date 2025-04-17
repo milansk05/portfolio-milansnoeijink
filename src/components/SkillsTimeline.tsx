@@ -26,14 +26,14 @@ const timeline: TimelineEvent[] = [
         description: "Eerste stappen in backend-development met PHP en MySQL. Leerde database-ontwerp en -management, evenals hoe ik full-stack webapplicaties kon bouwen."
     },
     {
-        year: "2023-2024",
+        year: "2024",
         event: "Moderne frameworks",
         description: "Begon met het gebruik van moderne frameworks zoals React en Next.js. Verbeterde mijn JavaScript-vaardigheden en leerde TypeScript voor type-veilige code."
     },
     {
         year: "2024-2025",
         event: "Professionele groei",
-        description: "Stage bij HQ-Online waar ik werkte aan echte projecten. Leerde geavanceerde concepten zoals unit testing, CI/CD en teamwork in een professionele omgeving."
+        description: "Stage bij HQ-Online waar ik werkte met WordPress en geavanceerd PHP (inclusief het maken van plugins). Leerde hoe het is om in een professionele bedrijfsomgeving te werken en in teamverband projecten te voltooien."
     },
     {
         year: "2025",

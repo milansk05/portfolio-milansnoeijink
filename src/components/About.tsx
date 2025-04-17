@@ -7,48 +7,117 @@ const About = () => {
     return (
         <motion.section
             id="overmij"
-            className="mb-20 p-10 bg-card rounded-lg shadow text-card-foreground flex flex-col items-center text-center"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
+            className="mb-20 relative overflow-hidden"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ duration: 0.7 }}
             viewport={{ once: true }}
         >
-            <div className="flex flex-col md:flex-row items-center justify-center gap-8 w-full max-w-4xl">
-                <div className="w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden border-2 shadow-xl">
-                    <Image
-                        src="/images/profielfoto.jpg"
-                        alt="Milan Snoeijink"
-                        width={160}
-                        height={160}
-                        className="object-cover"
+            {/* Background decorative elements */}
+            <div className="absolute -right-20 -top-20 w-64 h-64 bg-primary/5 rounded-full blur-3xl"></div>
+            <div className="absolute -left-20 -bottom-20 w-64 h-64 bg-primary/5 rounded-full blur-3xl"></div>
+
+            {/* Content container */}
+            <div className="relative bg-card rounded-xl shadow-lg p-8 md:p-10">
+                <div className="flex flex-col md:flex-row items-center gap-8 md:gap-12">
+                    {/* Profile image wrapper with animation */}
+                    <motion.div
+                        className="relative"
+                        initial={{ scale: 0.9, opacity: 0 }}
+                        whileInView={{ scale: 1, opacity: 1 }}
+                        transition={{ duration: 0.5, delay: 0.2 }}
+                        viewport={{ once: true }}
+                    >
+                        <div className="relative w-40 h-40 md:w-48 md:h-48 rounded-xl overflow-hidden shadow-xl">
+                            <Image
+                                src="/images/profielfoto.jpg"
+                                alt="Milan Snoeijink"
+                                fill
+                                className="object-cover"
+                                sizes="(max-width: 768px) 160px, 192px"
+                                priority
+                            />
+                        </div>
+
+                        {/* Decorative element behind the image */}
+                        <div className="absolute -z-10 -bottom-3 -right-3 w-40 h-40 md:w-48 md:h-48 bg-primary/10 rounded-xl"></div>
+                    </motion.div>
+
+                    {/* Text content */}
+                    <div className="flex-1">
+                        <motion.div
+                            initial={{ y: 20, opacity: 0 }}
+                            whileInView={{ y: 0, opacity: 1 }}
+                            transition={{ duration: 0.5, delay: 0.3 }}
+                            viewport={{ once: true }}
+                        >
+                            <div className="inline-block mb-2 px-3 py-1 bg-primary/10 rounded-full">
+                                <h2 className="text-lg font-medium text-primary">Over mij</h2>
+                            </div>
+                            <h3 className="text-3xl font-bold mb-4 text-accent-foreground">Milan Snoeijink</h3>
+                            <div className="text-accent-foreground/80 space-y-4">
+                                <p>
+                                    Hey! Ik ben Milan Snoeijink, een gedreven derdejaars student Software Development aan de Bit Academy in Groningen. Mijn passie ligt bij het ontwikkelen van efficiënte, creatieve oplossingen voor complexe problemen.
+                                </p>
+                                <p>
+                                    Ik heb ervaring met diverse programmeertalen en frameworks en werk graag aan innovatieve projecten. Nieuwsgierig? Laten we connecten!
+                                </p>
+                            </div>
+                        </motion.div>
+                    </div>
+                </div>
+
+                {/* Stats section */}
+                <motion.div
+                    className="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6"
+                    initial={{ y: 30, opacity: 0 }}
+                    whileInView={{ y: 0, opacity: 1 }}
+                    transition={{ duration: 0.6, delay: 0.5 }}
+                    viewport={{ once: true }}
+                >
+                    <StatsCard
+                        number="3+"
+                        text="Jaar ervaring in softwareontwikkeling"
+                        delay={0.1}
                     />
-                </div>
-
-                <div className="max-w-2xl text-left">
-                    <h2 className="text-3xl font-bold mb-4 text-accent-foreground">Over mij</h2>
-                    <p className="text-accent-foreground">
-                        Hey! Ik ben Milan Snoeijink, een gedreven derdejaars student Software Development aan de Bit Academy in Groningen. Mijn passie ligt bij het ontwikkelen van efficiënte, creatieve oplossingen voor complexe problemen.
-                        <br /><br />
-                        Ik heb ervaring met diverse programmeertalen en frameworks en werk graag aan innovatieve projecten. Nieuwsgierig? Laten we connecten!
-                    </p>
-                </div>
-            </div>
-
-            <div className="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
-                <div className="p-4 bg-gray-50 dark:bg-muted rounded-lg shadow-md">
-                    <h3 className="text-2xl font-bold text-accent-foreground">3+ jaar</h3>
-                    <p className="text-sm text-muted-foreground">Ervaring in softwareontwikkeling</p>
-                </div>
-                <div className="p-4 bg-gray-50 dark:bg-muted rounded-lg shadow-md">
-                    <h3 className="text-2xl font-bold text-accent-foreground">10+ projecten</h3>
-                    <p className="text-sm text-muted-foreground">(Succesvol) afgerond</p>
-                </div>
-                <div className="p-4 bg-gray-50 dark:bg-muted rounded-lg shadow-md">
-                    <h3 className="text-2xl font-bold text-accent-foreground">Frontend & Backend</h3>
-                    <p className="text-sm text-muted-foreground">Full-stack ervaring</p>
-                </div>
+                    <StatsCard
+                        number="10+"
+                        text="(Succesvol) afgeronde projecten"
+                        delay={0.2}
+                    />
+                    <StatsCard
+                        number="Frontend & Backend"
+                        text="Full-stack ervaring"
+                        delay={0.3}
+                    />
+                </motion.div>
             </div>
         </motion.section>
+    );
+};
+
+interface StatsCardProps {
+    number: string;
+    text: string;
+    delay?: number;
+}
+
+const StatsCard = ({ number, text, delay = 0 }: StatsCardProps) => {
+    return (
+        <motion.div
+            className="relative overflow-hidden p-6 rounded-lg bg-gradient-to-br from-background to-muted border border-border shadow-md group"
+            whileHover={{ y: -5, transition: { duration: 0.2 } }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, delay }}
+            viewport={{ once: true }}
+        >
+            {/* Background gradient animation on hover */}
+            <div className="absolute inset-0 bg-gradient-to-r from-primary/10 via-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+
+            <h3 className="text-2xl font-bold text-accent-foreground mb-1">{number}</h3>
+            <p className="text-sm text-muted-foreground">{text}</p>
+        </motion.div>
     );
 };
 
