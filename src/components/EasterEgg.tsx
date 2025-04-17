@@ -122,7 +122,7 @@ const EasterEgg = () => {
                         >
                             <div className="relative w-64 h-64 mx-auto mb-4 overflow-hidden rounded-lg">
                                 <Image
-                                    src="/images/cat.jpg" // Plaats hier een foto van je kat
+                                    src="/images/cat.jpg"
                                     alt="Mijn kat"
                                     fill
                                     style={{ objectFit: 'cover' }}

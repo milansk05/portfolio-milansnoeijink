@@ -21,14 +21,14 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children, image }
     }, [])
 
     useEffect(() => {
-        // Handle scrolling
+        // Afhandeling van scrollen
         if (isOpen) {
             document.body.style.overflow = "hidden"
         } else {
             document.body.style.overflow = "unset"
         }
 
-        // Handle escape key
+        // Afhandeling van escape toets
         const handleEsc = (e: KeyboardEvent) => {
             if (e.key === 'Escape') onClose()
         }
@@ -50,7 +50,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children, image }
         <AnimatePresence>
             {isOpen && (
                 <>
-                    {/* Backdrop overlay with blur effect */}
+                    {/* Achtergrond overlay met blur effect */}
                     <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
@@ -82,7 +82,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children, image }
                                 }
                                 flex flex-col`}
                         >
-                            {/* Header with title and close buttons */}
+                            {/* Header met titel en sluitknoppen */}
                             <div className="flex justify-between items-center p-4 md:p-6 border-b border-border bg-gradient-to-r from-card to-secondary/30">
                                 <div className="flex items-center space-x-3">
                                     <div className="h-8 w-8 rounded-full overflow-hidden bg-primary/10 flex items-center justify-center">
@@ -107,7 +107,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children, image }
                                 </div>
 
                                 <div className="flex items-center space-x-2">
-                                    {/* Fullscreen toggle button */}
+                                    {/* Volledig scherm schakelknop */}
                                     <button
                                         onClick={toggleFullscreen}
                                         className="text-muted-foreground hover:text-foreground transition-colors h-8 w-8 rounded-full flex items-center justify-center hover:bg-secondary"
@@ -116,7 +116,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children, image }
                                         {isFullscreen ? <Minimize2 size={18} /> : <Maximize2 size={18} />}
                                     </button>
 
-                                    {/* Close button */}
+                                    {/* Sluitknop */}
                                     <button
                                         onClick={onClose}
                                         className="text-muted-foreground hover:text-foreground transition-colors h-8 w-8 rounded-full flex items-center justify-center hover:bg-secondary"
@@ -127,12 +127,12 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children, image }
                                 </div>
                             </div>
 
-                            {/* Content area with scrolling */}
+                            {/* Inhoudsgebied met scrolling */}
                             <div className="flex-grow overflow-y-auto p-4 md:p-6 scrollbar-thin">
                                 {children}
                             </div>
 
-                            {/* Footer with action buttons */}
+                            {/* Footer met actieknoppen */}
                             <div className="p-4 md:p-6 border-t border-border flex justify-between items-center">
                                 <div className="text-xs text-muted-foreground">
                                     <kbd className="px-2 py-1 rounded bg-muted text-muted-foreground border border-border">ESC</kbd>

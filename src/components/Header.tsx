@@ -9,7 +9,7 @@ import { smoothScroll } from "@/utils/smoothScroll"
 import DarkModeToggle from "./DarkModeToggle"
 import { motion } from "framer-motion"
 import { Code, Home, User, Briefcase, FileText, LayoutGrid, Mail } from "lucide-react"
-import Image from "next/image" // Add import for next/image
+import Image from "next/image"
 
 const Header = () => {
     const pathname = usePathname()

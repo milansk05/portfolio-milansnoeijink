@@ -7,7 +7,7 @@ import Modal from "@/components/Modal"
 import TechnologyBadge from "@/components/TechnologyBadge"
 import { Github, ExternalLink, ArrowRight } from "lucide-react"
 
-// Project type definition
+// Project type definitie
 type ProjectCategory = "all" | "web" | "mobile" | "design" | "other"
 
 interface Project {
@@ -26,7 +26,7 @@ interface Project {
     }
 }
 
-// Project data
+// Project gegevens
 const projects: Project[] = [
     {
         id: 1,
@@ -106,13 +106,13 @@ const Portfolio = () => {
         return () => clearTimeout(timer)
     }, [])
 
-    // Filter projects based on category and hide "Komt binnenkort..." projects unless toggled
+    // Filter projecten op basis van categorie en verberg "Komt binnenkort..." projecten tenzij ingeschakeld
     const filteredProjects = projects
         .filter(project => {
-            // First filter by category
+            // Filter eerst op categorie
             const matchesCategory = activeCategory === "all" || project.category === activeCategory;
 
-            // Then filter empty projects
+            // Filter vervolgens lege projecten
             if (!showEmptyProjects && project.title.includes("Komt binnenkort")) {
                 return false;
             }
@@ -158,7 +158,7 @@ const Portfolio = () => {
                     ))}
                 </div>
 
-                {/* Toggle for showing placeholder projects */}
+                {/* Schakelknop voor het tonen van toekomstige projecten */}
                 <button
                     onClick={() => setShowEmptyProjects(!showEmptyProjects)}
                     className="text-sm flex items-center gap-1 text-muted-foreground hover:text-foreground transition-colors"
@@ -229,7 +229,7 @@ const Portfolio = () => {
                                     </div>
                                 )}
 
-                                {/* Category badge */}
+                                {/* Categorie label */}
                                 <div className="absolute top-2 right-2">
                                     <span className="inline-block px-3 py-1 text-xs font-medium rounded-full bg-black/70 text-white">
                                         {filterCategories.find(cat => cat.value === project.category)?.label || project.category}
@@ -293,7 +293,7 @@ const Portfolio = () => {
             >
                 {selectedProject && selectedProject.details && (
                     <div className="space-y-6">
-                        {/* Main project image */}
+                        {/* Project hoofdafbeelding */}
                         {selectedProject.image && (
                             <div className="relative h-56 md:h-72 w-full rounded-lg overflow-hidden mb-2">
                                 <Image
@@ -305,7 +305,7 @@ const Portfolio = () => {
                             </div>
                         )}
 
-                        {/* External links */}
+                        {/* Externe links */}
                         {(selectedProject.repoUrl || selectedProject.liveUrl) && (
                             <div className="flex flex-wrap gap-3 mb-4">
                                 {selectedProject.repoUrl && (

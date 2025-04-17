@@ -12,7 +12,6 @@ export function AppSidebar() {
     const [mounted, setMounted] = useState(false)
     const sidebarContext = useContext(SidebarContext)
 
-    // Hydration fix
     useEffect(() => {
         setMounted(true)
     }, [])

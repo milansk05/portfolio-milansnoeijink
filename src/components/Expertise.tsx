@@ -65,13 +65,13 @@ const Expertise = () => {
                         viewport={{ once: true }}
                         whileHover={{ y: -5 }}
                     >
-                        {/* Background accent */}
+                        {/* Achtergrond accent */}
                         <div
                             className="absolute top-0 left-0 w-full h-1 opacity-70"
                             style={{ background: item.background }}
                         />
 
-                        {/* Icon container with gradient background */}
+                        {/* Icoon container met gradient achtergrond */}
                         <div className="relative mb-4">
                             <div
                                 className="w-16 h-16 rounded-full flex items-center justify-center mb-4"
@@ -92,7 +92,7 @@ const Expertise = () => {
                             {item.description}
                         </p>
 
-                        {/* Corner decoration */}
+                        {/* Hoek decoratie */}
                         <div
                             className="absolute bottom-0 right-0 w-12 h-12 -mb-6 -mr-6 rounded-full opacity-10 group-hover:opacity-20 transition-opacity"
                             style={{ background: item.background }}

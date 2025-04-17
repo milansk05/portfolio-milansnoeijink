@@ -14,7 +14,7 @@ interface AchievementProps {
 const Achievement = ({ title, description, icon = "/images/achievement-icon.png", show }: AchievementProps) => {
     if (!show) return null
 
-    // Check if the icon is an emoji (simple check for non-URL format)
+    // Controleer of het pictogram een emoji is (eenvoudige controle voor niet-URL formaat)
     const isEmoji = !icon.startsWith('/') && !icon.startsWith('http');
 
     return (
@@ -25,7 +25,7 @@ const Achievement = ({ title, description, icon = "/images/achievement-icon.png"
             exit={{ x: 100, opacity: 0 }}
             transition={{ type: "spring", bounce: 0.4 }}
         >
-            {/* Achievement icon */}
+            {/* Achievement icoon */}
             <div className="flex-shrink-0 relative w-10 h-10 bg-gradient-to-br from-amber-500 to-yellow-600 rounded-md overflow-hidden border border-yellow-700">
                 {isEmoji ? (
                     <div className="absolute inset-0 flex items-center justify-center text-2xl">
@@ -42,14 +42,14 @@ const Achievement = ({ title, description, icon = "/images/achievement-icon.png"
                 )}
             </div>
 
-            {/* Achievement text */}
+            {/* Achievement tekst */}
             <div className="flex-grow">
                 <p className="text-yellow-300 text-sm font-bold mb-1">Achievement Unlocked!</p>
                 <p className="text-white font-bold text-base leading-tight">{title}</p>
                 <p className="text-gray-300 text-xs">{description}</p>
             </div>
 
-            {/* Yellow shine animation */}
+            {/* Gele glans animatie */}
             <motion.div
                 className="absolute inset-0 bg-gradient-to-r from-transparent via-yellow-400/20 to-transparent pointer-events-none"
                 initial={{ x: -200 }}

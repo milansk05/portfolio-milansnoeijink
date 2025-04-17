@@ -1,6 +1,6 @@
 import React from 'react'
 import { motion } from 'framer-motion'
-import Image from 'next/image' // Add import for Next.js Image component
+import Image from 'next/image'
 
 interface TechnologyBadgeProps {
     name: string
@@ -8,7 +8,7 @@ interface TechnologyBadgeProps {
     iconPath?: string
 }
 
-// Map technology names to appropriate colors
+// Koppel technologieën aan passende kleuren
 const getTechColor = (techName: string): { bg: string, text: string } => {
     const techColors: Record<string, { bg: string, text: string }> = {
         "React": { bg: "bg-blue-100 dark:bg-blue-900/50", text: "text-blue-800 dark:text-blue-300" },
@@ -34,7 +34,7 @@ const getTechColor = (techName: string): { bg: string, text: string } => {
         "EmailJS": { bg: "bg-yellow-100 dark:bg-yellow-900/50", text: "text-yellow-800 dark:text-yellow-300" },
     }
 
-    // Return color based on tech name, or default color if not found
+    // Geef kleur terug op basis van de technologienaam, of standaardkleur indien niet gevonden
     return techColors[techName] || { bg: "bg-gray-100 dark:bg-gray-800", text: "text-gray-800 dark:text-gray-200" }
 }
 

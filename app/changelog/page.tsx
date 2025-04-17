@@ -58,7 +58,7 @@ const Changelog = () => {
     }, [])
 
     useEffect(() => {
-        // Filter logic based on search term and active filters
+        // Filterlogica op basis van zoekterm en actieve filters
         let results = [...commits]
 
         if (searchTerm) {
@@ -153,7 +153,7 @@ const Changelog = () => {
                         </div>
                     </div>
 
-                    {/* Search and filter bar */}
+                    {/* Zoek- en filterbalk */}
                     {!loading && !error && (
                         <motion.div
                             initial={{ opacity: 0, y: 20 }}

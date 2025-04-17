@@ -13,14 +13,14 @@ const About = () => {
             transition={{ duration: 0.7 }}
             viewport={{ once: true }}
         >
-            {/* Background decorative elements */}
+            {/* Decoratieve elementen op de achtergrond */}
             <div className="absolute -right-20 -top-20 w-64 h-64 bg-primary/5 rounded-full blur-3xl"></div>
             <div className="absolute -left-20 -bottom-20 w-64 h-64 bg-primary/5 rounded-full blur-3xl"></div>
 
-            {/* Content container */}
+            {/* Container voor inhoud */}
             <div className="relative bg-card rounded-xl shadow-lg p-8 md:p-10">
                 <div className="flex flex-col md:flex-row items-center gap-8 md:gap-12">
-                    {/* Profile image wrapper with animation */}
+                    {/* Profielfoto wrapper met animatie */}
                     <motion.div
                         className="relative"
                         initial={{ scale: 0.9, opacity: 0 }}
@@ -39,11 +39,11 @@ const About = () => {
                             />
                         </div>
 
-                        {/* Decorative element behind the image */}
+                        {/* Decoratief element achter de afbeelding */}
                         <div className="absolute -z-10 -bottom-3 -right-3 w-40 h-40 md:w-48 md:h-48 bg-primary/10 rounded-xl"></div>
                     </motion.div>
 
-                    {/* Text content */}
+                    {/* Tekstinhoud */}
                     <div className="flex-1">
                         <motion.div
                             initial={{ y: 20, opacity: 0 }}
@@ -67,7 +67,7 @@ const About = () => {
                     </div>
                 </div>
 
-                {/* Stats section */}
+                {/* Statistieken sectie */}
                 <motion.div
                     className="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6"
                     initial={{ y: 30, opacity: 0 }}
@@ -112,7 +112,7 @@ const StatsCard = ({ number, text, delay = 0 }: StatsCardProps) => {
             transition={{ duration: 0.3, delay }}
             viewport={{ once: true }}
         >
-            {/* Background gradient animation on hover */}
+            {/* Achtergrond gradiënt animatie bij hover */}
             <div className="absolute inset-0 bg-gradient-to-r from-primary/10 via-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 
             <h3 className="text-2xl font-bold text-accent-foreground mb-1">{number}</h3>

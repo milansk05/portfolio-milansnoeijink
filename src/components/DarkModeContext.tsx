@@ -30,7 +30,6 @@ export const DarkModeProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         localStorage.setItem("darkMode", newDarkMode.toString())
         document.documentElement.classList.toggle("dark", newDarkMode)
 
-        // Reduced from 1000ms to 400ms to match the other transition timing
         setTimeout(() => {
             setIsTransitioning(false)
         }, 400)

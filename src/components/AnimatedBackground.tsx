@@ -17,9 +17,9 @@ const AnimatedBackground = () => {
     return (
         <div className="fixed inset-0 w-full h-full -z-10 overflow-hidden pointer-events-none">
             {darkMode ? (
-                // Night sky elements for dark mode
+                // Nachthemel elementen voor donkere modus
                 <>
-                    {/* Twinkling stars */}
+                    {/* Twinkelende sterren */}
                     {Array.from({ length: 50 }).map((_, i) => (
                         <motion.div
                             key={`star-${i}`}
@@ -43,7 +43,7 @@ const AnimatedBackground = () => {
                         />
                     ))}
 
-                    {/* Occasional shooting stars */}
+                    {/* Incidentele vallende sterren */}
                     {Array.from({ length: 3 }).map((_, i) => (
                         <motion.div
                             key={`shooting-star-${i}`}
@@ -68,16 +68,16 @@ const AnimatedBackground = () => {
                         />
                     ))}
 
-                    {/* Subtle dark blue gradient for night sky effect */}
+                    {/* Subtiele donkerblauwe gradiënt voor nachtlucht effect */}
                     <div className="absolute inset-0 bg-gradient-to-b from-blue-950/20 to-transparent pointer-events-none" />
                 </>
             ) : (
                 // Light mode effects
                 <>
-                    {/* Subtle sun rays in corners */}
+                    {/* Subtiele zonnestralen in de hoeken */}
                     <div className="absolute -top-20 -right-20 w-60 h-60 bg-gradient-radial from-yellow-200/30 to-transparent rounded-full pointer-events-none" />
 
-                    {/* Floating particles */}
+                    {/* Zwevende deeltjes */}
                     {Array.from({ length: 20 }).map((_, i) => (
                         <motion.div
                             key={`particle-${i}`}
@@ -101,7 +101,7 @@ const AnimatedBackground = () => {
                         />
                     ))}
 
-                    {/* Very subtle light gradient */}
+                    {/* Zeer subtiele lichte gradiënt */}
                     <div className="absolute inset-0 bg-gradient-to-b from-blue-50/10 to-transparent pointer-events-none" />
                 </>
             )}
