@@ -9,6 +9,7 @@ import { smoothScroll } from "@/utils/smoothScroll"
 import DarkModeToggle from "./DarkModeToggle"
 import { motion } from "framer-motion"
 import { Code, Home, User, Briefcase, FileText, LayoutGrid, Mail } from "lucide-react"
+import Image from "next/image" // Add import for next/image
 
 const Header = () => {
     const pathname = usePathname()
@@ -53,9 +54,11 @@ const Header = () => {
                             whileHover={{ rotate: 10, scale: 1.1 }}
                             transition={{ type: "spring", stiffness: 400, damping: 10 }}
                         >
-                            <img 
+                            <Image
                                 src="/favicon.ico" 
                                 alt="Logo" 
+                                width={40}
+                                height={40}
                                 className="w-full h-full"
                             />
                         </motion.div>

@@ -166,7 +166,7 @@ const Portfolio = () => {
                     <div className={`w-4 h-4 rounded-sm border ${showEmptyProjects ? 'bg-primary border-primary' : 'border-muted-foreground'} flex items-center justify-center transition-colors`}>
                         {showEmptyProjects && <span className="text-white text-xs">✓</span>}
                     </div>
-                    <span>Toon "Komt binnenkort" projecten</span>
+                    <span>Toon &quot;Komt binnenkort&quot; projecten</span>
                 </button>
             </div>
 

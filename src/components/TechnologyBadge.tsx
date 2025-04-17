@@ -1,5 +1,6 @@
 import React from 'react'
 import { motion } from 'framer-motion'
+import Image from 'next/image' // Add import for Next.js Image component
 
 interface TechnologyBadgeProps {
     name: string
@@ -48,8 +49,14 @@ const TechnologyBadge: React.FC<TechnologyBadgeProps> = ({ name, index, iconPath
             className={`inline-flex items-center px-3 py-1 rounded-full ${bg} ${text} text-sm font-medium`}
         >
             {iconPath && (
-                <span className="mr-1 w-4 h-4">
-                    <img src={iconPath} alt={name} className="w-full h-full object-contain" />
+                <span className="mr-1 w-4 h-4 relative">
+                    <Image
+                        src={iconPath}
+                        alt={name}
+                        width={16}
+                        height={16}
+                        className="w-full h-full object-contain"
+                    />
                 </span>
             )}
             {name}
