@@ -16,14 +16,14 @@ const ThemeTransitionWrapper = ({ children }: ThemeTransitionWrapperProps) => {
 
             const timeoutId = setTimeout(() => {
                 document.body.classList.remove('theme-transitioning')
-            }, 1000)
+            }, 400)
 
             return () => clearTimeout(timeoutId)
         }
     }, [isTransitioning])
 
     return (
-        <div className={`transition-all duration-500 ${darkMode ? 'theme-dark' : 'theme-light'}`}>
+        <div className={`${darkMode ? 'theme-dark' : 'theme-light'}`}>
             {children}
         </div>
     )

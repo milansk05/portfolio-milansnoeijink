@@ -12,7 +12,7 @@ type DarkModeContextType = {
 const DarkModeContext = createContext<DarkModeContextType | undefined>(undefined)
 
 export const DarkModeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    const [darkMode, setDarkMode] = useState(true) // Initialiseer op true voor standaard dark mode
+    const [darkMode, setDarkMode] = useState(true)
     const [isTransitioning, setIsTransitioning] = useState(false)
 
     useEffect(() => {
@@ -30,10 +30,10 @@ export const DarkModeProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         localStorage.setItem("darkMode", newDarkMode.toString())
         document.documentElement.classList.toggle("dark", newDarkMode)
 
-        // Reset transition state after animation completes
+        // Reduced from 1000ms to 400ms to match the other transition timing
         setTimeout(() => {
             setIsTransitioning(false)
-        }, 1000)
+        }, 400)
     }
 
     return (

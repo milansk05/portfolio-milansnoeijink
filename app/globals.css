@@ -22,10 +22,10 @@
   --border: 226, 232, 240;
   --input: 226, 232, 240;
   --ring: 59, 130, 246;
-  --transition-bg: background-color 0.5s ease;
-  --transition-color: color 0.5s ease;
-  --transition-border: border-color 0.3s ease;
-  --transition-shadow: box-shadow 0.3s ease;
+  --transition-bg: background-color 0.3s ease;
+  --transition-color: color 0.3s ease;
+  --transition-border: border-color 0.2s ease;
+  --transition-shadow: box-shadow 0.2s ease;
 }
 
 .dark {
@@ -51,29 +51,41 @@
 }
 
 @layer base {
+
   body {
     @apply bg-background text-foreground;
-    transition: background-color 1s ease, color 1s ease;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    will-change: background-color, color;
   }
 
-  /* Voeg soepele overgangen toe voor alle elementen */
-  *,
-  *::before,
-  *::after {
-    transition: background-color 0.5s ease,
-      color 0.5s ease,
-      border-color 0.5s ease,
-      box-shadow 0.5s ease;
+  .bg-card,
+  .bg-background,
+  .bg-secondary,
+  .bg-muted,
+  .bg-accent,
+  .text-foreground,
+  .text-primary,
+  .text-secondary-foreground,
+  .text-muted-foreground,
+  .text-accent-foreground {
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
 
-  /* Voeg een subtiele gloed toe aan kaarten in dark mode */
+  .border,
+  .shadow,
+  .shadow-lg,
+  .shadow-md,
+  .shadow-sm,
+  .ring {
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
   .dark .bg-card {
     box-shadow: 0 0 15px rgba(59, 130, 246, 0.05);
   }
 
-  /* Speciale animatie tijdens themawisseling */
   .theme-transitioning .bg-card {
-    animation: pulse 1s ease;
+    animation: pulse 0.4s ease;
   }
 
   @keyframes pulse {
@@ -82,7 +94,7 @@
     }
 
     50% {
-      transform: scale(1.02);
+      transform: scale(1.01);
     }
 
     100% {
@@ -179,10 +191,9 @@
   }
 }
 
-/* Print styles */
+/* Print styles - unchanged */
 @media print {
 
-  /* Verberg elementen die niet geprint moeten worden */
   header,
   footer,
   nav,
@@ -194,7 +205,6 @@
     display: none !important;
   }
 
-  /* Algemene print styling */
   body {
     font-size: 12pt !important;
     line-height: 1.5 !important;
@@ -209,14 +219,12 @@
     width: 100% !important;
   }
 
-  /* Zorg ervoor dat alle tekst zwart is */
   * {
     color: black !important;
     text-shadow: none !important;
     box-shadow: none !important;
   }
 
-  /* Achtergrond elementen wit maken */
   .bg-card,
   .bg-secondary,
   .bg-muted,
@@ -225,7 +233,6 @@
     border: 1px solid #ddd !important;
   }
 
-  /* Vermijd pagina-onderbrekingen binnen elementen */
   section,
   article,
   .card {
@@ -233,7 +240,6 @@
     break-inside: avoid !important;
   }
 
-  /* Zorg voor goede paginering */
   h2,
   h3 {
     page-break-after: avoid !important;
@@ -245,25 +251,21 @@
     page-break-inside: avoid !important;
   }
 
-  /* URL's van links tonen */
   a[href^="http"]:after {
     content: " (" attr(href) ")" !important;
     font-size: 90% !important;
   }
 
-  /* Interne links niet tonen */
   a[href^="#"]:after {
     content: "" !important;
   }
 
-  /* Voorkomen dat de content uitloopt */
   pre,
   blockquote {
     page-break-inside: avoid !important;
     white-space: pre-wrap !important;
   }
 
-  /* Voeg styling toe voor tabellen */
   table {
     border-collapse: collapse !important;
   }
