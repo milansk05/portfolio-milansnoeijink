@@ -21,7 +21,7 @@ const DarkModeToggle = () => {
             className="p-4 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 relative overflow-hidden"
             aria-label={darkMode ? "Schakel lichte modus in" : "Schakel donkere modus in"}
         >
-            <div className="relative z-10 w-6 h-6 flex items-center justify-center">
+            <div className="relative z-10 w-4 h-4 flex items-center justify-center">
                 {darkMode ? (
                     // Zon animatie
                     <motion.div

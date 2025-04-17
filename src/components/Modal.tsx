@@ -88,8 +88,8 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children, image }
                                     <div className="h-8 w-8 rounded-full overflow-hidden bg-primary/10 flex items-center justify-center">
                                         {image ? (
                                             <Image
-                                                src={image}
-                                                alt={title}
+                                                src="/favicon.ico"
+                                                alt="Favicon"
                                                 width={32}
                                                 height={32}
                                                 className="object-cover"

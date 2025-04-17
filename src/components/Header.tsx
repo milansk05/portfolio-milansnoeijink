@@ -59,7 +59,7 @@ const Header = () => {
                                 alt="Logo" 
                                 width={40}
                                 height={40}
-                                className="w-full h-full"
+                                className="w-full h-full rounded-full overflow-hidden"
                             />
                         </motion.div>
                         <h1 className="text-xl md:text-2xl font-bold text-foreground group-hover:text-primary transition-all duration-300">
@@ -88,7 +88,7 @@ const Header = () => {
 
                         <Link
                             href="#contact"
-                            className="hidden md:flex items-center gap-2 bg-primary hover:bg-primary/90 text-primary-foreground px-4 py-2 rounded-full transition-all duration-300 hover:shadow-md"
+                            className="hidden md:flex items-center gap-2 bg-primary hover:bg-primary/90 text-primary-foreground px-4 py-3 rounded-full transition-all duration-300 hover:shadow-md"
                             onClick={(e) => smoothScroll(e, "contact")}
                         >
                             <Mail className="w-4 h-4" />
