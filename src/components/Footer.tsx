@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import Image from 'next/image'
-import { Github, Instagram, Linkedin, Mail, HeartIcon, Code, ExternalLink } from 'lucide-react'
+import { Github, Instagram, Linkedin, Mail, Code, ExternalLink } from 'lucide-react'
 import { smoothScroll } from '@/utils/smoothScroll'
 
 const ImprovedFooter = () => {
