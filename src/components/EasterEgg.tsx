@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
 import Achievement from './Achievement'
+import achievementManager from './AchievementManager'
 
 // De Konami Code sequentie: ↑ ↑ ↓ ↓ ← → ← → B A
 const KONAMI_CODE = [
@@ -43,6 +44,9 @@ const EasterEgg = () => {
                 // Toon achievement en easter egg tegelijkertijd
                 setShowAchievement(true)
                 setShowEasterEgg(true)
+
+                // Unlock de achievement
+                achievementManager.unlockAchievement("easter-egg")
 
                 // Speel beide geluiden na elkaar af
                 playCombinedSounds();

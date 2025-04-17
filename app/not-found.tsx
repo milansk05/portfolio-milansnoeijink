@@ -6,6 +6,7 @@ import { motion } from "framer-motion"
 import { Home, Search, Award, Gamepad2, RotateCcw } from "lucide-react"
 import ThemeTransitionWrapper from "@/components/ThemeTransitionWrapper"
 import Achievement from "@/components/Achievement"
+import achievementManager from "@/components/AchievementManager"
 
 export default function NotFound() {
     const [mounted, setMounted] = useState(false)
@@ -16,6 +17,7 @@ export default function NotFound() {
     const [gameActive, setGameActive] = useState(false)
     const [showAchievement, setShowAchievement] = useState(false)
     const gameTimerRef = useRef<NodeJS.Timeout | null>(null)
+    const achievementUnlocked = useRef(false)
 
     useEffect(() => {
         setMounted(true)
@@ -26,17 +28,26 @@ export default function NotFound() {
             setGameHighScore(parseInt(savedHighScore))
         }
 
-        // Toon achievement na een korte vertraging
-        const timer = setTimeout(() => {
-            setShowAchievement(true)
+        // Unlock de 404 achievement als deze nog niet was ontgrendeld
+        if (!achievementUnlocked.current) {
+            const wasUnlocked = achievementManager.unlockAchievement("page-not-found");
+            achievementUnlocked.current = true;
 
-            // Verberg achievement na 6 seconden
-            setTimeout(() => {
-                setShowAchievement(false)
-            }, 6000)
-        }, 800)
+            // Toon achievement notificatie alleen als deze nieuw ontgrendeld is
+            if (wasUnlocked) {
+                // Toon achievement na een korte vertraging
+                const timer = setTimeout(() => {
+                    setShowAchievement(true);
 
-        return () => clearTimeout(timer)
+                    // Verberg achievement na 6 seconden
+                    setTimeout(() => {
+                        setShowAchievement(false);
+                    }, 6000);
+                }, 800);
+
+                return () => clearTimeout(timer);
+            }
+        }
     }, [])
 
     useEffect(() => {
