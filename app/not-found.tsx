@@ -3,7 +3,7 @@
 import { useEffect, useState, useRef } from "react"
 import Link from "next/link"
 import { motion } from "framer-motion"
-import { Home, ArrowLeft, Search, Award, Gamepad2, RotateCcw } from "lucide-react"
+import { Home, Search, Award, Gamepad2, RotateCcw } from "lucide-react"
 import ThemeTransitionWrapper from "@/components/ThemeTransitionWrapper"
 import Achievement from "@/components/Achievement"
 
