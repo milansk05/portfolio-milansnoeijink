@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion"
 import { Download, ArrowRight } from "lucide-react"
-import PrintCV from "./PrintCV"
 import { smoothScroll } from "@/utils/smoothScroll"
 
 const Hero = () => {
@@ -56,7 +55,6 @@ const Hero = () => {
                         Download CV
                     </a>
 
-                    <PrintCV />
                 </motion.div>
             </div>
         </section>
