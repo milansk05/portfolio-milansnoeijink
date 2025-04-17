@@ -1,28 +1,52 @@
 "use client"
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import emailjs from "@emailjs/browser";
 import { motion } from "framer-motion";
 import { Mail, Briefcase, AlertCircle, Send, Loader2 } from "lucide-react";
 import { Linkedin, Github, Instagram } from "lucide-react";
+import ReCAPTCHA from "react-google-recaptcha";
 
 type FormData = {
     name: string;
     email: string;
-    message: string
+    message: string;
 }
 
 type FormErrors = {
     name?: string;
     email?: string;
     message?: string;
+    recaptcha?: string;
 }
+
+// Lijst met verdachte domein patronen
+const SUSPICIOUS_PATTERNS = [
+    /^\d+@gmail\.com$/,         // Alleen nummers voor @gmail.com
+    /^[a-z]{1,3}\d{4,}@/,       // Korte prefix gevolgd door veel cijfers
+    /^temp[._-]?mail/i,         // Tijdelijke mail services
+    /^throwaway/i,              // Wegwerp mail services
+    /^user\d{5,}@/              // user12345@... patroon
+];
+
+// Lijst met gekende problematische domeinen (voorbeeld)
+const SUSPICIOUS_DOMAINS = [
+    'tempmail.com',
+    'mailinator.com',
+    'throwawaymail.com',
+    'fakeinbox.com',
+    'guerrillamail.com',
+    'sharklasers.com',
+    'yopmail.com'
+];
 
 const Contact = () => {
     const [formData, setFormData] = useState<FormData>({ name: "", email: "", message: "" });
     const [isSending, setIsSending] = useState(false);
     const [success, setSuccess] = useState<boolean | null>(null);
     const [errors, setErrors] = useState<FormErrors>({});
+    const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null);
+    const recaptchaRef = useRef<ReCAPTCHA>(null);
 
     useEffect(() => {
         if (success !== null) {
@@ -44,23 +68,55 @@ const Contact = () => {
     const validateForm = (): FormErrors => {
         const errors: FormErrors = {};
 
+        // Naam validatie
         if (!formData.name.trim()) {
             errors.name = "Naam is verplicht";
+        } else if (formData.name.trim().length < 2) {
+            errors.name = "Voer een geldige naam in";
         }
 
+        // E-mail validatie (meerdere stappen)
         if (!formData.email.trim()) {
             errors.email = "E-mail is verplicht";
         } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
             errors.email = "Voer een geldig e-mailadres in";
+        } else {
+            // Check verdachte patronen
+            const domain = formData.email.split('@')[1].toLowerCase();
+            const isSuspiciousPattern = SUSPICIOUS_PATTERNS.some(pattern =>
+                pattern.test(formData.email.toLowerCase())
+            );
+            const isSuspiciousDomain = SUSPICIOUS_DOMAINS.includes(domain);
+
+            if (isSuspiciousPattern || isSuspiciousDomain) {
+                errors.email = "Dit e-mailadres lijkt niet geldig. Gebruik een persoonlijk of zakelijk e-mailadres.";
+            }
         }
 
+        // Bericht validatie
         if (!formData.message.trim()) {
             errors.message = "Bericht is verplicht";
         } else if (formData.message.trim().length < 10) {
             errors.message = "Bericht moet minimaal 10 tekens bevatten";
         }
 
+        // reCAPTCHA validatie
+        if (!recaptchaToken) {
+            errors.recaptcha = "Bevestig dat je geen robot bent";
+        }
+
         return errors;
+    };
+
+    const handleRecaptchaChange = (token: string | null) => {
+        setRecaptchaToken(token);
+        if (errors.recaptcha) {
+            setErrors(prev => ({ ...prev, recaptcha: undefined }));
+        }
+    };
+
+    const handleRecaptchaExpired = () => {
+        setRecaptchaToken(null);
     };
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -78,7 +134,8 @@ const Contact = () => {
             const templateParams = {
                 name: formData.name,
                 email: formData.email,
-                message: formData.message
+                message: formData.message,
+                'g-recaptcha-response': recaptchaToken
             };
 
             const response = await emailjs.send(
@@ -91,6 +148,12 @@ const Contact = () => {
             setSuccess(true);
             setFormData({ name: "", email: "", message: "" });
             setErrors({});
+            setRecaptchaToken(null);
+
+            // Reset reCAPTCHA
+            if (recaptchaRef.current) {
+                recaptchaRef.current.reset();
+            }
         } catch (error) {
             setSuccess(false);
             console.error("Error sending email:", error);
@@ -131,8 +194,8 @@ const Contact = () => {
                                         value={formData.name}
                                         onChange={handleChange}
                                         className={`w-full px-4 py-2 rounded-md border focus:outline-none focus:ring-2 text-black ${errors.name
-                                                ? "border-red-500 focus:ring-red-200"
-                                                : "border-secondary focus:ring-primary/30"
+                                            ? "border-red-500 focus:ring-red-200"
+                                            : "border-secondary focus:ring-primary/30"
                                             }`}
                                         placeholder="Jouw naam"
                                         aria-invalid={errors.name ? "true" : "false"}
@@ -157,8 +220,8 @@ const Contact = () => {
                                         value={formData.email}
                                         onChange={handleChange}
                                         className={`w-full px-4 py-2 rounded-md border focus:outline-none focus:ring-2 text-black ${errors.email
-                                                ? "border-red-500 focus:ring-red-200"
-                                                : "border-secondary focus:ring-primary/30"
+                                            ? "border-red-500 focus:ring-red-200"
+                                            : "border-secondary focus:ring-primary/30"
                                             }`}
                                         placeholder="jouw@email.nl"
                                         aria-invalid={errors.email ? "true" : "false"}
@@ -183,8 +246,8 @@ const Contact = () => {
                                         onChange={handleChange}
                                         rows={5}
                                         className={`w-full px-4 py-2 rounded-md border focus:outline-none focus:ring-2 text-black ${errors.message
-                                                ? "border-red-500 focus:ring-red-200"
-                                                : "border-secondary focus:ring-primary/30"
+                                            ? "border-red-500 focus:ring-red-200"
+                                            : "border-secondary focus:ring-primary/30"
                                             }`}
                                         placeholder="Jouw bericht hier..."
                                         aria-invalid={errors.message ? "true" : "false"}
@@ -194,6 +257,23 @@ const Contact = () => {
                                         <div id="message-error" className="mt-1 flex items-center text-sm text-red-500">
                                             <AlertCircle className="h-3 w-3 mr-1" />
                                             {errors.message}
+                                        </div>
+                                    )}
+                                </div>
+
+                                {/* reCAPTCHA component */}
+                                <div className="mt-4">
+                                    <ReCAPTCHA
+                                        ref={recaptchaRef}
+                                        sitekey="6LdkyhsrAAAAAK0x51DzwPfD9wYaFSiXrrbaqpIG" // Vervang dit met je eigen site key
+                                        onChange={handleRecaptchaChange}
+                                        onExpired={handleRecaptchaExpired}
+                                        className="transform scale-90 origin-left"
+                                    />
+                                    {errors.recaptcha && (
+                                        <div className="mt-1 flex items-center text-sm text-red-500">
+                                            <AlertCircle className="h-3 w-3 mr-1" />
+                                            {errors.recaptcha}
                                         </div>
                                     )}
                                 </div>
@@ -219,8 +299,8 @@ const Contact = () => {
                                 {success !== null && (
                                     <motion.div
                                         className={`mt-4 p-4 rounded-md ${success
-                                                ? "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300"
-                                                : "bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300"
+                                            ? "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300"
+                                            : "bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300"
                                             } flex items-center`}
                                         initial={{ opacity: 0, y: -10 }}
                                         animate={{ opacity: 1, y: 0 }}
