@@ -533,7 +533,7 @@ export default function NotFound() {
 }
 
 // Game Area Component geoptimaliseerd met React.memo en useCallback
-const GameArea = React.memo(({ score, setScore }: { score: number, setScore: (score: number) => void }) => {
+const GameArea = React.memo(({ setScore }: { setScore: (score: number) => void }) => {
     const [blocks, setBlocks] = useState<{ id: number; x: number; y: number; size: number; value: number }[]>([])
     const gameAreaRef = useRef<HTMLDivElement>(null)
     const blockIdCounter = useRef(0)
