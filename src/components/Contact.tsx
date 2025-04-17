@@ -139,10 +139,10 @@ const Contact = () => {
             };
 
             const response = await emailjs.send(
-                "service_jz42tcr",
-                "template_440y3an",
+                process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || "",
+                process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || "",
                 templateParams,
-                "lHmUgT3v2e8-jRgOO"
+                process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY || ""
             );
             console.log("Email sent successfully:", response);
             setSuccess(true);
@@ -265,7 +265,7 @@ const Contact = () => {
                                 <div className="mt-4">
                                     <ReCAPTCHA
                                         ref={recaptchaRef}
-                                        sitekey="6LdkyhsrAAAAAK0x51DzwPfD9wYaFSiXrrbaqpIG" // Vervang dit met je eigen site key
+                                        sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || ""}
                                         onChange={handleRecaptchaChange}
                                         onExpired={handleRecaptchaExpired}
                                         className="transform scale-90 origin-left"
