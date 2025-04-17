@@ -184,7 +184,7 @@ const certificates: Certificate[] = [
     },
 ]
 
-type SortButton = { label: string; value: string; icon: React.ComponentType<any> };
+type SortButton = { label: string; value: string; icon: React.ElementType };
 
 // Custom filter buttons met iconen
 const sortButtons: SortButton[] = [
@@ -440,7 +440,7 @@ const ImprovedCertificates = () => {
                             : `Geen certificaten in de categorie "${sortButtons.find(b => b.value === sortType)?.label}".`}
                     </p>
                 </div>
-            )}
+            )}  
 
             {/* Certificaten gegroepeerd per jaar */}
             {visibleCertificates.length > 0 && (
