@@ -1,12 +1,27 @@
 "use client"
 
-import { useEffect, useState, useRef } from "react"
+import { useEffect, useState, useRef, useCallback } from "react"
+import React from "react"
 import Link from "next/link"
 import { motion } from "framer-motion"
 import { Home, Search, Award, Gamepad2, RotateCcw } from "lucide-react"
 import ThemeTransitionWrapper from "@/components/ThemeTransitionWrapper"
 import Achievement from "@/components/Achievement"
 import achievementManager from "@/components/AchievementManager"
+
+// Lijst met alle mogelijke error quotes
+const ERROR_QUOTES = [
+    "Houston, we have a problem.",
+    "Deze pagina is naar de digitale hemel.",
+    "Oeps, we kunnen niet vinden wat je zoekt!",
+    "Deze pagina heeft vakantie genomen.",
+    "404: Pagina niet gevonden, maar je hebt wel mij gevonden!",
+    "Deze pagina is verdwaald in de digitale woestijn.",
+    "Hmmm, hier is niets te zien.",
+    "Deze link is gebroken, net als mijn beloftes om minder koffie te drinken.",
+    "Technisch gezien ben je verdwaald.",
+    "Deze pagina bestaat alleen in een parallel universum.",
+];
 
 export default function NotFound() {
     const [mounted, setMounted] = useState(false)
@@ -16,11 +31,26 @@ export default function NotFound() {
     const [gameTime, setGameTime] = useState(30)
     const [gameActive, setGameActive] = useState(false)
     const [showAchievement, setShowAchievement] = useState(false)
-    const gameTimerRef = useRef<NodeJS.Timeout | null>(null)
+    const [currentAchievementType, setCurrentAchievementType] = useState<string>("page-not-found")
+
+    // Refs voor geavanceerde timer implementatie
+    const startTimeRef = useRef<number | null>(null)
+    const frameIdRef = useRef<number | null>(null)
     const achievementUnlocked = useRef(false)
+
+    // Store the random quote in a ref so it doesn't change on re-renders
+    const errorQuoteRef = useRef<string>("")
 
     useEffect(() => {
         setMounted(true)
+
+        // Choose a random quote only once when the component mounts
+        const randomIndex = Math.floor(Math.random() * ERROR_QUOTES.length);
+        const selectedQuote = ERROR_QUOTES[randomIndex];
+        errorQuoteRef.current = selectedQuote;
+
+        // Registreer dat we deze quote hebben gezien
+        const wasNewQuote = achievementManager.addSeenQuote(selectedQuote);
 
         // Haal highscore op uit localStorage als die bestaat
         const savedHighScore = localStorage.getItem('404GameHighScore')
@@ -30,51 +60,177 @@ export default function NotFound() {
 
         // Unlock de 404 achievement als deze nog niet was ontgrendeld
         if (!achievementUnlocked.current) {
-            const wasUnlocked = achievementManager.unlockAchievement("page-not-found");
+            const wasPageNotFoundUnlocked = achievementManager.unlockAchievement("page-not-found");
             achievementUnlocked.current = true;
 
-            // Toon achievement notificatie alleen als deze nieuw ontgrendeld is
-            if (wasUnlocked) {
-                // Toon achievement na een korte vertraging
-                const timer = setTimeout(() => {
-                    setShowAchievement(true);
+            // Toon achievement notificatie - eerst voor nieuwe quote achievement als die ontgrendeld is
+            if (wasNewQuote) {
+                setCurrentAchievementType("quote-collector");
+                displayAchievement("quote-collector");
 
-                    // Verberg achievement na 6 seconden
+                // Dan na vertraging voor de page-not-found achievement als die ook nieuw is
+                if (wasPageNotFoundUnlocked) {
                     setTimeout(() => {
-                        setShowAchievement(false);
-                    }, 6000);
-                }, 800);
-
-                return () => clearTimeout(timer);
+                        setCurrentAchievementType("page-not-found");
+                        displayAchievement("page-not-found");
+                    }, 7000); // Toon na 7 seconden (als de eerste achievement notificatie voorbij is)
+                }
+            }
+            // Anders toon gewoon de page-not-found achievement indien nieuw
+            else if (wasPageNotFoundUnlocked) {
+                setCurrentAchievementType("page-not-found");
+                displayAchievement("page-not-found");
             }
         }
+
+        // Cleanup bij unmount
+        return () => {
+            if (frameIdRef.current !== null) {
+                cancelAnimationFrame(frameIdRef.current);
+                frameIdRef.current = null;
+            }
+        };
     }, [])
 
+    // Functie om een achievement notification te tonen
+    const displayAchievement = (achievementType: string) => {
+        // Maak het geluidsobject alvast aan
+        const achievementSound = new Audio('/sounds/achievement.mp3');
+        achievementSound.volume = 0.5;
+        achievementSound.preload = 'auto';
+
+        // Toon achievement na een korte vertraging
+        const timer = setTimeout(() => {
+            setShowAchievement(true);
+
+            // Probeer het geluid af te spelen - dit zal waarschijnlijk alleen werken als de gebruiker
+            // al een interactie heeft gehad met de pagina
+            achievementSound.play().catch(() => {
+                // Als auto-play mislukt, voegen we een effecthandler toe aan de body die
+                // het geluid probeert af te spelen bij de volgende gebruikersinteractie
+                const playOnInteraction = () => {
+                    achievementSound.play().catch(() => { });
+                    document.body.removeEventListener('click', playOnInteraction);
+                    document.body.removeEventListener('keydown', playOnInteraction);
+                };
+
+                document.body.addEventListener('click', playOnInteraction);
+                document.body.addEventListener('keydown', playOnInteraction);
+
+                // Schoon de event listeners op na een redelijke tijd
+                setTimeout(() => {
+                    document.body.removeEventListener('click', playOnInteraction);
+                    document.body.removeEventListener('keydown', playOnInteraction);
+                }, 10000);
+            });
+
+            // Verberg achievement na 6 seconden
+            setTimeout(() => {
+                setShowAchievement(false);
+            }, 6000);
+        }, 800);
+
+        return timer;
+    };
+
+    // Verbeterde timer implementatie met requestAnimationFrame
     useEffect(() => {
-        // Game timer logic
-        if (gameActive && gameTime > 0) {
-            gameTimerRef.current = setTimeout(() => {
-                setGameTime(prev => prev - 1)
-            }, 1000)
-        } else if (gameTime === 0 && gameActive) {
-            setGameActive(false)
-            // Update highscore als de huidige score hoger is
-            if (gameScore > gameHighScore) {
-                setGameHighScore(gameScore)
-                localStorage.setItem('404GameHighScore', gameScore.toString())
+        const handleGameTimer = () => {
+            if (gameActive && startTimeRef.current !== null) {
+                // Bereken verlopen tijd sinds start
+                const elapsedTime = Math.floor((Date.now() - startTimeRef.current) / 1000);
+                const newTimeRemaining = Math.max(0, 30 - elapsedTime);
+
+                // Update timer state wanneer het verandert
+                if (newTimeRemaining !== gameTime) {
+                    setGameTime(newTimeRemaining);
+                }
+
+                // Game over check
+                if (newTimeRemaining === 0 && gameActive) {
+                    setGameActive(false);
+
+                    // Update highscore als nodig
+                    if (gameScore > gameHighScore) {
+                        setGameHighScore(gameScore);
+                        localStorage.setItem('404GameHighScore', gameScore.toString());
+
+                        // Update de voortgang in de achievements manager
+                        const wasUnlocked = achievementManager.updateGameScore(gameScore);
+
+                        // Als Game Master achievement is ontgrendeld, toon notificatie
+                        if (wasUnlocked) {
+                            setCurrentAchievementType("game-master");
+                            setShowAchievement(true);
+
+                            // Probeer het achievement geluid af te spelen
+                            const achievementSound = new Audio('/sounds/achievement.mp3');
+                            achievementSound.volume = 0.5;
+                            achievementSound.play().catch(() => {
+                                // Als auto-play mislukt, probeer bij volgende gebruikersinteractie
+                                const playOnInteraction = () => {
+                                    achievementSound.play().catch(() => { });
+                                    document.body.removeEventListener('click', playOnInteraction);
+                                    document.body.removeEventListener('keydown', playOnInteraction);
+                                };
+
+                                document.body.addEventListener('click', playOnInteraction);
+                                document.body.addEventListener('keydown', playOnInteraction);
+
+                                // Schoon event listeners op na een tijd
+                                setTimeout(() => {
+                                    document.body.removeEventListener('click', playOnInteraction);
+                                    document.body.removeEventListener('keydown', playOnInteraction);
+                                }, 10000);
+                            });
+
+                            // Verberg achievement na 6 seconden
+                            setTimeout(() => {
+                                setShowAchievement(false);
+                            }, 6000);
+                        }
+                    } else {
+                        // Zelfs als er geen nieuwe highscore is, nog steeds de voortgang bijwerken
+                        // (dit logt de hoogste score, zelfs als het niet de huidige is)
+                        achievementManager.updateGameScore(gameHighScore);
+                    }
+
+                    return;
+                }
+
+                // Schedule next frame
+                frameIdRef.current = requestAnimationFrame(handleGameTimer);
+            }
+        };
+
+        if (gameActive) {
+            // Start timer als het spel actief wordt
+            if (startTimeRef.current === null) {
+                startTimeRef.current = Date.now();
+            }
+
+            frameIdRef.current = requestAnimationFrame(handleGameTimer);
+        } else {
+            // Cleanup als spel stopt
+            if (frameIdRef.current !== null) {
+                cancelAnimationFrame(frameIdRef.current);
+                frameIdRef.current = null;
             }
         }
 
+        // Cleanup effect
         return () => {
-            if (gameTimerRef.current) {
-                clearTimeout(gameTimerRef.current)
+            if (frameIdRef.current !== null) {
+                cancelAnimationFrame(frameIdRef.current);
+                frameIdRef.current = null;
             }
-        }
-    }, [gameActive, gameTime, gameScore, gameHighScore])
+        };
+    }, [gameActive, gameScore, gameHighScore, gameTime]);
 
     const startGame = () => {
         setGameScore(0)
         setGameTime(30)
+        startTimeRef.current = Date.now() // Reset starttijd
         setGameActive(true)
     }
 
@@ -82,26 +238,15 @@ export default function NotFound() {
         setGameActive(false)
         setGameScore(0)
         setGameTime(30)
+        startTimeRef.current = null // Reset starttijd
+        // Stop animatieframe als die actief is
+        if (frameIdRef.current !== null) {
+            cancelAnimationFrame(frameIdRef.current)
+            frameIdRef.current = null
+        }
     }
 
     if (!mounted) return null
-
-    // Willekeurige 404 quotes
-    const errorQuotes = [
-        "Houston, we have a problem.",
-        "Deze pagina is naar de digitale hemel.",
-        "Oeps, we kunnen niet vinden wat je zoekt!",
-        "Deze pagina heeft vakantie genomen.",
-        "404: Pagina niet gevonden, maar je hebt wel mij gevonden!",
-        "Deze pagina is verdwaald in de digitale woestijn.",
-        "Hmmm, hier is niets te zien.",
-        "Deze link is gebroken, net als mijn beloftes om minder koffie te drinken.",
-        "Technisch gezien ben je verdwaald.",
-        "Deze pagina bestaat alleen in een parallel universum.",
-    ]
-
-    // Kies willekeurig een quote
-    const randomQuote = errorQuotes[Math.floor(Math.random() * errorQuotes.length)]
 
     return (
         <ThemeTransitionWrapper>
@@ -151,7 +296,7 @@ export default function NotFound() {
                         transition={{ delay: 0.2, duration: 0.5 }}
                         className="text-xl md:text-2xl font-bold mb-4 text-foreground"
                     >
-                        {randomQuote}
+                        {errorQuoteRef.current}
                     </motion.h2>
 
                     <motion.p
@@ -207,6 +352,12 @@ export default function NotFound() {
                                         ? "Klik zo snel mogelijk op de blokjes!"
                                         : "Start het spel en vang zoveel mogelijk 404 blokjes in 30 seconden."}
                                 </p>
+                                {!gameActive && (
+                                    <p className="text-xs text-muted-foreground mt-2">
+                                        <span className="font-bold text-primary">4</span> = 4 punten |
+                                        <span className="font-bold text-primary ml-1">0</span> = 0 punten
+                                    </p>
+                                )}
                             </div>
 
                             <div className="flex justify-between items-center mb-4">
@@ -349,24 +500,43 @@ export default function NotFound() {
                 </div>
             </main>
 
-            {/* Achievement Notification */}
-            <Achievement
-                title="Hoe zijn we hier terechtgekomen?"
-                description="Vind de verborgen 404 pagina!"
-                icon="🧭"
-                show={showAchievement}
-                onClose={() => setShowAchievement(false)}
-            />
+            {/* Achievement Notification - dynamisch op basis van type */}
+            {currentAchievementType === "game-master" ? (
+                <Achievement
+                    title="Game Master"
+                    description="Scoor 100 punten in de 404 minigame!"
+                    icon="🎮"
+                    show={showAchievement}
+                    onClose={() => setShowAchievement(false)}
+                />
+            ) : currentAchievementType === "quote-collector" ? (
+                <Achievement
+                    title="Quote Verzamelaar"
+                    description={`Ontdek alle 404 quotes! (${achievementManager.getSeenQuotesCount()}/10)`}
+                    icon="📜"
+                    show={showAchievement}
+                    onClose={() => setShowAchievement(false)}
+                />
+            ) : (
+                <Achievement
+                    title="Hoe zijn we hier terechtgekomen?"
+                    description="Vind de verborgen 404 pagina!"
+                    icon="🧭"
+                    show={showAchievement}
+                    onClose={() => setShowAchievement(false)}
+                />
+            )}
 
         </ThemeTransitionWrapper>
     )
 }
 
-// Game Area Component
-const GameArea = ({ score, setScore }: { score: number, setScore: (score: number) => void }) => {
+// Game Area Component geoptimaliseerd met React.memo en useCallback
+const GameArea = React.memo(({ score, setScore }: { score: number, setScore: (score: number) => void }) => {
     const [blocks, setBlocks] = useState<{ id: number; x: number; y: number; size: number; value: number }[]>([])
     const gameAreaRef = useRef<HTMLDivElement>(null)
     const blockIdCounter = useRef(0)
+    const blockTimersRef = useRef<Record<number, NodeJS.Timeout>>({})
 
     useEffect(() => {
         const addBlock = () => {
@@ -384,29 +554,44 @@ const GameArea = ({ score, setScore }: { score: number, setScore: (score: number
                 // Random waarde: 4, 0, of 4 (404)
                 const value = [4, 0, 4][Math.floor(Math.random() * 3)]
 
-                const newBlock = { id: blockIdCounter.current++, x, y, size, value }
+                const id = blockIdCounter.current++
+                const newBlock = { id, x, y, size, value }
 
                 setBlocks(prev => [...prev, newBlock])
 
                 // Verwijder het blok na 2 seconden
-                setTimeout(() => {
-                    setBlocks(prev => prev.filter(block => block.id !== newBlock.id))
+                blockTimersRef.current[id] = setTimeout(() => {
+                    setBlocks(prev => prev.filter(block => block.id !== id))
+                    delete blockTimersRef.current[id]
                 }, 2000)
             }
         }
 
         // Voeg elke 0.6 seconden een nieuw blok toe
         const interval = setInterval(addBlock, 600)
-        return () => clearInterval(interval)
+
+        return () => {
+            clearInterval(interval)
+            // Schoon alle blok-timers op
+            Object.values(blockTimersRef.current).forEach(timer => clearTimeout(timer))
+            blockTimersRef.current = {}
+        }
     }, [])
 
-    const handleBlockClick = (id: number, value: number) => {
+    // Gebruik useCallback om te voorkomen dat de functie bij elke render opnieuw wordt gemaakt
+    const handleBlockClick = useCallback((id: number, value: number) => {
         // Verwijder het geklikte blok
         setBlocks(prev => prev.filter(block => block.id !== id))
 
-        // Voeg de waarde toe aan de score
-        setScore(score + value)
-    }
+        // Schoon de timer voor dit blok op
+        if (blockTimersRef.current[id]) {
+            clearTimeout(blockTimersRef.current[id])
+            delete blockTimersRef.current[id]
+        }
+
+        // Voeg de waarde toe aan de score - gebruik functionele update
+        setScore(prevScore => prevScore + value)
+    }, [setScore])
 
     return (
         <div
@@ -435,4 +620,4 @@ const GameArea = ({ score, setScore }: { score: number, setScore: (score: number
             ))}
         </div>
     )
-}
+})

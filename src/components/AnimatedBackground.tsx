@@ -20,7 +20,7 @@ const AnimatedBackground = () => {
                 // Nachthemel elementen voor donkere modus
                 <>
                     {/* Twinkelende sterren */}
-                    {Array.from({ length: 50 }).map((_, i) => (
+                    {Array.from({ length: 100 }).map((_, i) => (
                         <motion.div
                             key={`star-${i}`}
                             className="absolute rounded-full bg-white"

@@ -12,13 +12,17 @@ export interface Achievement {
     description: string
     icon: string
     unlocked: boolean
+    progress?: {
+        current: number
+        total: number
+    }
 }
 
 // Lijst van beschikbare achievements
 const defaultAchievements: Achievement[] = [
     {
         id: "easter-egg",
-        title: "Kat Ontdekker",
+        title: "Miauw?",
         description: "Je hebt de geheime kat gevonden!",
         icon: "😸",
         unlocked: false,
@@ -29,6 +33,28 @@ const defaultAchievements: Achievement[] = [
         description: "Vind de verborgen 404 pagina!",
         icon: "🧭",
         unlocked: false,
+    },
+    {
+        id: "game-master",
+        title: "Game Master",
+        description: "Scoor 100 punten in de 404 minigame!",
+        icon: "🎮",
+        unlocked: false,
+        progress: {
+            current: 0,
+            total: 100
+        }
+    },
+    {
+        id: "quote-collector",
+        title: "Quote Verzamelaar",
+        description: "Ontdek alle 404 quotes!",
+        icon: "📜",
+        unlocked: false,
+        progress: {
+            current: 0,
+            total: 10
+        }
     }
 ]
 
@@ -123,6 +149,22 @@ const AchievementsModal = ({ isOpen, onClose }: AchievementsModalProps) => {
                                             ? achievement.description
                                             : "????? (Nog niet ontgrendeld)"}
                                     </p>
+
+                                    {/* Progress bar for achievements with progress - visible even when locked */}
+                                    {achievement.progress && (achievement.id === "quote-collector" || achievement.id === "game-master") && (
+                                        <div className="mt-2">
+                                            <div className="flex justify-between text-xs text-muted-foreground mb-1">
+                                                <span>Voortgang:</span>
+                                                <span>{achievement.progress.current} / {achievement.progress.total}</span>
+                                            </div>
+                                            <div className="w-full h-2 bg-muted rounded-full overflow-hidden">
+                                                <div
+                                                    className="h-full bg-amber-500 rounded-full transition-all duration-500"
+                                                    style={{ width: `${(achievement.progress.current / achievement.progress.total) * 100}%` }}
+                                                ></div>
+                                            </div>
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                         </motion.div>
