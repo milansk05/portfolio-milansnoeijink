@@ -304,7 +304,7 @@ export default function NotFound() {
                             </div>
                             <h3 className="font-semibold text-accent-foreground mb-2">Certificaten</h3>
                             <p className="text-center text-sm text-muted-foreground">
-                                Bekijk mijn certificaten en diploma's
+                                Bekijk mijn certificaten en diploma&apos;s
                             </p>
                         </Link>
 
