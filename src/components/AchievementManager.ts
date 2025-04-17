@@ -53,7 +53,9 @@ class AchievementManager {
                 if (this.achievements['quote-collector']) {
                     this.achievements['quote-collector'].progress = {
                         ...this.achievements['quote-collector'].progress,
-                        current: this.seenQuotes.size
+                        current: this.seenQuotes.size,
+                        // Ensure total is set if progress exists
+                        total: this.achievements['quote-collector'].progress?.total || 10
                     };
 
                     // Check of alle quotes zijn gezien
@@ -82,7 +84,9 @@ class AchievementManager {
                 if (this.achievements['game-master']) {
                     this.achievements['game-master'].progress = {
                         ...this.achievements['game-master'].progress,
-                        current: Math.min(this.highestGameScore, 100)
+                        current: Math.min(this.highestGameScore, 100),
+                        // Ensure total is set if progress exists
+                        total: this.achievements['game-master'].progress?.total || 100
                     };
 
                     // Check of de score van 100 is behaald
@@ -138,7 +142,7 @@ class AchievementManager {
 
             // Behoud voortgang voor progressieve achievements
             if (achievement.progress && this.achievements[achievement.id].progress) {
-                achievement.progress.current = this.achievements[achievement.id].progress.current;
+                achievement.progress.current = this.achievements[achievement.id].progress?.current ?? 0;
             }
         }
 

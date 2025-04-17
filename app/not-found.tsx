@@ -1,3 +1,7 @@
+// The issue is in the handleBlockClick function
+// The problem is that when you call setScore with a function, TypeScript doesn't know what type the prevScore parameter should be
+// Let's fix this by properly typing the setScore prop in the GameArea component
+
 "use client"
 
 import { useEffect, useState, useRef, useCallback } from "react"
@@ -379,7 +383,7 @@ export default function NotFound() {
                             </div>
 
                             {gameActive ? (
-                                <GameArea setScore={setGameScore} />
+                                <GameArea setScore={(score: number | ((prevScore: number) => number)) => setGameScore(score)} />
                             ) : (
                                 <div className="bg-secondary/30 rounded-lg h-64 flex flex-col items-center justify-center">
                                     {gameTime === 30 ? (
@@ -532,8 +536,13 @@ export default function NotFound() {
     )
 }
 
+// Define the props type for GameArea
+interface GameAreaProps {
+    setScore: (score: number | ((prevScore: number) => number)) => void;
+}
+
 // Game Area Component geoptimaliseerd met React.memo en useCallback
-const GameArea = React.memo(({ setScore }: { setScore: (score: number) => void }) => {
+const GameArea = React.memo(({ setScore }: GameAreaProps) => {
     const [blocks, setBlocks] = useState<{ id: number; x: number; y: number; size: number; value: number }[]>([])
     const gameAreaRef = useRef<HTMLDivElement>(null)
     const blockIdCounter = useRef(0)
