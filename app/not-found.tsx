@@ -101,6 +101,7 @@ export default function NotFound() {
 
         // Toon achievement na een korte vertraging
         const timer = setTimeout(() => {
+            setCurrentAchievementType(achievementType); // Set the current achievement type
             setShowAchievement(true);
 
             // Probeer het geluid af te spelen - dit zal waarschijnlijk alleen werken als de gebruiker
@@ -378,7 +379,7 @@ export default function NotFound() {
                             </div>
 
                             {gameActive ? (
-                                <GameArea score={gameScore} setScore={setGameScore} />
+                                <GameArea setScore={setGameScore} />
                             ) : (
                                 <div className="bg-secondary/30 rounded-lg h-64 flex flex-col items-center justify-center">
                                     {gameTime === 30 ? (
@@ -621,3 +622,6 @@ const GameArea = React.memo(({ score, setScore }: { score: number, setScore: (sc
         </div>
     )
 })
+
+// Add display name
+GameArea.displayName = 'GameArea';
