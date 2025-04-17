@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 import Modal from "./Modal"
 import { motion } from "framer-motion"
-import { Trophy, HelpCircle, Lock } from "lucide-react"
+import { Trophy, Lock } from "lucide-react"
 import achievementManager from "./AchievementManager"
 
 export interface Achievement {
@@ -54,7 +54,7 @@ const AchievementsModal = ({ isOpen, onClose }: AchievementsModalProps) => {
         setAchievements(achievementManager.getAchievements());
 
         // Luister naar achievement updates
-        const handleAchievementUnlock = (id: string, achievement: Achievement) => {
+        const handleAchievementUnlock = () => {
             setAchievements(achievementManager.getAchievements());
         };
 
