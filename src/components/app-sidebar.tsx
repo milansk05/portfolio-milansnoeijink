@@ -24,7 +24,7 @@ export function AppSidebar() {
 
     const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>, targetId: string) => {
         smoothScroll(e, targetId)
-        // Sluit de sidebar wanneer er op een link wordt geklikt
+        // Close the sidebar when a link is clicked
         if (sidebarContext) {
             sidebarContext.close()
         }
@@ -59,7 +59,7 @@ export function AppSidebar() {
                                 <NavItem href="#certificaten" label="Certificaten" handleClick={handleSmoothScroll} />
                                 <NavItem href="#portfolio" label="Portfolio" handleClick={handleSmoothScroll} />
                                 <NavItem href="#contact" label="Contact" handleClick={handleSmoothScroll} />
-                                
+
                                 {/* Overig dropdown menu */}
                                 <motion.li
                                     initial={{ x: -20, opacity: 0 }}
@@ -75,12 +75,11 @@ export function AppSidebar() {
                                             <span>Overig</span>
                                         </div>
                                         <ChevronDown
-                                            className={`h-4 w-4 transition-transform ${
-                                                otherMenuOpen ? "rotate-180" : ""
-                                            }`}
+                                            className={`h-4 w-4 ml-1 transition-transform ${otherMenuOpen ? "rotate-180" : ""
+                                                }`}
                                         />
                                     </button>
-                                    
+
                                     {otherMenuOpen && (
                                         <div className="mt-2 ml-5 space-y-1 border-l-2 border-secondary pl-3">
                                             <Link
@@ -137,12 +136,12 @@ function NavItem({ href, label, handleClick }: NavItemProps) {
     const sidebarContext = useContext(SidebarContext)
 
     const handleClick2 = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
-        // Specifieke logica voor anchor links
+        // Specific logic for anchor links
         if (href.startsWith('#') && handleClick) {
             handleClick(e, href.substring(1))
         }
 
-        // Sluit de sidebar voor alle links
+        // Close the sidebar for all links
         if (sidebarContext) {
             sidebarContext.close()
         }

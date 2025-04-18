@@ -13,7 +13,7 @@ export function SidebarProvider({ children }: { children: React.ReactNode }) {
     const toggle = () => setIsOpen(!isOpen)
     const close = () => setIsOpen(false)
 
-    // Sluit de sidebar als er op escape wordt gedrukt
+    // Close the sidebar when Escape key is pressed
     React.useEffect(() => {
         const handleEsc = (e: KeyboardEvent) => {
             if (e.key === 'Escape') setIsOpen(false)
@@ -23,15 +23,35 @@ export function SidebarProvider({ children }: { children: React.ReactNode }) {
         return () => window.removeEventListener('keydown', handleEsc)
     }, [])
 
-    // Voorkom scrollen van de body wanneer sidebar open is
+    // Prevent scrolling of the body when sidebar is open
     React.useEffect(() => {
         if (isOpen) {
+            // Save the current scroll position
+            const scrollY = window.scrollY
+            // Add styles to prevent scrolling and keep the body in place
+            document.body.style.position = 'fixed'
+            document.body.style.width = '100%'
+            document.body.style.top = `-${scrollY}px`
             document.body.style.overflow = 'hidden'
         } else {
+            // Restore scrolling and scroll position
+            const scrollY = document.body.style.top
+            document.body.style.position = ''
+            document.body.style.width = ''
+            document.body.style.top = ''
             document.body.style.overflow = ''
+
+            // Restore scroll position if we have one
+            if (scrollY) {
+                window.scrollTo(0, parseInt(scrollY || '0', 10) * -1)
+            }
         }
 
         return () => {
+            // Clean up styles on unmount
+            document.body.style.position = ''
+            document.body.style.width = ''
+            document.body.style.top = ''
             document.body.style.overflow = ''
         }
     }, [isOpen])
@@ -45,7 +65,7 @@ export function SidebarTrigger({ className, ...props }: React.ButtonHTMLAttribut
 
     return (
         <button
-            className={cn("p-2 rounded-md bg-secondary text-secondary-foreground", className)}
+            className={cn("p-2 rounded-md bg-secondary text-secondary-foreground min-w-12 h-10", className)}
             onClick={context.toggle}
             aria-label="Menu openen"
             {...props}
@@ -61,7 +81,7 @@ export function Sidebar({ className, ...props }: React.HTMLAttributes<HTMLDivEle
 
     return (
         <>
-            {/* Overlay achtergrond */}
+            {/* Overlay background */}
             {context.isOpen && (
                 <div
                     className="fixed inset-0 bg-black/50 z-40 backdrop-blur-sm transition-opacity"
@@ -70,7 +90,7 @@ export function Sidebar({ className, ...props }: React.HTMLAttributes<HTMLDivEle
                 />
             )}
 
-            {/* Sidebar zelf */}
+            {/* Sidebar itself */}
             <aside
                 className={cn(
                     "fixed inset-y-0 left-0 w-[80vw] max-w-xs bg-background shadow-xl z-50 transform transition-transform ease-in-out duration-300",

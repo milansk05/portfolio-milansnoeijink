@@ -20,7 +20,7 @@ const Header = () => {
     const [dropdownOpen, setDropdownOpen] = useState(false)
     const dropdownRef = useRef<HTMLDivElement>(null)
 
-    // Effect voor scroll detectie
+    // Effect for scroll detection
     useEffect(() => {
         const handleScroll = () => {
             const isScrolled = window.scrollY > 10
@@ -94,7 +94,7 @@ const Header = () => {
                                 <NavLink href="#certificaten" text="Certificaten" icon={FileText} />
                                 <NavLink href="#portfolio" text="Portfolio" icon={LayoutGrid} />
                                 <NavLink href="#contact" text="Contact" icon={Mail} />
-                                
+
                                 {/* Dropdown menu voor Overig */}
                                 <div className="relative" ref={dropdownRef}>
                                     <button
@@ -104,12 +104,11 @@ const Header = () => {
                                         <MoreHorizontal className="w-4 h-4 mr-1.5" />
                                         <span>Overig</span>
                                         <ChevronDown
-                                            className={`w-4 h-4 ml-1 transition-transform ${
-                                                dropdownOpen ? "rotate-180" : ""
-                                            }`}
+                                            className={`w-4 h-4 ml-1 transition-transform ${dropdownOpen ? "rotate-180" : ""
+                                                }`}
                                         />
                                     </button>
-                                    
+
                                     <AnimatePresence>
                                         {dropdownOpen && (
                                             <motion.div
@@ -120,7 +119,7 @@ const Header = () => {
                                                 className="absolute right-0 mt-2 w-48 rounded-lg shadow-lg bg-card border border-border z-50"
                                             >
                                                 <div className="py-1">
-                                                    <Link 
+                                                    <Link
                                                         href="/changelog"
                                                         className="flex items-center px-4 py-2 text-foreground hover:bg-secondary hover:text-primary transition-colors"
                                                         onClick={() => setDropdownOpen(false)}
@@ -161,7 +160,8 @@ const Header = () => {
                             <span>Contact</span>
                         </Link>
 
-                        <SidebarTrigger className="md:hidden flex items-center justify-center p-2 rounded-md bg-secondary text-secondary-foreground hover:bg-secondary/80 transition-colors z-50" />
+                        {/* Updated with wider SidebarTrigger */}
+                        <SidebarTrigger className="md:hidden flex items-center justify-center p-2 rounded-md bg-secondary text-secondary-foreground hover:bg-secondary/80 transition-colors z-50 min-w-12 h-10" />
 
                         <AppSidebar />
                     </div>

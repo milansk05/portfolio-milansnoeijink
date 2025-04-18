@@ -107,10 +107,10 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children, image }
                                 </div>
 
                                 <div className="flex items-center space-x-2">
-                                    {/* Volledig scherm schakelknop */}
+                                    {/* Volledig scherm schakelknop - Verborgen op mobiel */}
                                     <button
                                         onClick={toggleFullscreen}
-                                        className="text-muted-foreground hover:text-foreground transition-colors h-8 w-8 rounded-full flex items-center justify-center hover:bg-secondary"
+                                        className="hidden md:flex text-muted-foreground hover:text-foreground transition-colors h-8 w-8 rounded-full items-center justify-center hover:bg-secondary"
                                         aria-label={isFullscreen ? "Minimize" : "Maximize"}
                                     >
                                         {isFullscreen ? <Minimize2 size={18} /> : <Maximize2 size={18} />}
@@ -132,8 +132,8 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children, image }
                                 {children}
                             </div>
 
-                            {/* Footer met actieknoppen */}
-                            <div className="p-4 md:p-6 border-t border-border flex justify-between items-center">
+                            {/* Footer met actieknoppen - Verborgen op mobiel */}
+                            <div className="hidden md:flex p-4 md:p-6 border-t border-border justify-between items-center">
                                 <div className="text-xs text-muted-foreground">
                                     <kbd className="px-2 py-1 rounded bg-muted text-muted-foreground border border-border">ESC</kbd>
                                     <span className="ml-1">om te sluiten</span>
