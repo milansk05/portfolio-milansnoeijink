@@ -26,32 +26,15 @@ export function SidebarProvider({ children }: { children: React.ReactNode }) {
     // Prevent scrolling of the body when sidebar is open
     React.useEffect(() => {
         if (isOpen) {
-            // Save the current scroll position
-            const scrollY = window.scrollY
-            // Add styles to prevent scrolling and keep the body in place
-            document.body.style.position = 'fixed'
-            document.body.style.width = '100%'
-            document.body.style.top = `-${scrollY}px`
+            // Add styles to prevent scrolling of the main content
             document.body.style.overflow = 'hidden'
         } else {
-            // Restore scrolling and scroll position
-            const scrollY = document.body.style.top
-            document.body.style.position = ''
-            document.body.style.width = ''
-            document.body.style.top = ''
+            // Restore scrolling
             document.body.style.overflow = ''
-
-            // Restore scroll position if we have one
-            if (scrollY) {
-                window.scrollTo(0, parseInt(scrollY || '0', 10) * -1)
-            }
         }
 
         return () => {
             // Clean up styles on unmount
-            document.body.style.position = ''
-            document.body.style.width = ''
-            document.body.style.top = ''
             document.body.style.overflow = ''
         }
     }, [isOpen])
@@ -93,7 +76,7 @@ export function Sidebar({ className, ...props }: React.HTMLAttributes<HTMLDivEle
             {/* Sidebar itself */}
             <aside
                 className={cn(
-                    "fixed inset-y-0 left-0 w-[80vw] max-w-xs bg-background shadow-xl z-50 transform transition-transform ease-in-out duration-300",
+                    "fixed inset-y-0 left-0 w-[80vw] max-w-xs bg-background shadow-xl z-50 transform transition-transform ease-in-out duration-300 flex flex-col",
                     context.isOpen ? "translate-x-0" : "-translate-x-[105%]",
                     className
                 )}

@@ -45,70 +45,73 @@ export function AppSidebar() {
         <>
             <Sidebar className="md:hidden">
                 <SidebarContent>
-                    <motion.ul
-                        className="space-y-5 pt-2"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ staggerChildren: 0.1, delayChildren: 0.2 }}
-                    >
-                        {pathname !== "/changelog" ? (
-                            <>
-                                <NavItem href="/" label="Home" />
-                                <NavItem href="#overmij" label="Over Mij" handleClick={handleSmoothScroll} />
-                                <NavItem href="#expertise" label="Expertise" handleClick={handleSmoothScroll} />
-                                <NavItem href="#certificaten" label="Certificaten" handleClick={handleSmoothScroll} />
-                                <NavItem href="#portfolio" label="Portfolio" handleClick={handleSmoothScroll} />
-                                <NavItem href="#contact" label="Contact" handleClick={handleSmoothScroll} />
-
-                                {/* Overig dropdown menu */}
-                                <motion.li
-                                    initial={{ x: -20, opacity: 0 }}
-                                    animate={{ x: 0, opacity: 1 }}
-                                    transition={{ duration: 0.3 }}
-                                >
-                                    <button
-                                        onClick={toggleOtherMenu}
-                                        className="flex items-center justify-between py-2 px-3 w-full text-left rounded-lg text-foreground hover:text-primary hover:bg-secondary/50 transition-colors"
+                    <div className="pb-20"> {/* Added padding to ensure the bottom button doesn't overlap content */}
+                        <motion.ul
+                            className="space-y-5 pt-2"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ staggerChildren: 0.1, delayChildren: 0.2 }}
+                        >
+                            {pathname !== "/changelog" ? (
+                                <>
+                                    <NavItem href="/" label="Home" />
+                                    <NavItem href="#overmij" label="Over Mij" handleClick={handleSmoothScroll} />
+                                    <NavItem href="#expertise" label="Expertise" handleClick={handleSmoothScroll} />
+                                    <NavItem href="#certificaten" label="Certificaten" handleClick={handleSmoothScroll} />
+                                    <NavItem href="#portfolio" label="Portfolio" handleClick={handleSmoothScroll} />
+                                    <NavItem href="#contact" label="Contact" handleClick={handleSmoothScroll} />
+                                    
+                                    {/* Overig dropdown menu */}
+                                    <motion.li
+                                        initial={{ x: -20, opacity: 0 }}
+                                        animate={{ x: 0, opacity: 1 }}
+                                        transition={{ duration: 0.3 }}
                                     >
-                                        <div className="flex items-center">
-                                            <MoreHorizontal className="mr-2 h-4 w-4" />
-                                            <span>Overig</span>
-                                        </div>
-                                        <ChevronDown
-                                            className={`h-4 w-4 ml-1 transition-transform ${otherMenuOpen ? "rotate-180" : ""
+                                        <button
+                                            onClick={toggleOtherMenu}
+                                            className="flex items-center justify-between py-2 px-3 w-full text-left rounded-lg text-foreground hover:text-primary hover:bg-secondary/50 transition-colors"
+                                        >
+                                            <div className="flex items-center">
+                                                <MoreHorizontal className="mr-2 h-4 w-4" />
+                                                <span>Overig</span>
+                                            </div>
+                                            <ChevronDown
+                                                className={`h-4 w-4 ml-1 transition-transform ${
+                                                    otherMenuOpen ? "rotate-180" : ""
                                                 }`}
-                                        />
-                                    </button>
+                                            />
+                                        </button>
+                                        
+                                        {otherMenuOpen && (
+                                            <div className="mt-2 ml-5 space-y-1 border-l-2 border-secondary pl-3">
+                                                <Link
+                                                    href="/changelog"
+                                                    onClick={() => {
+                                                        if (sidebarContext) sidebarContext.close();
+                                                    }}
+                                                    className="flex items-center py-2 px-3 rounded-lg text-foreground hover:text-primary hover:bg-secondary/50 transition-colors"
+                                                >
+                                                    <Code className="mr-2 h-4 w-4" />
+                                                    Changelog
+                                                </Link>
+                                                <button
+                                                    onClick={handleAchievementsClick}
+                                                    className="flex items-center py-2 px-3 w-full text-left rounded-lg text-foreground hover:text-primary hover:bg-secondary/50 transition-colors"
+                                                >
+                                                    <Trophy className="mr-2 h-4 w-4" />
+                                                    Achievements
+                                                </button>
+                                            </div>
+                                        )}
+                                    </motion.li>
+                                </>
+                            ) : (
+                                <NavItem href="/" label="⬅️ Terug naar Home" />
+                            )}
+                        </motion.ul>
+                    </div>
 
-                                    {otherMenuOpen && (
-                                        <div className="mt-2 ml-5 space-y-1 border-l-2 border-secondary pl-3">
-                                            <Link
-                                                href="/changelog"
-                                                onClick={() => {
-                                                    if (sidebarContext) sidebarContext.close();
-                                                }}
-                                                className="flex items-center py-2 px-3 rounded-lg text-foreground hover:text-primary hover:bg-secondary/50 transition-colors"
-                                            >
-                                                <Code className="mr-2 h-4 w-4" />
-                                                Changelog
-                                            </Link>
-                                            <button
-                                                onClick={handleAchievementsClick}
-                                                className="flex items-center py-2 px-3 w-full text-left rounded-lg text-foreground hover:text-primary hover:bg-secondary/50 transition-colors"
-                                            >
-                                                <Trophy className="mr-2 h-4 w-4" />
-                                                Achievements
-                                            </button>
-                                        </div>
-                                    )}
-                                </motion.li>
-                            </>
-                        ) : (
-                            <NavItem href="/" label="⬅️ Terug naar Home" />
-                        )}
-                    </motion.ul>
-
-                    <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-border mt-6">
+                    <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-border bg-background">
                         <Link
                             href="#contact"
                             onClick={(e) => handleSmoothScroll(e, "contact")}
