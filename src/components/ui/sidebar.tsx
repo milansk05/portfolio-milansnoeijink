@@ -9,11 +9,12 @@ export const SidebarContext = React.createContext<{
 
 export function SidebarProvider({ children }: { children: React.ReactNode }) {
     const [isOpen, setIsOpen] = React.useState(false)
+    const scrollPositionRef = React.useRef(0)
 
     const toggle = () => setIsOpen(!isOpen)
     const close = () => setIsOpen(false)
 
-    // Close the sidebar when Escape key is pressed
+    // Handle Escape key to close the sidebar
     React.useEffect(() => {
         const handleEsc = (e: KeyboardEvent) => {
             if (e.key === 'Escape') setIsOpen(false)
@@ -23,19 +24,39 @@ export function SidebarProvider({ children }: { children: React.ReactNode }) {
         return () => window.removeEventListener('keydown', handleEsc)
     }, [])
 
-    // Prevent scrolling of the body when sidebar is open
+    // Completely lock background scrolling when sidebar is open
     React.useEffect(() => {
         if (isOpen) {
-            // Add styles to prevent scrolling of the main content
-            document.body.style.overflow = 'hidden'
+            // Store current scroll position
+            scrollPositionRef.current = window.scrollY
+
+            // Apply fixed position to the body
+            document.body.style.position = 'fixed'
+            document.body.style.top = `-${scrollPositionRef.current}px`
+            document.body.style.width = '100%'
+            document.body.style.overflowY = 'scroll' // Prevents layout shift
         } else {
-            // Restore scrolling
-            document.body.style.overflow = ''
+            // Restore position
+            document.body.style.position = ''
+            document.body.style.top = ''
+            document.body.style.width = ''
+            document.body.style.overflowY = ''
+
+            // Restore scroll position
+            window.scrollTo(0, scrollPositionRef.current)
         }
 
         return () => {
-            // Clean up styles on unmount
-            document.body.style.overflow = ''
+            // Cleanup on unmount
+            document.body.style.position = ''
+            document.body.style.top = ''
+            document.body.style.width = ''
+            document.body.style.overflowY = ''
+
+            // Ensure scroll position is restored if component unmounts while sidebar is open
+            if (isOpen) {
+                window.scrollTo(0, scrollPositionRef.current)
+            }
         }
     }, [isOpen])
 
