@@ -32,6 +32,49 @@ const groupCommitsByDate = (commits: Commit[]) => {
     }, {} as Record<string, Commit[]>)
 }
 
+// Get commit type and associated data based on message
+const getCommitType = (message: string): { type: string; color: string; activeColor: string; icon: string } => {
+    const lowerMsg = message.toLowerCase()
+
+    // Feature commits
+    if (lowerMsg.startsWith('feat:') || lowerMsg.includes('feature') || lowerMsg.includes('add') || lowerMsg.includes('nieuwe')) {
+        return {
+            type: 'Feature',
+            color: 'bg-blue-100 text-blue-800 border border-blue-200 dark:bg-blue-900/40 dark:text-blue-300 dark:border-blue-800/60',
+            activeColor: 'bg-blue-500 text-white',
+            icon: '✨'
+        }
+    }
+
+    // Fix commits
+    if (lowerMsg.startsWith('fix:') || lowerMsg.includes('bug') || lowerMsg.includes('issue')) {
+        return {
+            type: 'Fix',
+            color: 'bg-rose-100 text-rose-800 border border-rose-200 dark:bg-rose-900/40 dark:text-rose-300 dark:border-rose-800/60',
+            activeColor: 'bg-rose-500 text-white',
+            icon: '🐛'
+        }
+    }
+
+    // Update/refactor commits
+    if (lowerMsg.startsWith('refactor:') || lowerMsg.startsWith('update:') || lowerMsg.includes('improve') || lowerMsg.includes('refactor')) {
+        return {
+            type: 'Update',
+            color: 'bg-amber-100 text-amber-800 border border-amber-200 dark:bg-amber-900/40 dark:text-amber-300 dark:border-amber-800/60',
+            activeColor: 'bg-amber-500 text-white',
+            icon: '🔄'
+        }
+    }
+
+    // Default for other commit types
+    return {
+        type: 'Change',
+        color: 'bg-slate-100 text-slate-800 border border-slate-200 dark:bg-slate-800/80 dark:text-slate-300 dark:border-slate-700',
+        activeColor: 'bg-slate-500 text-white',
+        icon: '📝'
+    }
+}
+
 const Changelog = () => {
     const [commits, setCommits] = useState<Commit[]>([])
     const [filteredCommits, setFilteredCommits] = useState<Commit[]>([])
@@ -71,23 +114,20 @@ const Changelog = () => {
 
         if (activeFilter) {
             if (activeFilter === 'feature') {
-                results = results.filter(commit =>
-                    commit.commit.message.toLowerCase().includes('feature') ||
-                    commit.commit.message.toLowerCase().includes('add') ||
-                    commit.commit.message.toLowerCase().includes('nieuwe')
-                )
+                results = results.filter(commit => {
+                    const msg = commit.commit.message.toLowerCase()
+                    return msg.startsWith('feat:') || msg.includes('feature') || msg.includes('add') || msg.includes('nieuwe')
+                })
             } else if (activeFilter === 'fix') {
-                results = results.filter(commit =>
-                    commit.commit.message.toLowerCase().includes('fix') ||
-                    commit.commit.message.toLowerCase().includes('bug') ||
-                    commit.commit.message.toLowerCase().includes('issue')
-                )
+                results = results.filter(commit => {
+                    const msg = commit.commit.message.toLowerCase()
+                    return msg.startsWith('fix:') || msg.includes('bug') || msg.includes('issue')
+                })
             } else if (activeFilter === 'update') {
-                results = results.filter(commit =>
-                    commit.commit.message.toLowerCase().includes('update') ||
-                    commit.commit.message.toLowerCase().includes('improve') ||
-                    commit.commit.message.toLowerCase().includes('refactor')
-                )
+                results = results.filter(commit => {
+                    const msg = commit.commit.message.toLowerCase()
+                    return msg.startsWith('refactor:') || msg.startsWith('update:') || msg.includes('improve') || msg.includes('refactor')
+                })
             }
         }
 
@@ -98,34 +138,17 @@ const Changelog = () => {
     const commitCount = filteredCommits.length
     const totalCommits = commits.length
 
-    const getCommitTypeColor = (message: string) => {
-        const lowerMsg = message.toLowerCase()
-        if (lowerMsg.includes('feature') || lowerMsg.includes('add') || lowerMsg.includes('nieuwe')) {
-            return 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300'
-        } else if (lowerMsg.includes('fix') || lowerMsg.includes('bug') || lowerMsg.includes('issue')) {
-            return 'bg-rose-100 text-rose-800 dark:bg-rose-900/30 dark:text-rose-300'
-        } else if (lowerMsg.includes('update') || lowerMsg.includes('improve') || lowerMsg.includes('refactor')) {
-            return 'bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-300'
-        }
-        return 'bg-slate-100 text-slate-800 dark:bg-slate-800 dark:text-slate-300'
-    }
-
-    const getCommitTypeIcon = (message: string) => {
-        const lowerMsg = message.toLowerCase()
-        if (lowerMsg.includes('feature') || lowerMsg.includes('add') || lowerMsg.includes('nieuwe')) {
-            return '✨'
-        } else if (lowerMsg.includes('fix') || lowerMsg.includes('bug') || lowerMsg.includes('issue')) {
-            return '🐛'
-        } else if (lowerMsg.includes('update') || lowerMsg.includes('improve') || lowerMsg.includes('refactor')) {
-            return '🔄'
-        }
-        return '📝'
-    }
-
     const clearFiltersAndSearch = () => {
         setActiveFilter(null)
         setSearchTerm("")
     }
+
+    // Filter buttons configuration
+    const filterButtons = [
+        { id: 'feature', label: '✨ Features', activeClass: 'bg-blue-500 text-white' },
+        { id: 'fix', label: '🐛 Fixes', activeClass: 'bg-rose-500 text-white' },
+        { id: 'update', label: '🔄 Updates', activeClass: 'bg-amber-500 text-white' }
+    ]
 
     return (
         <ThemeTransitionWrapper>
@@ -171,51 +194,36 @@ const Changelog = () => {
                                         placeholder="Zoek in commits..."
                                         value={searchTerm}
                                         onChange={(e) => setSearchTerm(e.target.value)}
-                                        className="w-full pl-10 pr-10 py-2 rounded-lg bg-secondary text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+                                        className="w-full pl-10 pr-10 py-2 rounded-lg bg-secondary text-foreground focus:outline-none focus:ring-2 focus:ring-primary transition-all"
                                     />
                                     {searchTerm && (
                                         <button
                                             onClick={() => setSearchTerm("")}
                                             className="absolute inset-y-0 right-0 pr-3 flex items-center"
                                         >
-                                            <X className="h-5 w-5 text-muted-foreground hover:text-foreground" />
+                                            <X className="h-5 w-5 text-muted-foreground hover:text-foreground transition-colors" />
                                         </button>
                                     )}
                                 </div>
 
                                 <div className="flex gap-2 flex-wrap">
-                                    <button
-                                        onClick={() => setActiveFilter(activeFilter === 'feature' ? null : 'feature')}
-                                        className={`px-3 py-2 rounded-lg text-sm flex items-center gap-1 ${activeFilter === 'feature'
-                                                ? 'bg-blue-500 text-white'
-                                                : 'bg-secondary text-secondary-foreground hover:bg-secondary/80'
-                                            }`}
-                                    >
-                                        <span>✨ Features</span>
-                                    </button>
-                                    <button
-                                        onClick={() => setActiveFilter(activeFilter === 'fix' ? null : 'fix')}
-                                        className={`px-3 py-2 rounded-lg text-sm flex items-center gap-1 ${activeFilter === 'fix'
-                                                ? 'bg-rose-500 text-white'
-                                                : 'bg-secondary text-secondary-foreground hover:bg-secondary/80'
-                                            }`}
-                                    >
-                                        <span>🐛 Fixes</span>
-                                    </button>
-                                    <button
-                                        onClick={() => setActiveFilter(activeFilter === 'update' ? null : 'update')}
-                                        className={`px-3 py-2 rounded-lg text-sm flex items-center gap-1 ${activeFilter === 'update'
-                                                ? 'bg-amber-500 text-white'
-                                                : 'bg-secondary text-secondary-foreground hover:bg-secondary/80'
-                                            }`}
-                                    >
-                                        <span>🔄 Updates</span>
-                                    </button>
+                                    {filterButtons.map(button => (
+                                        <button
+                                            key={button.id}
+                                            onClick={() => setActiveFilter(activeFilter === button.id ? null : button.id)}
+                                            className={`px-3 py-2 rounded-lg text-sm flex items-center gap-1 transition-all shadow-sm ${activeFilter === button.id
+                                                    ? button.activeClass
+                                                    : 'bg-secondary text-secondary-foreground hover:bg-secondary/80'
+                                                }`}
+                                        >
+                                            <span>{button.label}</span>
+                                        </button>
+                                    ))}
 
                                     {(activeFilter || searchTerm) && (
                                         <button
                                             onClick={clearFiltersAndSearch}
-                                            className="px-3 py-2 rounded-lg text-sm bg-secondary text-secondary-foreground hover:bg-secondary/80 flex items-center gap-1"
+                                            className="px-3 py-2 rounded-lg text-sm bg-secondary text-secondary-foreground hover:bg-secondary/80 flex items-center gap-1 transition-all"
                                         >
                                             <Filter className="h-4 w-4" />
                                             <span>Wis filters</span>
@@ -257,7 +265,7 @@ const Changelog = () => {
                             <p className="text-muted-foreground mb-6">Er is een probleem opgetreden bij het ophalen van de commit geschiedenis.</p>
                             <Link
                                 href="/"
-                                className="inline-flex items-center justify-center px-5 py-2 border border-transparent text-base font-medium rounded-md text-white bg-primary hover:bg-primary/90"
+                                className="inline-flex items-center justify-center px-5 py-2 border border-transparent text-base font-medium rounded-md text-white bg-primary hover:bg-primary/90 transition-all"
                             >
                                 Terug naar home
                             </Link>
@@ -310,59 +318,62 @@ const Changelog = () => {
                                     </div>
 
                                     <ul className="divide-y divide-border">
-                                        {dateCommits.map((commit, commitIndex) => (
-                                            <motion.li
-                                                key={commit.sha}
-                                                initial={{ opacity: 0 }}
-                                                animate={{ opacity: 1 }}
-                                                transition={{ delay: 0.1 + commitIndex * 0.05 }}
-                                                className="group hover:bg-muted/50 transition-colors"
-                                            >
-                                                <div className="px-6 py-4">
-                                                    <div className="flex items-start justify-between">
-                                                        <div className="flex items-start gap-3">
-                                                            <div className="flex-shrink-0 mt-1">
-                                                                <div className="w-8 h-8 flex items-center justify-center rounded-full bg-secondary/70 text-xl">
-                                                                    {getCommitTypeIcon(commit.commit.message)}
+                                        {dateCommits.map((commit, commitIndex) => {
+                                            // Get commit type data
+                                            const commitTypeData = getCommitType(commit.commit.message);
+
+                                            return (
+                                                <motion.li
+                                                    key={commit.sha}
+                                                    initial={{ opacity: 0 }}
+                                                    animate={{ opacity: 1 }}
+                                                    transition={{ delay: 0.1 + commitIndex * 0.05 }}
+                                                    className="group hover:bg-muted/50 transition-colors"
+                                                >
+                                                    <div className="px-6 py-4">
+                                                        <div className="flex items-start justify-between">
+                                                            <div className="flex items-start gap-3">
+                                                                <div className="flex-shrink-0 mt-1">
+                                                                    <div className="w-8 h-8 flex items-center justify-center rounded-full bg-secondary/70 text-xl">
+                                                                        {commitTypeData.icon}
+                                                                    </div>
+                                                                </div>
+                                                                <div>
+                                                                    <a
+                                                                        href={commit.html_url}
+                                                                        target="_blank"
+                                                                        rel="noopener noreferrer"
+                                                                        className="text-accent-foreground font-medium hover:text-primary hover:underline flex items-center gap-1 group"
+                                                                    >
+                                                                        {commit.commit.message}
+                                                                        <Link2 className="h-3.5 w-3.5 opacity-0 group-hover:opacity-100 transition-opacity" />
+                                                                    </a>
+                                                                    <div className="flex items-center gap-3 mt-1.5 flex-wrap">
+                                                                        <span className="text-sm text-muted-foreground">
+                                                                            <span className="font-medium">{commit.commit.author.name}</span>
+                                                                        </span>
+                                                                        <span className={`text-xs px-2 py-0.5 rounded-full ${commitTypeData.color} font-medium`}>
+                                                                            {commitTypeData.type}
+                                                                        </span>
+                                                                    </div>
                                                                 </div>
                                                             </div>
-                                                            <div>
+                                                            <div className="flex items-center">
                                                                 <a
                                                                     href={commit.html_url}
                                                                     target="_blank"
                                                                     rel="noopener noreferrer"
-                                                                    className="text-accent-foreground font-medium hover:text-primary hover:underline flex items-center gap-1 group"
+                                                                    className="flex items-center gap-1.5 text-xs bg-secondary hover:bg-secondary/70 text-secondary-foreground px-3 py-1.5 rounded-full transition-colors shadow-sm"
                                                                 >
-                                                                    {commit.commit.message}
-                                                                    <Link2 className="h-3.5 w-3.5 opacity-0 group-hover:opacity-100 transition-opacity" />
+                                                                    <GitCommit className="h-3.5 w-3.5" />
+                                                                    <code>{commit.sha.slice(0, 7)}</code>
                                                                 </a>
-                                                                <div className="flex items-center gap-3 mt-1.5">
-                                                                    <span className="text-sm text-muted-foreground">
-                                                                        <span className="font-medium">{commit.commit.author.name}</span>
-                                                                    </span>
-                                                                    <span className={`text-xs px-2 py-0.5 rounded-full ${getCommitTypeColor(commit.commit.message)}`}>
-                                                                        {commit.commit.message.toLowerCase().includes('feature') || commit.commit.message.toLowerCase().includes('add') ? 'Feature' :
-                                                                            commit.commit.message.toLowerCase().includes('fix') || commit.commit.message.toLowerCase().includes('bug') ? 'Fix' :
-                                                                                commit.commit.message.toLowerCase().includes('update') || commit.commit.message.toLowerCase().includes('improve') ? 'Update' : 'Change'}
-                                                                    </span>
-                                                                </div>
                                                             </div>
                                                         </div>
-                                                        <div className="flex items-center">
-                                                            <a
-                                                                href={commit.html_url}
-                                                                target="_blank"
-                                                                rel="noopener noreferrer"
-                                                                className="flex items-center gap-1.5 text-xs bg-secondary hover:bg-secondary/70 text-secondary-foreground px-3 py-1.5 rounded-full transition-colors"
-                                                            >
-                                                                <GitCommit className="h-3.5 w-3.5" />
-                                                                <code>{commit.sha.slice(0, 7)}</code>
-                                                            </a>
-                                                        </div>
                                                     </div>
-                                                </div>
-                                            </motion.li>
-                                        ))}
+                                                </motion.li>
+                                            )
+                                        })}
                                     </ul>
                                 </motion.div>
                             ))}

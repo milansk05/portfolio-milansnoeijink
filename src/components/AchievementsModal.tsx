@@ -22,7 +22,7 @@ export interface Achievement {
 const defaultAchievements: Achievement[] = [
     {
         id: "easter-egg",
-        title: "Miauw?",
+        title: "Favourite vierpoot!",
         description: "Je hebt de geheime kat gevonden!",
         icon: "😸",
         unlocked: false,
