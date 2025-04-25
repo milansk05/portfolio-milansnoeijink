@@ -54,18 +54,28 @@ const projects: Project[] = [
     },
     {
         id: 2,
-        title: "Komt binnenkort...",
-        description: "",
-        image: "",
+        title: "Headless WordPress met Next.js",
+        description: "Moderne headless CMS-oplossing waarbij WordPress als backend fungeert en Next.js als frontend.",
+        image: "/images/headless-wordpress_voorbeeld.png",
         category: "web",
+        repoUrl: "https://github.com/milansk05/headless-wp",
+        liveUrl: "",
         details: {
             description:
-                "Komt binnenkort...",
-            technologies: [],
+                "Deze website is ontwikkeld als een moderne headless CMS-oplossing waarbij WordPress als backend fungeert en Next.js als frontend. Het is een volledig responsive applicatie die geavanceerde web development technieken en best practices demonstreert.",
+            technologies: ["Next.js", "React", "GraphQL", "Tailwind CSS", "WordPress (headless)"],
             features: [
+                "Responsive design voor alle schermformaten",
+                "Dynamisch content management via WordPress",
+                "Server-side rendering en statische generatie voor optimale prestaties",
+                "GraphQL API-integratie voor efficiënte data-uitwisseling",
+                "Geavanceerde componenten zoals blogposts, categoriefiltering en reactiesysteem",
+                "Contactformulier met serverless functies",
+                "SEO geoptimaliseerd",
+                "Gebruiksvriendelijke interface met moderne UI/UX principes",
             ],
             implementation:
-                "",
+                "De website is gebouwd met Next.js voor server-side rendering en optimale prestaties. React wordt gebruikt voor de UI-componenten, terwijl GraphQL zorgt voor efficiënte datacommunicatie met WordPress. TailwindCSS zorgt voor consistente styling en responsiviteit. Het project demonstreert hoe je de kracht van WordPress CMS kunt combineren met de snelheid en flexibiliteit van een moderne JavaScript frontend.",
         },
     },
     {
