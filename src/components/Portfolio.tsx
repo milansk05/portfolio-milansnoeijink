@@ -62,20 +62,26 @@ const projects: Project[] = [
         liveUrl: "",
         details: {
             description:
-                "Deze website is ontwikkeld als een moderne headless CMS-oplossing waarbij WordPress als backend fungeert en Next.js als frontend. Het is een volledig responsive applicatie die geavanceerde web development technieken en best practices demonstreert.",
-            technologies: ["Next.js", "React", "GraphQL", "Tailwind CSS", "WordPress (headless)"],
+                "Deze website is ontwikkeld als een moderne headless CMS-oplossing waarbij WordPress als backend fungeert en Next.js als frontend. Het is een volledig responsive applicatie die geavanceerde web development technieken demonstreert, met speciale aandacht voor gebruikerservaring en prestaties.",
+            technologies: ["Next.js", "React", "GraphQL", "Framer Motion", "Tailwind CSS", "WordPress (headless)"],
             features: [
-                "Responsive design voor alle schermformaten",
+                "Responsive design met adaptieve navigatie voor alle apparaten",
                 "Dynamisch content management via WordPress",
                 "Server-side rendering en statische generatie voor optimale prestaties",
                 "GraphQL API-integratie voor efficiënte data-uitwisseling",
-                "Geavanceerde componenten zoals blogposts, categoriefiltering en reactiesysteem",
+                "Bookmark/favorieten systeem met lokale opslag",
+                "Automatisch gegenereerde inhoudsopgave voor lange artikelen",
+                "Gerelateerde posts en content suggesties",
+                "Geavanceerde mega menu's en navigatie-opties",
+                "Social media sharing integratie",
+                "Leesvoortgangsindicator en leestijdschatting",
+                "Geoptimaliseerde afbeeldingsweergave en lazy loading",
+                "SEO geoptimaliseerd met meta tags en structured data",
                 "Contactformulier met serverless functies",
-                "SEO geoptimaliseerd",
-                "Gebruiksvriendelijke interface met moderne UI/UX principes",
+                "Interactieve UI elementen met Framer Motion animaties"
             ],
             implementation:
-                "De website is gebouwd met Next.js voor server-side rendering en optimale prestaties. React wordt gebruikt voor de UI-componenten, terwijl GraphQL zorgt voor efficiënte datacommunicatie met WordPress. TailwindCSS zorgt voor consistente styling en responsiviteit. Het project demonstreert hoe je de kracht van WordPress CMS kunt combineren met de snelheid en flexibiliteit van een moderne JavaScript frontend.",
+                "De website is gebouwd met Next.js 15.3 voor server-side rendering en optimale prestaties. React 19 wordt gebruikt voor de UI-componenten, terwijl GraphQL zorgt voor efficiënte datacommunicatie met WordPress. TailwindCSS 4.1 met een uitgebreide typografie configuratie zorgt voor consistente styling en responsiviteit. Het project bevat geavanceerde componenten zoals een adaptieve header, geanimeerde menu's, een bookmark systeem en automatische inhoudsopgave generatie. Framer Motion zorgt voor vloeiende animaties en overgangen, waardoor de gebruikerservaring wordt verbeterd. De applicatie demonstreert hoe je de kracht van WordPress CMS kunt combineren met de snelheid en flexibiliteit van een moderne JavaScript frontend.",
         },
     },
     {
