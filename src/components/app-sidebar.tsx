@@ -6,7 +6,7 @@ import { smoothScroll } from "@/utils/smoothScroll"
 import { useState, useEffect, useContext } from "react"
 import { usePathname } from "next/navigation"
 import { motion } from "framer-motion"
-import { Trophy, MoreHorizontal, Code, ChevronDown } from "lucide-react"
+import { Trophy, MoreHorizontal, Code, ChevronDown, GitBranch } from "lucide-react"
 import AchievementsModal from "./AchievementsModal"
 
 export function AppSidebar() {
@@ -94,6 +94,18 @@ export function AppSidebar() {
                                                     <Code className="mr-2 h-4 w-4" />
                                                     Changelog
                                                 </Link>
+                                                <a
+                                                    href="https://github.com/users/milansk05/projects/4"
+                                                    target="_blank" 
+                                                    rel="noopener noreferrer"
+                                                    onClick={() => {
+                                                        if (sidebarContext) sidebarContext.close();
+                                                    }}
+                                                    className="flex items-center py-2 px-3 rounded-lg text-foreground hover:text-primary hover:bg-secondary/50 transition-colors"
+                                                >
+                                                    <GitBranch className="mr-2 h-4 w-4" />
+                                                    Roadmap Portfolio
+                                                </a>
                                                 <button
                                                     onClick={handleAchievementsClick}
                                                     className="flex items-center py-2 px-3 w-full text-left rounded-lg text-foreground hover:text-primary hover:bg-secondary/50 transition-colors"

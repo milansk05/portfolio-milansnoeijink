@@ -8,7 +8,7 @@ import { AppSidebar } from "@/components/app-sidebar"
 import { smoothScroll } from "@/utils/smoothScroll"
 import DarkModeToggle from "./DarkModeToggle"
 import { motion, AnimatePresence } from "framer-motion"
-import { Code, Home, User, Briefcase, FileText, LayoutGrid, Mail, Trophy, ChevronDown, MoreHorizontal } from "lucide-react"
+import { Code, Home, User, Briefcase, FileText, LayoutGrid, Mail, Trophy, ChevronDown, MoreHorizontal, GitBranch } from "lucide-react"
 import Image from "next/image"
 import AchievementsModal from "./AchievementsModal"
 
@@ -127,6 +127,16 @@ const Header = () => {
                                                         <Code className="w-4 h-4 mr-2" />
                                                         <span>Changelog</span>
                                                     </Link>
+                                                    <a
+                                                        href="https://github.com/users/milansk05/projects/4"
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                        className="flex items-center px-4 py-2 text-foreground hover:bg-secondary hover:text-primary transition-colors"
+                                                        onClick={() => setDropdownOpen(false)}
+                                                    >
+                                                        <GitBranch className="w-4 h-4 mr-2" />
+                                                        <span>Roadmap Portfolio</span>
+                                                    </a>
                                                     <button
                                                         onClick={() => {
                                                             setShowAchievements(true);
