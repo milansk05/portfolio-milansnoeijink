@@ -86,20 +86,30 @@ const projects: Project[] = [
     },
     {
         id: 3,
-        title: "Komt binnenkort...",
-        description: "",
-        image: "",
+        title: "Binsta - Instagram voor code",
+        description: "Een sociaal platform waar programmeurs code snippets kunnen delen, liken en becommentariëren.",
+        image: "/images/binsta_inlog.png",
         category: "web",
+        repoUrl: "https://github.com/milansk05/Binsta",
         details: {
             description:
-                "Komt binnenkort...",
-            technologies: [],
+                "Binsta is een socialmediaplatform specifiek voor programmeurs, geïnspireerd op Instagram. Het stelt gebruikers in staat om code snippets te delen met syntax highlighting, deze te liken en er reacties op te plaatsen. Het platform heeft een modern, donker thema en is volledig responsive voor alle apparaten.",
+            technologies: ["PHP", "MySQL", "RedBeanPHP", "Twig", "JavaScript", "CSS", "Highlight.js"],
             features: [
+                "Gebruikersregistratie en authenticatie",
+                "Code snippets delen met syntax highlighting voor 15+ programmeertalen",
+                "Like en reactie systeem",
+                "Responsive interface voor desktop en mobiel",
+                "Modern donker thema specifiek voor code weergave",
+                "Profiel pagina's met statistieken over taalgebruik",
+                "Zoekfunctie voor gebruikers",
+                "Kopieer-functie voor code snippets",
+                "Persoonlijke feed met recente posts"
             ],
             implementation:
-                "",
+                "Binsta is ontwikkeld met PHP en maakt gebruik van RedBeanPHP als ORM voor databasebeheer. De front-end is gebouwd met Twig als template engine, met JavaScript voor interactieve elementen zoals het like-systeem en code highlighting. De applicatie heeft een MVC-structuur met controllers voor verschillende functies zoals posts, gebruikers en authenticatie. Highlight.js zorgt voor professionele syntax highlighting van code in verschillende programmeertalen. Het ontwerp is geoptimaliseerd voor leesbaarheid van code met een donker thema en gebruikt moderne CSS-technieken voor een responsieve layout.",
         },
-    },
+    }
 ]
 
 const filterCategories = [
