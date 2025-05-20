@@ -6,7 +6,19 @@ import { smoothScroll } from "@/utils/smoothScroll"
 import { useState, useEffect, useContext } from "react"
 import { usePathname } from "next/navigation"
 import { motion } from "framer-motion"
-import { Trophy, MoreHorizontal, Code, ChevronDown, GitBranch } from "lucide-react"
+import {
+    Trophy,
+    MoreHorizontal,
+    Code,
+    ChevronDown,
+    GitBranch,
+    Home,
+    User,
+    Briefcase,
+    FileText,
+    LayoutGrid,
+    Mail
+} from "lucide-react"
 import AchievementsModal from "./AchievementsModal"
 
 export function AppSidebar() {
@@ -23,6 +35,7 @@ export function AppSidebar() {
     if (!mounted) return null
 
     const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>, targetId: string) => {
+        e.preventDefault() // Ensure the default behavior is prevented
         smoothScroll(e, targetId)
         // Close the sidebar when a link is clicked
         if (sidebarContext) {
@@ -54,13 +67,42 @@ export function AppSidebar() {
                         >
                             {pathname !== "/changelog" ? (
                                 <>
-                                    <NavItem href="/" label="Home" />
-                                    <NavItem href="#overmij" label="Over Mij" handleClick={handleSmoothScroll} />
-                                    <NavItem href="#expertise" label="Expertise" handleClick={handleSmoothScroll} />
-                                    <NavItem href="#certificaten" label="Certificaten" handleClick={handleSmoothScroll} />
-                                    <NavItem href="#portfolio" label="Portfolio" handleClick={handleSmoothScroll} />
-                                    <NavItem href="#contact" label="Contact" handleClick={handleSmoothScroll} />
-                                    
+                                    <MobileNavLink
+                                        href="/"
+                                        label="Home"
+                                        icon={Home}
+                                    />
+                                    <MobileNavLink
+                                        href="#overmij"
+                                        label="Over mij"
+                                        icon={User}
+                                        handleClick={handleSmoothScroll}
+                                    />
+                                    <MobileNavLink
+                                        href="#expertise"
+                                        label="Expertise"
+                                        icon={Briefcase}
+                                        handleClick={handleSmoothScroll}
+                                    />
+                                    <MobileNavLink
+                                        href="#certificaten"
+                                        label="Certificaten"
+                                        icon={FileText}
+                                        handleClick={handleSmoothScroll}
+                                    />
+                                    <MobileNavLink
+                                        href="#portfolio"
+                                        label="Portfolio"
+                                        icon={LayoutGrid}
+                                        handleClick={handleSmoothScroll}
+                                    />
+                                    <MobileNavLink
+                                        href="#contact"
+                                        label="Contact"
+                                        icon={Mail}
+                                        handleClick={handleSmoothScroll}
+                                    />
+
                                     {/* Overig dropdown menu */}
                                     <motion.li
                                         initial={{ x: -20, opacity: 0 }}
@@ -76,12 +118,11 @@ export function AppSidebar() {
                                                 <span>Overig</span>
                                             </div>
                                             <ChevronDown
-                                                className={`h-4 w-4 ml-1 transition-transform ${
-                                                    otherMenuOpen ? "rotate-180" : ""
-                                                }`}
+                                                className={`h-4 w-4 ml-1 transition-transform ${otherMenuOpen ? "rotate-180" : ""
+                                                    }`}
                                             />
                                         </button>
-                                        
+
                                         {otherMenuOpen && (
                                             <div className="mt-2 ml-5 space-y-1 border-l-2 border-secondary pl-3">
                                                 <Link
@@ -96,7 +137,7 @@ export function AppSidebar() {
                                                 </Link>
                                                 <a
                                                     href="https://github.com/users/milansk05/projects/4"
-                                                    target="_blank" 
+                                                    target="_blank"
                                                     rel="noopener noreferrer"
                                                     onClick={() => {
                                                         if (sidebarContext) sidebarContext.close();
@@ -118,7 +159,7 @@ export function AppSidebar() {
                                     </motion.li>
                                 </>
                             ) : (
-                                <NavItem href="/" label="⬅️ Terug naar Home" />
+                                <MobileNavLink href="/" label="⬅️ Terug naar Home" icon={Home} />
                             )}
                         </motion.ul>
                     </div>
@@ -141,24 +182,27 @@ export function AppSidebar() {
     )
 }
 
-type NavItemProps = {
+type MobileNavLinkProps = {
     href: string
     label: string
+    icon: React.ComponentType<{ className?: string }>
     handleClick?: (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>, targetId: string) => void
 }
 
-function NavItem({ href, label, handleClick }: NavItemProps) {
+function MobileNavLink({ href, label, icon: Icon, handleClick }: MobileNavLinkProps) {
     const sidebarContext = useContext(SidebarContext)
+    const [isHovered, setIsHovered] = useState(false)
 
-    const handleClick2 = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+    const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
         // Specific logic for anchor links
         if (href.startsWith('#') && handleClick) {
             handleClick(e, href.substring(1))
-        }
-
-        // Close the sidebar for all links
-        if (sidebarContext) {
-            sidebarContext.close()
+        } else if (!href.startsWith('#')) {
+            // For non-anchor links, let the default behavior work
+            // but still close the sidebar
+            if (sidebarContext) {
+                sidebarContext.close()
+            }
         }
     }
 
@@ -170,10 +214,23 @@ function NavItem({ href, label, handleClick }: NavItemProps) {
         >
             <Link
                 href={href}
-                onClick={handleClick2}
+                onClick={handleLinkClick}
                 className="flex items-center py-2 px-3 rounded-lg text-foreground hover:text-primary hover:bg-secondary/50 transition-colors"
+                onMouseEnter={() => setIsHovered(true)}
+                onMouseLeave={() => setIsHovered(false)}
             >
-                {label}
+                <Icon className={`w-4 h-4 mr-2 transition-transform duration-300 ${isHovered ? 'scale-125' : 'scale-100'}`} />
+                <span>{label}</span>
+                {isHovered && (
+                    <motion.div
+                        className="absolute inset-0 bg-secondary/50 rounded-lg -z-10"
+                        layoutId="navBackground"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.2 }}
+                    />
+                )}
             </Link>
         </motion.li>
     )

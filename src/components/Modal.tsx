@@ -83,9 +83,9 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children, image }
                                 flex flex-col`}
                         >
                             {/* Header met titel en sluitknoppen */}
-                            <div className="flex justify-between items-center p-4 md:p-6 border-b border-border bg-gradient-to-r from-card to-secondary/30">
-                                <div className="flex items-center space-x-3">
-                                    <div className="h-8 w-8 rounded-full overflow-hidden bg-primary/10 flex items-center justify-center">
+                            <div className="flex justify-between items-center p-3 md:p-6 border-b border-border bg-gradient-to-r from-card to-secondary/30">
+                                <div className="flex items-center space-x-3 max-w-[calc(100%-80px)]">
+                                    <div className="h-8 w-8 flex-shrink-0 rounded-full overflow-hidden bg-primary/10 flex items-center justify-center">
                                         {image ? (
                                             <Image
                                                 src="/favicon.ico"
@@ -103,10 +103,10 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children, image }
                                             />
                                         )}
                                     </div>
-                                    <h2 className="text-xl md:text-2xl font-bold truncate">{title}</h2>
+                                    <h2 className="text-lg md:text-2xl font-bold truncate">{title}</h2>
                                 </div>
 
-                                <div className="flex items-center space-x-2">
+                                <div className="flex items-center space-x-2 flex-shrink-0">
                                     {/* Volledig scherm schakelknop - Verborgen op mobiel */}
                                     <button
                                         onClick={toggleFullscreen}

@@ -1,11 +1,12 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { motion } from "framer-motion"
 import Image from "next/image"
 import Modal from "@/components/Modal"
 import TechnologyBadge from "@/components/TechnologyBadge"
-import { Github, ExternalLink, ArrowRight } from "lucide-react"
+import DiagramCarousel from "@/components/DiagramCarousel"
+import { Github, ExternalLink, ArrowRight, ChevronLeft, ChevronRight } from "lucide-react"
 
 // Project type definitie
 type ProjectCategory = "all" | "web" | "mobile" | "design" | "other"
@@ -23,6 +24,7 @@ interface Project {
         technologies: string[]
         features: string[]
         implementation: string
+        images?: string[] // Array of image paths for carousel
     }
 }
 
@@ -109,14 +111,45 @@ const projects: Project[] = [
             implementation:
                 "Binsta is ontwikkeld met PHP en maakt gebruik van RedBeanPHP als ORM voor databasebeheer. De front-end is gebouwd met Twig als template engine, met JavaScript voor interactieve elementen zoals het like-systeem en code highlighting. De applicatie heeft een MVC-structuur met controllers voor verschillende functies zoals posts, gebruikers en authenticatie. Highlight.js zorgt voor professionele syntax highlighting van code in verschillende programmeertalen. Het ontwerp is geoptimaliseerd voor leesbaarheid van code met een donker thema en gebruikt moderne CSS-technieken voor een responsieve layout.",
         },
+    },
+    {
+        id: 4,
+        title: "UML Diagram Collectie",
+        description: "Diverse UML-diagrammen ontwikkeld tijdens mijn opleiding, van klassendiagrammen tot sequentiediagrammen",
+        image: "/images/klassendiagram.png",
+        category: "design",
+        repoUrl: "",
+        details: {
+            description:
+                "Tijdens mijn opleiding heb ik verschillende UML-diagrammen gemaakt om softwaresystemen te modelleren en te documenteren. Deze collectie toont mijn vaardigheid in het toepassen van verschillende UML-technieken, van structurele klassendiagrammen tot dynamische sequentie- en activiteitendiagrammen.",
+            technologies: ["UML 2.5", "PlantUML", "Enterprise Architect", "Draw.io", "Visual Paradigm"],
+            features: [
+                "Klassendiagrammen voor het visualiseren van objectgeoriënteerde systemen",
+                "State diagrammen voor het modelleren van objecttoestanden en overgangen",
+                "Activiteitendiagrammen voor het in kaart brengen van processen en workflows",
+                "Deploymentdiagrammen voor het specificeren van hardware- en softwareconfiguraties",
+                "Sequentiediagrammen voor het modelleren van object interacties",
+                "Use Case diagrammen voor het documenteren van systeemfunctionaliteiten"
+            ],
+            implementation:
+                "De diagrammen zijn gemaakt met verschillende tools, waaronder Enterprise Architect en Visual Paradigm. Ze zijn ontwikkeld als onderdeel van diverse studieopdrachten en projecten om softwareontwerp en -architectuur te documenteren. De UML-technieken heb ik toegepast om zowel bestaande systemen te analyseren als nieuwe systemen te ontwerpen. De diagrammen tonen mijn vaardigheid in het conceptualiseren en visualiseren van complexe softwaresystemen.",
+            images: [
+                "/images/state_diagram.png",
+                "/images/klassendiagram.png",
+                "/images/sequence_diagram.png",
+                "/images/afrekenproces-diagram.png",
+                "/images/use_case_diagram.png",
+                "/images/deployment-diagram.png"
+            ]
+        },
     }
 ]
 
 const filterCategories = [
     { value: "all", label: "Alles" },
     { value: "web", label: "Web Development" },
-    { value: "mobile", label: "Mobile Apps" },
     { value: "design", label: "Design" },
+    { value: "mobile", label: "Mobile Apps" },
     { value: "other", label: "Overig" }
 ]
 
@@ -125,12 +158,36 @@ const Portfolio = () => {
     const [activeCategory, setActiveCategory] = useState<ProjectCategory>("all")
     const [loading, setLoading] = useState(true)
     const [showEmptyProjects, setShowEmptyProjects] = useState(true)
+    const [currentImageIndex, setCurrentImageIndex] = useState(0)
 
     useEffect(() => {
         // Simuleer laadtijd voor data
         const timer = setTimeout(() => setLoading(false), 500)
         return () => clearTimeout(timer)
     }, [])
+
+    // Reset carousel index when project changes
+    useEffect(() => {
+        setCurrentImageIndex(0)
+    }, [selectedProject])
+
+    const nextImage = (e: React.MouseEvent) => {
+        e.stopPropagation()
+        if (selectedProject?.details?.images) {
+            setCurrentImageIndex((prevIndex) =>
+                prevIndex === selectedProject.details!.images!.length - 1 ? 0 : prevIndex + 1
+            )
+        }
+    }
+
+    const prevImage = (e: React.MouseEvent) => {
+        e.stopPropagation()
+        if (selectedProject?.details?.images) {
+            setCurrentImageIndex((prevIndex) =>
+                prevIndex === 0 ? selectedProject.details!.images!.length - 1 : prevIndex - 1
+            )
+        }
+    }
 
     // Filter projecten op basis van categorie en verberg "Komt binnenkort..." projecten tenzij ingeschakeld
     const filteredProjects = projects
@@ -319,8 +376,69 @@ const Portfolio = () => {
             >
                 {selectedProject && selectedProject.details && (
                     <div className="space-y-6">
-                        {/* Project hoofdafbeelding */}
-                        {selectedProject.image && (
+                        {/* Project afbeeldingen carrousel */}
+                        {selectedProject.details.images && selectedProject.details.images.length > 0 ? (
+                            <div className="relative w-full rounded-lg overflow-hidden mb-2">
+                                {/* Gebruik de aangepaste DiagramCarousel component voor UML-projecten */}
+                                {selectedProject.id === 4 ? (
+                                    <div className="h-auto">
+                                        <DiagramCarousel images={selectedProject.details.images} />
+                                    </div>
+                                ) : (
+                                    <div className="relative h-56 md:h-72 w-full">
+                                        {/* Carrousel navigatieknoppen */}
+                                        <button
+                                            onClick={prevImage}
+                                            className="absolute left-2 top-1/2 -translate-y-1/2 z-10 bg-black/50 p-2 rounded-full text-white hover:bg-black/70 transition-colors"
+                                            aria-label="Vorige afbeelding"
+                                        >
+                                            <ChevronLeft size={20} />
+                                        </button>
+
+                                        <button
+                                            onClick={nextImage}
+                                            className="absolute right-2 top-1/2 -translate-y-1/2 z-10 bg-black/50 p-2 rounded-full text-white hover:bg-black/70 transition-colors"
+                                            aria-label="Volgende afbeelding"
+                                        >
+                                            <ChevronRight size={20} />
+                                        </button>
+
+                                        {/* Afbeelding */}
+                                        <motion.div
+                                            key={currentImageIndex}
+                                            initial={{ opacity: 0 }}
+                                            animate={{ opacity: 1 }}
+                                            exit={{ opacity: 0 }}
+                                            transition={{ duration: 0.3 }}
+                                            className="h-full w-full relative"
+                                        >
+                                            <Image
+                                                src={selectedProject.details.images[currentImageIndex]}
+                                                alt={`${selectedProject.title} - Afbeelding ${currentImageIndex + 1}`}
+                                                fill
+                                                className="object-contain bg-black/20"
+                                            />
+                                        </motion.div>
+
+                                        {/* Indicatoren */}
+                                        <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex space-x-2">
+                                            {selectedProject.details.images.map((_, idx) => (
+                                                <button
+                                                    key={idx}
+                                                    onClick={(e) => {
+                                                        e.stopPropagation();
+                                                        setCurrentImageIndex(idx);
+                                                    }}
+                                                    className={`w-2 h-2 rounded-full ${idx === currentImageIndex ? "bg-primary" : "bg-white/50"
+                                                        }`}
+                                                    aria-label={`Ga naar afbeelding ${idx + 1}`}
+                                                />
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+                        ) : selectedProject.image ? (
                             <div className="relative h-56 md:h-72 w-full rounded-lg overflow-hidden mb-2">
                                 <Image
                                     src={selectedProject.image}
@@ -329,7 +447,7 @@ const Portfolio = () => {
                                     className="object-cover"
                                 />
                             </div>
-                        )}
+                        ) : null}
 
                         {/* Externe links */}
                         {(selectedProject.repoUrl || selectedProject.liveUrl) && (
