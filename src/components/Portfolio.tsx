@@ -142,6 +142,38 @@ const projects: Project[] = [
                 "/images/deployment-diagram.png"
             ]
         },
+    },
+    {
+        id: 5,
+        title: "Komt binnenkort",
+        description: "",
+        image: "",
+        category: "other",
+        repoUrl: "",
+        details: {
+            description:
+                "Komt binnenkort",
+            technologies: [],
+            features: [],
+            implementation:
+                ""
+        },
+    },
+    {
+        id: 6,
+        title: "Komt binnenkort",
+        description: "",
+        image: "",
+        category: "other",
+        repoUrl: "",
+        details: {
+            description:
+                "Komt binnenkort",
+            technologies: [],
+            features: [],
+            implementation:
+                ""
+        },
     }
 ]
 
