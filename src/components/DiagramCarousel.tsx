@@ -1,9 +1,9 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import Image from "next/image"
-import { ChevronLeft, ChevronRight, Maximize2, ZoomIn, Code } from "lucide-react"
+import { ChevronLeft, ChevronRight, Maximize2, ZoomIn } from "lucide-react"
 
 interface DiagramCarouselProps {
     images: string[]
@@ -59,7 +59,7 @@ const getDiagramType = (path: string): { type: string; title: string; descriptio
     }
 };
 
-const DiagramCarousel: React.FC<DiagramCarouselProps> = ({ images, onClose }) => {
+const DiagramCarousel: React.FC<DiagramCarouselProps> = ({ images }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [isZoomed, setIsZoomed] = useState(false);
     const [isLoaded, setIsLoaded] = useState(false);
