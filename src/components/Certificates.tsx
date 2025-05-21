@@ -182,6 +182,20 @@ const certificates: Certificate[] = [
         code: "019570e7-8ba8-7db8-951a-1399b526da02",
         category: "frontend",
     },
+    {
+        href: "https://www.nexed.com/verify?certId=0196ed52-687d-7dac-99b1-0544823991b3",
+        title: "UML",
+        date: "May 20, 2025",
+        code: "0196ed52-687d-7dac-99b1-0544823991b3",
+        category: "functional",
+    },
+    {
+        href: "https://www.nexed.com/verify?certId=0196ef1c-5e74-7fc5-a025-d37faf7ecdc1",
+        title: "Your Fullstack Framework",
+        date: "May 20, 2025",
+        code: "0196ef1c-5e74-7fc5-a025-d37faf7ecdc1",
+        category: "fullstack",
+    },
 ]
 
 type SortButton = { label: string; value: string; icon: React.ElementType };
@@ -408,8 +422,8 @@ const ImprovedCertificates = () => {
                             setShowAll(false) // Reset "Toon meer" als categorie verandert
                         }}
                         className={`flex items-center gap-2 px-4 py-2 rounded-full transition-all ${sortType === button.value
-                                ? "bg-primary text-primary-foreground shadow-md"
-                                : "bg-secondary text-secondary-foreground hover:bg-secondary/80"
+                            ? "bg-primary text-primary-foreground shadow-md"
+                            : "bg-secondary text-secondary-foreground hover:bg-secondary/80"
                             }`}
                     >
                         <button.icon size={16} />
@@ -440,7 +454,7 @@ const ImprovedCertificates = () => {
                             : `Geen certificaten in de categorie "${sortButtons.find(b => b.value === sortType)?.label}".`}
                     </p>
                 </div>
-            )}  
+            )}
 
             {/* Certificaten gegroepeerd per jaar */}
             {visibleCertificates.length > 0 && (

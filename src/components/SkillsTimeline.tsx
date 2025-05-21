@@ -1,6 +1,8 @@
 "use client"
 
-import { motion } from "framer-motion"
+import { useState, useEffect, useRef } from "react"
+import { motion, useScroll, useTransform } from "framer-motion"
+import { Briefcase, Palette, Smartphone, Brain } from "lucide-react"
 
 interface TimelineEvent {
     year: string
@@ -43,6 +45,51 @@ const timeline: TimelineEvent[] = [
 ]
 
 const SkillsTimeline = () => {
+    const timelineRef = useRef<HTMLDivElement>(null)
+    const [isInView, setIsInView] = useState(false)
+
+    // Deze state houdt bij hoeveel procent van de tijdlijn zichtbaar is
+    const [scrollProgress, setScrollProgress] = useState(0)
+
+    useEffect(() => {
+        const handleScroll = () => {
+            if (!timelineRef.current) return
+
+            const timelineElement = timelineRef.current
+            const timelineTop = timelineElement.getBoundingClientRect().top
+            const timelineBottom = timelineElement.getBoundingClientRect().bottom
+            const windowHeight = window.innerHeight
+
+            // Bepaal wanneer de tijdlijn in beeld komt
+            if (timelineTop < windowHeight && timelineBottom > 0) {
+                setIsInView(true)
+
+                // Bereken hoeveel procent van de tijdlijn zichtbaar is
+                const visibleHeight = Math.min(windowHeight, timelineBottom) - Math.max(0, timelineTop)
+                const totalHeight = timelineElement.offsetHeight
+                const visiblePercentage = Math.min(visibleHeight / totalHeight, 1)
+
+                // Pas de berekening aan om de lijn te vullen naarmate we door de tijdlijn scrollen
+                // We willen dat de lijn volledig gevuld is wanneer we het einde van de tijdlijn bereiken
+                const scrollProgressValue = timelineTop <= 0
+                    ? Math.min(1, Math.abs(timelineTop) / (totalHeight - windowHeight) + 0.1)
+                    : 0.1 // Start met een klein deel gevuld
+
+                setScrollProgress(Math.min(1, Math.max(0.1, scrollProgressValue)))
+            } else {
+                setIsInView(false)
+            }
+        }
+
+        window.addEventListener('scroll', handleScroll)
+        // Direct een keer aanroepen om de initiële staat te bepalen
+        handleScroll()
+
+        return () => {
+            window.removeEventListener('scroll', handleScroll)
+        }
+    }, [])
+
     return (
         <section className="mb-20">
             <h2 className="text-3xl font-bold text-center mb-2 text-foreground">Mijn Leerpad</h2>
@@ -50,9 +97,21 @@ const SkillsTimeline = () => {
                 Een overzicht van mijn ontwikkeling als software developer door de jaren heen
             </p>
 
-            <div className="relative max-w-3xl mx-auto">
-                {/* Verticale lijn */}
-                <div className="absolute left-0 md:left-1/2 top-0 bottom-0 w-1 bg-primary transform md:translate-x-[-50%]"></div>
+            <div ref={timelineRef} className="relative max-w-3xl mx-auto">
+                {/* Achtergrond tijdlijn (onvolledig deel) */}
+                <div className="absolute left-0 md:left-1/2 top-0 bottom-0 w-1 bg-secondary/70 transform md:translate-x-[-50%]"></div>
+
+                {/* Geanimeerde tijdlijn die gevuld wordt tijdens scrollen */}
+                <motion.div
+                    className="absolute left-0 md:left-1/2 top-0 w-1 bg-primary transform md:translate-x-[-50%]"
+                    animate={{
+                        height: isInView ? `${scrollProgress * 100}%` : "0%"
+                    }}
+                    transition={{
+                        duration: 0.3,
+                        ease: "easeOut"
+                    }}
+                />
 
                 {timeline.map((item, index) => (
                     <motion.div
@@ -64,8 +123,13 @@ const SkillsTimeline = () => {
                         transition={{ duration: 0.5, delay: index * 0.1 }}
                         viewport={{ once: true }}
                     >
-                        {/* Cirkel op de tijdlijn */}
-                        <div className="absolute left-[-8px] md:left-1/2 top-0 w-4 h-4 rounded-full bg-primary md:translate-x-[-50%] border-4 border-background"></div>
+                        {/* Cirkel op de tijdlijn met kleur die verandert afhankelijk van de scrollpositie */}
+                        <div
+                            className={`absolute left-[-8px] md:left-1/2 top-0 w-4 h-4 rounded-full md:translate-x-[-50%] border-4 border-background ${scrollProgress * 100 >= (index / (timeline.length - 1)) * 100
+                                    ? "bg-primary"
+                                    : "bg-secondary/70"
+                                }`}
+                        />
 
                         <div className={`bg-card p-6 rounded-lg shadow-lg ${index % 2 === 0 ? 'md:mr-4' : 'md:ml-4'
                             }`}>
