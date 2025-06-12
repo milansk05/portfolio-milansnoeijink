@@ -190,15 +190,6 @@ const projects: Project[] = [
             ],
 
             implementation: "TaskFlow is gebouwd als een moderne Progressive Web App met een focus op gebruikerservaring en technische excellentie. De applicatie gebruikt Next.js 15 met het nieuwe App Router voor server-side rendering en optimale performance. TypeScript zorgt voor type-safe development en betere code kwaliteit door het hele project. Voor state management wordt React Context API gebruikt in combinatie met custom reducers voor efficiënte data flow. De UI is gebouwd met Tailwind CSS 4 en Framer Motion voor prachtige animaties en responsive design. De backend implementeert Prisma ORM met PostgreSQL voor type-safe database operaties en een goed gestructureerd relationeel datamodel. RESTful API endpoints zorgen voor betrouwbare communicatie tussen frontend en backend. Progressive Web App features maken de applicatie installeerbaar en offline bruikbaar door Service Workers en intelligente caching strategieën. De ontwikkeling volgt moderne best practices met component-driven development, clean code principes en uitgebreide TypeScript typing. ESLint configuratie waarborgt consistente code kwaliteit en Git workflow met duidelijke commit messages zorgt voor professioneel versiebeher. Deployment gebeurt via Vercel met automatische builds en omgevingsspecifieke configuraties.",
-
-            images: [
-                "/images/taskflow-dashboard.png",
-                "/images/taskflow-kanban.png",
-                "/images/taskflow-mobile.png",
-                "/images/taskflow-dark-mode.png",
-                "/images/taskflow-filters.png",
-                "/images/taskflow-statistics.png"
-            ]
         }
     },
     {
