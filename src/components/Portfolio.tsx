@@ -145,7 +145,65 @@ const projects: Project[] = [
     },
     {
         id: 5,
-        title: "Komt binnenkort",
+        title: "TaskFlow - Moderne Taakbeheer Applicatie",
+        description: "Een volledig uitgeruste Progressive Web App voor taakbeheer, ontwikkeld als MBO 4 Software Developer portfolio project. Toont geavanceerde frontend en backend ontwikkelingsvaardigheden.",
+        image: "/images/taskflow-dashboard.png",
+        category: "web",
+        repoUrl: "https://github.com/milansk05/TaskFlow",
+        details: {
+            description: "TaskFlow is een geavanceerde taakbeheer applicatie die moderne webontwikkeling technieken combineert met een uitstekende gebruikerservaring. Het project demonstreert professionele ontwikkelingsvaardigheden door gebruik te maken van de nieuwste technologieën en best practices. De applicatie biedt offline functionaliteit, real-time updates, en een volledig responsive design. Als portfolio project voor MBO 4 Software Developer toont TaskFlow expertise in zowel frontend als backend development, inclusief database design, API ontwikkeling, en moderne deployment strategieën.",
+
+            technologies: [
+                "Next.js 15",
+                "TypeScript",
+                "React 19",
+                "Tailwind CSS 4",
+                "Framer Motion",
+                "Prisma ORM",
+                "PostgreSQL",
+                "API Routes",
+                "Service Workers",
+                "Web App Manifest",
+                "ESLint",
+                "Vercel Deployment"
+            ],
+
+            features: [
+                "Volledig CRUD taakbeheer systeem",
+                "Project organisatie met kleurcodering",
+                "Meerdere weergavemodi (Lijst, Kaart, Kanban)",
+                "Geavanceerde zoek- en filterfuncties",
+                "Responsive design (mobiel-first)",
+                "Dark/Light mode toggle",
+                "Offline functionaliteit (PWA)",
+                "Drag & drop interface",
+                "Keyboard shortcuts",
+                "Real-time statistieken dashboard",
+                "Import/Export functionaliteit",
+                "Automatische backup systeem",
+                "CSV export voor Excel",
+                "Type-safe database operaties",
+                "Smooth animaties met Framer Motion",
+                "Smart notificatiesysteem",
+                "Contextgevoelige help",
+                "Toegankelijkheidsoptimalisaties"
+            ],
+
+            implementation: "TaskFlow is gebouwd als een moderne Progressive Web App met een focus op gebruikerservaring en technische excellentie. De applicatie gebruikt Next.js 15 met het nieuwe App Router voor server-side rendering en optimale performance. TypeScript zorgt voor type-safe development en betere code kwaliteit door het hele project. Voor state management wordt React Context API gebruikt in combinatie met custom reducers voor efficiënte data flow. De UI is gebouwd met Tailwind CSS 4 en Framer Motion voor prachtige animaties en responsive design. De backend implementeert Prisma ORM met PostgreSQL voor type-safe database operaties en een goed gestructureerd relationeel datamodel. RESTful API endpoints zorgen voor betrouwbare communicatie tussen frontend en backend. Progressive Web App features maken de applicatie installeerbaar en offline bruikbaar door Service Workers en intelligente caching strategieën. De ontwikkeling volgt moderne best practices met component-driven development, clean code principes en uitgebreide TypeScript typing. ESLint configuratie waarborgt consistente code kwaliteit en Git workflow met duidelijke commit messages zorgt voor professioneel versiebeher. Deployment gebeurt via Vercel met automatische builds en omgevingsspecifieke configuraties.",
+
+            images: [
+                "/images/taskflow-dashboard.png",
+                "/images/taskflow-kanban.png",
+                "/images/taskflow-mobile.png",
+                "/images/taskflow-dark-mode.png",
+                "/images/taskflow-filters.png",
+                "/images/taskflow-statistics.png"
+            ]
+        }
+    },
+    {
+        id: 6,
+        title: "Komt binnenkort - website-makers website",
         description: "",
         image: "",
         category: "other",
@@ -160,8 +218,8 @@ const projects: Project[] = [
         },
     },
     {
-        id: 6,
-        title: "Komt binnenkort",
+        id: 7,
+        title: "Komt binnenkort - A. Groen - Klus en Rietdekken",
         description: "",
         image: "",
         category: "other",
