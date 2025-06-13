@@ -194,26 +194,51 @@ const projects: Project[] = [
     },
     {
         id: 6,
-        title: "Komt binnenkort - website-makers website",
-        description: "",
-        image: "",
-        category: "other",
-        repoUrl: "",
+        title: "Website Makers - Professionele Webdevelopment Studio",
+        description: "Een moderne, volledig geanimeerde bedrijfswebsite voor een webdevelopment studio met focus op conversie en gebruikerservaring.",
+        image: "/images/website-makers-frontpage.png",
+        category: "web",
+        repoUrl: "https://github.com/milansk05/website-makers",
         details: {
             description:
-                "Komt binnenkort",
-            technologies: [],
-            features: [],
+                "Website Makers is een complete bedrijfswebsite voor een professionele webdevelopment studio. De site combineert moderne ontwerpprincipes met geavanceerde animaties en is volledig geoptimaliseerd voor conversie. Het project toont expertise in moderne webdevelopment met Next.js 15, TypeScript en Framer Motion. De website bevat uitgebreide secties voor diensten, portfolio, team informatie en contactmogelijkheden, allemaal met een focus op het aantrekken en converteren van potentiële klanten.",
+            technologies: [
+                "Next.js 15",
+                "React 19",
+                "TypeScript",
+                "Tailwind CSS v4",
+                "Framer Motion",
+                "Lucide React",
+                "PostCSS",
+                "ESLint"
+            ],
+            features: [
+                "Volledig responsive design voor alle apparaten",
+                "Geavanceerde animaties en micro-interacties met Framer Motion",
+                "Dynamische hero sectie met zwevende elementen en gradient animaties",
+                "Interactieve diensten overzicht met hover effecten en uitklapbare details",
+                "Geanimeerde testimonials carousel met automatische en handmatige navigatie",
+                "Portfolio showcase met filtering en modal weergave",
+                "Team sectie met interactieve profielkaarten en achievements",
+                "Contact formulier met real-time validatie en success states",
+                "SEO geoptimaliseerd met uitgebreide metadata en structured data",
+                "Performance geoptimaliseerd met lazy loading en image optimization",
+                "Toegankelijkheid features zoals skip links en ARIA labels",
+                "Custom UI componenten zoals Kaart, Knop en Sectie",
+                "Modulaire CSS architectuur met custom properties",
+                "Progressive Web App features met service worker",
+                "Analytics integratie met Vercel Speed Insights"
+            ],
             implementation:
-                ""
-        },
+                "De Website Makers site is gebouwd als een moderne Next.js 15 applicatie met het nieuwe App Router systeem. Het project maakt gebruik van TypeScript voor type safety en Tailwind CSS v4 voor styling met custom kleuren en componenten. Framer Motion zorgt voor vloeiende animaties en page transitions, terwijl Lucide React gebruikt wordt voor consistente iconografie. De architectuur is modulair opgezet met herbruikbare UI componenten zoals Kaart, Knop en Sectie die verschillende variants en animatie states ondersteunen. Het project bevat uitgebreide SEO optimalisatie met structured data, Open Graph metadata en performance optimalisaties. De styling maakt gebruik van CSS custom properties voor consistente theming en ondersteunt dark mode en reduced motion preferences. De applicatie is volledig responsive en geoptimaliseerd voor Core Web Vitals met lazy loading, image optimization en efficient bundle splitting."
+        }
     },
     {
         id: 7,
-        title: "Komt binnenkort - A. Groen - Klus en Rietdekken",
-        description: "",
+        title: "Komt binnenkort",
+        description: "A. Groen - Klus en Rietdekken",
         image: "",
-        category: "other",
+        category: "web",
         repoUrl: "",
         details: {
             description:
