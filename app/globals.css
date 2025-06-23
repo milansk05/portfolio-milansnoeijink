@@ -276,3 +276,394 @@
     border: 1px solid #ddd !important;
   }
 }
+
+/* =========================
+   TOEGANKELIJKHEID STIJLEN
+   ========================= */
+
+/* Lettergrootte instellingen */
+.font-size-klein {
+  font-size: 14px;
+}
+
+.font-size-klein h1 { font-size: 1.5rem; }
+.font-size-klein h2 { font-size: 1.25rem; }
+.font-size-klein h3 { font-size: 1.125rem; }
+.font-size-klein h4 { font-size: 1rem; }
+.font-size-klein p, .font-size-klein span, .font-size-klein div { font-size: 0.875rem; }
+.font-size-klein button { font-size: 0.875rem; }
+
+.font-size-normaal {
+  font-size: 16px;
+}
+
+.font-size-groot {
+  font-size: 18px;
+}
+
+.font-size-groot h1 { font-size: 2.5rem; }
+.font-size-groot h2 { font-size: 2rem; }
+.font-size-groot h3 { font-size: 1.5rem; }
+.font-size-groot h4 { font-size: 1.25rem; }
+.font-size-groot p, .font-size-groot span, .font-size-groot div { font-size: 1.125rem; }
+.font-size-groot button { font-size: 1.125rem; }
+
+.font-size-extra-groot {
+  font-size: 20px;
+}
+
+.font-size-extra-groot h1 { font-size: 3rem; }
+.font-size-extra-groot h2 { font-size: 2.5rem; }
+.font-size-extra-groot h3 { font-size: 2rem; }
+.font-size-extra-groot h4 { font-size: 1.5rem; }
+.font-size-extra-groot p, .font-size-extra-groot span, .font-size-extra-groot div { font-size: 1.25rem; }
+.font-size-extra-groot button { font-size: 1.25rem; }
+
+/* Leesmodus - verbergt afleidende elementen */
+.accessibility-reading-mode {
+  /* Verberg animaties en decoratieve elementen */
+}
+
+.accessibility-reading-mode .animated-background,
+.accessibility-reading-mode [data-decorative="true"],
+.accessibility-reading-mode .decoration,
+.accessibility-reading-mode .particle,
+.accessibility-reading-mode .floating-element {
+  display: none !important;
+}
+
+.accessibility-reading-mode * {
+  animation: none !important;
+  transition: none !important;
+}
+
+.accessibility-reading-mode .sidebar-trigger,
+.accessibility-reading-mode .back-to-top {
+  opacity: 0.7;
+}
+
+/* Verberg niet-essentiële visuele effecten in leesmodus */
+.accessibility-reading-mode .gradient-background,
+.accessibility-reading-mode .blur-effect,
+.accessibility-reading-mode .shadow-lg,
+.accessibility-reading-mode .shadow-xl,
+.accessibility-reading-mode .shadow-2xl {
+  box-shadow: none !important;
+  background: rgb(var(--background)) !important;
+}
+
+/* Hoog contrast modus */
+.accessibility-high-contrast {
+  --background: 255 255 255;
+  --foreground: 0 0 0;
+  --card: 255 255 255;
+  --card-foreground: 0 0 0;
+  --popover: 255 255 255;
+  --popover-foreground: 0 0 0;
+  --primary: 0 0 0;
+  --primary-foreground: 255 255 255;
+  --secondary: 230 230 230;
+  --secondary-foreground: 0 0 0;
+  --muted: 245 245 245;
+  --muted-foreground: 64 64 64;
+  --accent: 245 245 245;
+  --accent-foreground: 0 0 0;
+  --destructive: 255 0 0;
+  --destructive-foreground: 255 255 255;
+  --border: 200 200 200;
+  --input: 255 255 255;
+  --ring: 0 0 0;
+}
+
+.dark.accessibility-high-contrast {
+  --background: 0 0 0;
+  --foreground: 255 255 255;
+  --card: 0 0 0;
+  --card-foreground: 255 255 255;
+  --popover: 0 0 0;
+  --popover-foreground: 255 255 255;
+  --primary: 255 255 255;
+  --primary-foreground: 0 0 0;
+  --secondary: 30 30 30;
+  --secondary-foreground: 255 255 255;
+  --muted: 20 20 20;
+  --muted-foreground: 200 200 200;
+  --accent: 30 30 30;
+  --accent-foreground: 255 255 255;
+  --destructive: 255 100 100;
+  --destructive-foreground: 0 0 0;
+  --border: 80 80 80;
+  --input: 0 0 0;
+  --ring: 255 255 255;
+}
+
+/* Verbeterde focus indicatoren */
+.accessibility-enhanced-focus *:focus {
+  outline: 3px solid rgb(var(--primary)) !important;
+  outline-offset: 2px !important;
+  box-shadow: 0 0 0 5px rgba(var(--primary), 0.3) !important;
+}
+
+.accessibility-enhanced-focus button:focus,
+.accessibility-enhanced-focus a:focus,
+.accessibility-enhanced-focus input:focus,
+.accessibility-enhanced-focus textarea:focus,
+.accessibility-enhanced-focus select:focus {
+  transform: scale(1.05) !important;
+  z-index: 10 !important;
+  position: relative !important;
+}
+
+/* Verhoogde tekstafstand */
+.accessibility-increased-spacing {
+  line-height: 1.8 !important;
+}
+
+.accessibility-increased-spacing p,
+.accessibility-increased-spacing div,
+.accessibility-increased-spacing span {
+  margin-bottom: 1rem !important;
+  letter-spacing: 0.05em !important;
+}
+
+.accessibility-increased-spacing h1,
+.accessibility-increased-spacing h2,
+.accessibility-increased-spacing h3,
+.accessibility-increased-spacing h4,
+.accessibility-increased-spacing h5,
+.accessibility-increased-spacing h6 {
+  margin-bottom: 1.5rem !important;
+  margin-top: 2rem !important;
+  letter-spacing: 0.025em !important;
+}
+
+.accessibility-increased-spacing button,
+.accessibility-increased-spacing a {
+  padding: 0.75rem 1.5rem !important;
+  margin: 0.5rem !important;
+}
+
+.accessibility-increased-spacing .space-y-1 > * + *,
+.accessibility-increased-spacing .space-y-2 > * + *,
+.accessibility-increased-spacing .space-y-3 > * + *,
+.accessibility-increased-spacing .space-y-4 > * + * {
+  margin-top: 1.5rem !important;
+}
+
+.accessibility-increased-spacing .space-y-6 > * + *,
+.accessibility-increased-spacing .space-y-8 > * + * {
+  margin-top: 3rem !important;
+}
+
+/* Verminder beweging */
+.accessibility-reduce-motion *,
+.accessibility-reduce-motion *::before,
+.accessibility-reduce-motion *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
+}
+
+.accessibility-reduce-motion .animate-spin,
+.accessibility-reduce-motion .animate-pulse,
+.accessibility-reduce-motion .animate-bounce {
+  animation: none !important;
+}
+
+/* Toegankelijke skip links */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 6px;
+  background: rgb(var(--primary));
+  color: rgb(var(--primary-foreground));
+  padding: 8px;
+  text-decoration: none;
+  border-radius: 4px;
+  z-index: 1000;
+  font-weight: bold;
+}
+
+.skip-link:focus {
+  top: 6px;
+}
+
+/* Toegankelijke toetsinformatie */
+kbd {
+  background-color: rgb(var(--muted));
+  border: 1px solid rgb(var(--border));
+  border-radius: 3px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+  color: rgb(var(--foreground));
+  display: inline-block;
+  font-size: 0.85em;
+  font-weight: 700;
+  line-height: 1;
+  padding: 2px 4px;
+  white-space: nowrap;
+}
+
+/* Verbeterde scrollbalken voor toegankelijkheid */
+.accessibility-enhanced-focus ::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+.accessibility-enhanced-focus ::-webkit-scrollbar-track {
+  background: rgb(var(--muted));
+  border-radius: 6px;
+}
+
+.accessibility-enhanced-focus ::-webkit-scrollbar-thumb {
+  background: rgb(var(--primary));
+  border-radius: 6px;
+  border: 2px solid rgb(var(--muted));
+}
+
+.accessibility-enhanced-focus ::-webkit-scrollbar-thumb:hover {
+  background: rgb(var(--primary)) / 0.8;
+}
+
+/* Verbeterde contrast voor links */
+.accessibility-high-contrast a {
+  text-decoration: underline !important;
+  font-weight: bold !important;
+}
+
+.accessibility-high-contrast a:hover {
+  background-color: rgb(var(--primary)) !important;
+  color: rgb(var(--primary-foreground)) !important;
+  padding: 2px 4px !important;
+  border-radius: 2px !important;
+}
+
+/* Toegankelijke formulierelementen */
+.accessibility-enhanced-focus input,
+.accessibility-enhanced-focus textarea,
+.accessibility-enhanced-focus select {
+  border: 2px solid rgb(var(--border)) !important;
+}
+
+.accessibility-enhanced-focus input:focus,
+.accessibility-enhanced-focus textarea:focus,
+.accessibility-enhanced-focus select:focus {
+  border-color: rgb(var(--primary)) !important;
+  box-shadow: 0 0 0 3px rgba(var(--primary), 0.3) !important;
+}
+
+/* Verbeterde foutmeldingen */
+.accessibility-enhanced-focus .error,
+.accessibility-enhanced-focus .invalid {
+  border: 3px solid rgb(var(--destructive)) !important;
+  background-color: rgba(var(--destructive), 0.1) !important;
+}
+
+/* Verbeterde succesboodschappen */
+.accessibility-enhanced-focus .success,
+.accessibility-enhanced-focus .valid {
+  border: 3px solid #22c55e !important;
+  background-color: rgba(34, 197, 94, 0.1) !important;
+}
+
+/* Toegankelijke modals en overlays */
+.accessibility-reading-mode [role="dialog"] {
+  border: 3px solid rgb(var(--primary)) !important;
+}
+
+.accessibility-high-contrast [role="dialog"] {
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.8) !important;
+}
+
+/* Verbeterde tablet/mobiele toegankelijkheid */
+@media (max-width: 768px) {
+  .accessibility-increased-spacing button,
+  .accessibility-increased-spacing a {
+    min-height: 44px !important;
+    min-width: 44px !important;
+    padding: 1rem 1.5rem !important;
+  }
+  
+  .font-size-groot,
+  .font-size-extra-groot {
+    font-size: 18px !important;
+  }
+  
+  .accessibility-enhanced-focus *:focus {
+    outline-width: 4px !important;
+    outline-offset: 3px !important;
+  }
+}
+
+/* Animatie voor toegankelijkheidsknop */
+@keyframes accessibilityPulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.9;
+  }
+}
+
+.accessibility-button-pulse {
+  animation: accessibilityPulse 2s infinite;
+}
+
+/* Verbeterde zichtbaarheid van interactieve elementen */
+.accessibility-enhanced-focus button,
+.accessibility-enhanced-focus a,
+.accessibility-enhanced-focus [role="button"],
+.accessibility-enhanced-focus [role="link"] {
+  position: relative;
+}
+
+.accessibility-enhanced-focus button::after,
+.accessibility-enhanced-focus a::after,
+.accessibility-enhanced-focus [role="button"]::after,
+.accessibility-enhanced-focus [role="link"]::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border: 2px dashed transparent;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.accessibility-enhanced-focus button:hover::after,
+.accessibility-enhanced-focus a:hover::after,
+.accessibility-enhanced-focus [role="button"]:hover::after,
+.accessibility-enhanced-focus [role="link"]:hover::after {
+  border-color: rgb(var(--primary));
+}
+
+/* Speciale stijlen voor donkere modus met hoog contrast */
+.dark.accessibility-high-contrast img {
+  filter: contrast(1.2) brightness(1.1);
+}
+
+.dark.accessibility-high-contrast .bg-gradient-to-r,
+.dark.accessibility-high-contrast .bg-gradient-to-l,
+.dark.accessibility-high-contrast .bg-gradient-to-t,
+.dark.accessibility-high-contrast .bg-gradient-to-b {
+  background: rgb(var(--background)) !important;
+}
+
+/* Print-vriendelijke toegankelijkheidsstijlen */
+@media print {
+  .accessibility-enhanced-focus *:focus {
+    outline: 2px solid #000 !important;
+    box-shadow: none !important;
+  }
+  
+  .accessibility-high-contrast * {
+    color: #000 !important;
+    background: #fff !important;
+  }
+  
+  .font-size-groot,
+  .font-size-extra-groot {
+    font-size: 14pt !important;
+  }
+}

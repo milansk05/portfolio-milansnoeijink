@@ -1,17 +1,18 @@
-import Header from "../src/components/Header"
-import Hero from "../src/components/Hero"
-import About from "../src/components/About"
-import Expertise from "../src/components/Expertise"
-import Skills from "../src/components/Skills"
-import SkillsTimeline from "../src/components/SkillsTimeline"
-import Certificates from "../src/components/Certificates"
-import Portfolio from "../src/components/Portfolio"
-import Contact from "../src/components/Contact"
-import Footer from "../src/components/Footer"
-import BackToTop from "../src/components/BackToTop"
-import Script from "next/script"
-import PageTransition from "@/components/PageTransition"
-import ThemeTransitionWrapper from "@/components/ThemeTransitionWrapper"
+// app/page.tsx
+import Header from "../src/components/Header";
+import Hero from "../src/components/Hero";
+import About from "../src/components/About";
+import Expertise from "../src/components/Expertise";
+import Skills from "../src/components/Skills";
+import SkillsTimeline from "../src/components/SkillsTimeline";
+import Certificates from "../src/components/Certificates";
+import Portfolio from "../src/components/Portfolio";
+import Contact from "../src/components/Contact";
+import Footer from "../src/components/Footer";
+import BackToTop from "../src/components/BackToTop";
+import Script from "next/script";
+import PageTransition from "@/components/PageTransition";
+import ThemeTransitionWrapper from "@/components/ThemeTransitionWrapper";
 
 export default function Home() {
   return (
@@ -23,26 +24,26 @@ export default function Home() {
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "Person",
-            "name": "Milan Snoeijink",
-            "url": "https://www.milansnoeijink.nl",
-            "jobTitle": "Software Developer",
-            "image": "https://www.milansnoeijink.nl/images/profielfoto.jpg",
-            "email": "snoeijinkmilan@gmail.com",
-            "telephone": "",
-            "sameAs": [
+            name: "Milan Snoeijink",
+            url: "https://www.milansnoeijink.nl",
+            jobTitle: "Software Developer",
+            image: "https://www.milansnoeijink.nl/images/profielfoto.jpg",
+            email: "snoeijinkmilan@gmail.com",
+            telephone: "",
+            sameAs: [
               "https://github.com/milansk05",
               "https://www.linkedin.com/in/milan-snoeijink-797315292/",
-              "https://www.instagram.com/milan.sk19/"
+              "https://www.instagram.com/milan.sk19/",
             ],
-            "worksFor": {
+            worksFor: {
               "@type": "Organization",
-              "name": "Bit Academy Noorderpoort"
+              name: "Bit Academy Noorderpoort",
             },
-            "alumniOf": {
+            alumniOf: {
               "@type": "Organization",
-              "name": "Bit Academy Noorderpoort"
+              name: "Bit Academy Noorderpoort",
             },
-            "knowsAbout": [
+            knowsAbout: [
               "HTML",
               "CSS",
               "JavaScript",
@@ -51,15 +52,19 @@ export default function Home() {
               "Next.js",
               "PHP",
               "MySQL",
-              "Tailwind CSS"
-            ]
-          })
+              "Tailwind CSS",
+            ],
+          }),
         }}
       />
       <ThemeTransitionWrapper>
         <Header />
         <PageTransition>
-          <main className="container mx-auto px-4 pt-20">
+          <main
+            id="main-content"
+            className="container mx-auto px-4 pt-20"
+            role="main"
+          >
             <Hero />
             <About />
             <Expertise />
@@ -74,5 +79,5 @@ export default function Home() {
       </ThemeTransitionWrapper>
       <BackToTop />
     </div>
-  )
+  );
 }
