@@ -9,7 +9,8 @@ const nextConfig = {
   transpilePackages: [],
 
   // Optimalisaties voor Tailwind v4
-  webpack: (config: import('webpack').Configuration) => {
+  // @ts-expect-error: Next.js does not provide a type for the config parameter in the webpack function
+  webpack: (config) => {
     config.cache = false;
     return config;
   },
