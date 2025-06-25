@@ -376,7 +376,7 @@ const projects: Project[] = [
   {
     id: 7,
     title: "Komt binnenkort",
-    description: "A. Groen - Klus en Rietdekken",
+    description: "???",
     image: "",
     category: "web",
     repoUrl: "",
