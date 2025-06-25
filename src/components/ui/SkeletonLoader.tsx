@@ -1,7 +1,7 @@
 // src/components/ui/SkeletonLoader.tsx
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, Transition } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 interface SkeletonProps {
@@ -29,15 +29,11 @@ export const Skeleton = ({
     image: "h-48 rounded-lg",
   };
 
-  const shimmerAnimation = {
-    animate: {
-      backgroundPosition: ["200% 0", "-200% 0"],
-    },
-    transition: {
-      duration: 2,
-      repeat: Infinity,
-      ease: "linear",
-    },
+  // Correct gedefinieerde transition
+  const shimmerTransition: Transition = {
+    duration: 2,
+    repeat: Infinity,
+    ease: "linear" as const,
   };
 
   if (variant === "text" && lines > 1) {
@@ -55,7 +51,12 @@ export const Skeleton = ({
             style={{
               backgroundSize: "400% 100%",
             }}
-            {...(animated ? shimmerAnimation : {})}
+            animate={
+              animated
+                ? { backgroundPosition: ["200% 0", "-200% 0"] }
+                : undefined
+            }
+            transition={animated ? shimmerTransition : undefined}
           />
         ))}
       </div>
@@ -68,7 +69,10 @@ export const Skeleton = ({
       style={{
         backgroundSize: "400% 100%",
       }}
-      {...(animated ? shimmerAnimation : {})}
+      animate={
+        animated ? { backgroundPosition: ["200% 0", "-200% 0"] } : undefined
+      }
+      transition={animated ? shimmerTransition : undefined}
     />
   );
 };
@@ -109,7 +113,11 @@ export const TeamMemberSkeleton = () => {
       <div className="space-y-2">
         <Skeleton className="h-6 w-24 mx-auto" />
         <Skeleton className="h-4 w-32 mx-auto" />
-        <Skeleton variant="text" lines={2} className="max-w-xs mx-auto" />
+      </div>
+      <div className="flex justify-center gap-2">
+        <Skeleton className="h-8 w-8 rounded-full" />
+        <Skeleton className="h-8 w-8 rounded-full" />
+        <Skeleton className="h-8 w-8 rounded-full" />
       </div>
     </div>
   );
@@ -118,39 +126,45 @@ export const TeamMemberSkeleton = () => {
 // Blog post skeleton
 export const BlogPostSkeleton = () => {
   return (
-    <article className="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden">
+    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden">
       <Skeleton variant="image" className="w-full h-48" />
       <div className="p-6 space-y-4">
         <div className="flex items-center gap-2">
-          <Skeleton variant="circle" className="w-8 h-8" />
-          <div className="space-y-1">
-            <Skeleton className="h-3 w-20" />
-            <Skeleton className="h-3 w-16" />
-          </div>
+          <Skeleton className="h-6 w-20 rounded-full" />
+          <Skeleton className="h-4 w-16" />
         </div>
-        <Skeleton className="h-7 w-full" />
+        <Skeleton className="h-6 w-full" />
         <Skeleton variant="text" lines={3} />
-        <div className="flex gap-2">
-          <Skeleton className="h-6 w-12 rounded-full" />
-          <Skeleton className="h-6 w-16 rounded-full" />
-          <Skeleton className="h-6 w-14 rounded-full" />
+        <div className="flex justify-between items-center">
+          <Skeleton className="h-4 w-24" />
+          <Skeleton className="h-8 w-16 rounded" />
         </div>
       </div>
-    </article>
+    </div>
   );
 };
 
 // Navigation skeleton
 export const NavigationSkeleton = () => {
   return (
-    <nav className="flex items-center justify-between p-4">
-      <Skeleton className="h-8 w-32" />
-      <div className="hidden md:flex space-x-6">
-        {Array.from({ length: 4 }).map((_, index) => (
-          <Skeleton key={index} className="h-4 w-16" />
-        ))}
+    <nav className="bg-white dark:bg-gray-800 shadow-lg">
+      <div className="container mx-auto px-4">
+        <div className="flex justify-between items-center h-16">
+          <div className="flex items-center gap-4">
+            <Skeleton variant="circle" className="w-10 h-10" />
+            <Skeleton className="h-6 w-32" />
+          </div>
+          <div className="hidden md:flex items-center gap-6">
+            {Array.from({ length: 5 }).map((_, index) => (
+              <Skeleton key={index} className="h-4 w-16" />
+            ))}
+          </div>
+          <div className="flex items-center gap-2">
+            <Skeleton variant="circle" className="w-8 h-8" />
+            <Skeleton className="h-8 w-20 rounded" />
+          </div>
+        </div>
       </div>
-      <Skeleton className="h-10 w-24 rounded-full" />
     </nav>
   );
 };
@@ -158,26 +172,112 @@ export const NavigationSkeleton = () => {
 // Contact form skeleton
 export const ContactFormSkeleton = () => {
   return (
-    <div className="space-y-6">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-lg">
+      <div className="space-y-6">
+        <Skeleton className="h-8 w-48" />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="space-y-2">
+            <Skeleton className="h-4 w-16" />
+            <Skeleton className="h-10 w-full rounded" />
+          </div>
+          <div className="space-y-2">
+            <Skeleton className="h-4 w-20" />
+            <Skeleton className="h-10 w-full rounded" />
+          </div>
+        </div>
         <div className="space-y-2">
           <Skeleton className="h-4 w-16" />
-          <Skeleton className="h-12 w-full rounded-lg" />
+          <Skeleton className="h-32 w-full rounded" />
         </div>
-        <div className="space-y-2">
-          <Skeleton className="h-4 w-20" />
-          <Skeleton className="h-12 w-full rounded-lg" />
+        <div className="flex justify-center">
+          <Skeleton className="h-10 w-32 rounded" />
         </div>
       </div>
-      <div className="space-y-2">
-        <Skeleton className="h-4 w-20" />
-        <Skeleton className="h-12 w-full rounded-lg" />
+    </div>
+  );
+};
+
+// Card skeleton - algemeen gebruik
+export const CardSkeleton = ({
+  showImage = true,
+  showBadges = true,
+  className,
+}: {
+  showImage?: boolean;
+  showBadges?: boolean;
+  className?: string;
+}) => {
+  return (
+    <div
+      className={cn(
+        "bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden",
+        className
+      )}
+    >
+      {showImage && <Skeleton variant="image" className="w-full" />}
+      <div className="p-6 space-y-4">
+        <Skeleton className="h-6 w-3/4" />
+        <Skeleton variant="text" lines={2} />
+        {showBadges && (
+          <div className="flex gap-2 flex-wrap">
+            <Skeleton className="h-6 w-16 rounded-full" />
+            <Skeleton className="h-6 w-20 rounded-full" />
+            <Skeleton className="h-6 w-14 rounded-full" />
+          </div>
+        )}
       </div>
-      <div className="space-y-2">
-        <Skeleton className="h-4 w-16" />
-        <Skeleton className="h-32 w-full rounded-lg" />
-      </div>
-      <Skeleton className="h-12 w-32 rounded-full" />
+    </div>
+  );
+};
+
+// Loading state voor lijsten
+export const ListSkeleton = ({
+  items = 5,
+  variant = "default",
+}: {
+  items?: number;
+  variant?: "default" | "detailed";
+}) => {
+  return (
+    <div className="space-y-4">
+      {Array.from({ length: items }).map((_, index) => (
+        <div
+          key={index}
+          className="flex items-center gap-4 p-4 bg-white dark:bg-gray-800 rounded-lg shadow"
+        >
+          <Skeleton variant="circle" className="w-12 h-12 flex-shrink-0" />
+          <div className="flex-1 space-y-2">
+            <Skeleton className="h-5 w-3/4" />
+            {variant === "detailed" && (
+              <>
+                <Skeleton className="h-4 w-1/2" />
+                <div className="flex gap-2">
+                  <Skeleton className="h-4 w-16" />
+                  <Skeleton className="h-4 w-20" />
+                </div>
+              </>
+            )}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+};
+
+// Stats skeleton
+export const StatsSkeleton = ({ columns = 3 }: { columns?: number }) => {
+  return (
+    <div className={`grid grid-cols-1 md:grid-cols-${columns} gap-6`}>
+      {Array.from({ length: columns }).map((_, index) => (
+        <div
+          key={index}
+          className="text-center p-6 bg-white dark:bg-gray-800 rounded-lg shadow"
+        >
+          <Skeleton className="h-12 w-16 mx-auto mb-4" />
+          <Skeleton className="h-6 w-24 mx-auto mb-2" />
+          <Skeleton className="h-4 w-32 mx-auto" />
+        </div>
+      ))}
     </div>
   );
 };
