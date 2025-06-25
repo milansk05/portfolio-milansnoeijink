@@ -252,8 +252,8 @@ const ImprovedCertificates = () => {
         return categorizeAndSortCertificates(filtered, sortType);
     }, [searchTerm, sortType]);
 
-    const hasMoreThanSix = filteredCertificates.length > 6
-    const visibleCertificates = showAll || !hasMoreThanSix ? filteredCertificates : filteredCertificates.slice(0, 6)
+    const hasMoreThanSix = filteredCertificates.length > 7
+    const visibleCertificates = showAll || !hasMoreThanSix ? filteredCertificates : filteredCertificates.slice(0, 7)
 
     // Groepeer certificaten per jaar
     const certificatesByYear = useMemo(() => {

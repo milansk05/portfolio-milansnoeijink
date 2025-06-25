@@ -25,6 +25,7 @@ interface FormData {
   name: string;
   email: string;
   message: string;
+  contactPreference: "email" | "phone" | "video";
 }
 
 interface FormErrors {
@@ -32,6 +33,7 @@ interface FormErrors {
   email?: string;
   message?: string;
   recaptcha?: string;
+  contactPreference?: string;
 }
 
 const SUSPICIOUS_DOMAINS = [
@@ -366,6 +368,7 @@ const Contact = () => {
     name: "",
     email: "",
     message: "",
+    contactPreference: "email", // Nieuw veld
   });
   const [errors, setErrors] = useState<FormErrors>({});
   const [isSending, setIsSending] = useState(false);
@@ -435,6 +438,10 @@ const Contact = () => {
     if (!recaptchaToken) {
       errors.recaptcha = "Bevestig dat je geen robot bent";
     }
+    // ContactPreference validatie (optioneel, want default is altijd ingevuld)
+    if (!formData.contactPreference) {
+      errors.contactPreference = "Selecteer een voorkeur voor contactmethode";
+    }
 
     return errors;
   };
@@ -466,6 +473,7 @@ const Contact = () => {
         name: formData.name,
         email: formData.email,
         message: formData.message,
+        contactPreference: formData.contactPreference,
         "g-recaptcha-response": recaptchaToken,
       };
 
@@ -477,7 +485,7 @@ const Contact = () => {
       );
       console.log("Email sent successfully:", response);
       setSuccess(true);
-      setFormData({ name: "", email: "", message: "" });
+      setFormData({ name: "", email: "", message: "", contactPreference: "email" });
       setErrors({});
       setRecaptchaToken(null);
 
@@ -738,6 +746,66 @@ const Contact = () => {
                     )}
                   </motion.div>
 
+                  {/* Voorkeur contactmethode */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.25 }}
+                  >
+                    <label
+                      className={`flex items-center text-sm font-semibold mb-2 ${
+                        darkMode ? "text-gray-200" : "text-gray-700"
+                      }`}
+                    >
+                      <span className="mr-2">Voorkeur contactmethode</span>
+                    </label>
+                    <div className="flex space-x-4">
+                      <label className="flex items-center space-x-2 cursor-pointer">
+                        <input
+                          type="radio"
+                          name="contactPreference"
+                          value="email"
+                          checked={formData.contactPreference === "email"}
+                          onChange={handleChange}
+                          className="accent-blue-500"
+                        />
+                        <span className={darkMode ? "text-gray-200" : "text-gray-700"}>E-mail</span>
+                      </label>
+                      <label className="flex items-center space-x-2 cursor-pointer">
+                        <input
+                          type="radio"
+                          name="contactPreference"
+                          value="phone"
+                          checked={formData.contactPreference === "phone"}
+                          onChange={handleChange}
+                          className="accent-blue-500"
+                        />
+                        <span className={darkMode ? "text-gray-200" : "text-gray-700"}>Bellen</span>
+                      </label>
+                      <label className="flex items-center space-x-2 cursor-pointer">
+                        <input
+                          type="radio"
+                          name="contactPreference"
+                          value="video"
+                          checked={formData.contactPreference === "video"}
+                          onChange={handleChange}
+                          className="accent-blue-500"
+                        />
+                        <span className={darkMode ? "text-gray-200" : "text-gray-700"}>Video</span>
+                      </label>
+                    </div>
+                    {errors.contactPreference && (
+                      <motion.p
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="text-red-500 text-sm mt-2 flex items-center"
+                      >
+                        <AlertCircle size={16} className="mr-1" />
+                        {errors.contactPreference}
+                      </motion.p>
+                    )}
+                  </motion.div>
+
                   {/* Bericht veld */}
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
@@ -989,7 +1057,7 @@ const Contact = () => {
                             darkMode ? "text-blue-400" : "text-blue-600"
                           }`}
                         >
-                          milansk05@gmail.com
+                          snoeijinkmilan@gmail.com
                         </a>
                       </div>
                     </div>
@@ -1036,7 +1104,7 @@ const Contact = () => {
                             darkMode ? "text-gray-300" : "text-gray-600"
                           }`}
                         >
-                          Elsen, Overijssel, Nederland
+                          Veendam, Groningen, Nederland
                         </p>
                       </div>
                     </div>
@@ -1168,7 +1236,7 @@ const Contact = () => {
                           ? "hover:bg-indigo-900/30"
                           : "hover:bg-indigo-100",
                       },
-                    ].map((social) => (
+                    ].map((social, i) => (
                       <motion.a
                         key={social.href}
                         href={social.href}
@@ -1184,7 +1252,7 @@ const Contact = () => {
                         aria-label={social.label}
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.4 }}
+                        transition={{ delay: 0.4 + i * 0.1 }}
                         whileHover={{ y: -2 }}
                       >
                         {social.icon}
