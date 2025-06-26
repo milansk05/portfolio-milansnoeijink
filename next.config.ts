@@ -84,19 +84,6 @@ const nextConfig = {
       };
     }
 
-    // Image optimalisatie plugins
-    config.module.rules.push({
-      test: /\.(png|jpe?g|gif|svg|ico)$/,
-      use: {
-        loader: "file-loader",
-        options: {
-          publicPath: "/_next/static/images/",
-          outputPath: "static/images/",
-          name: "[name].[hash].[ext]",
-        },
-      },
-    });
-
     return config;
   },
 
@@ -170,8 +157,6 @@ const nextConfig = {
 
   // PWA en offline ondersteuning (optioneel)
   ...(process.env.NODE_ENV === "production" && {
-    swcMinify: true,
-
     // Compression
     compress: true,
 
