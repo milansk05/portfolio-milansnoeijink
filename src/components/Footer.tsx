@@ -120,19 +120,6 @@ const ImprovedFooter = () => {
                                 <Mail size={18} className="text-primary mt-1 flex-shrink-0" />
                                 <span>snoeijinkmilan@gmail.com</span>
                             </p>
-
-                            <div className="pt-3 border-t border-border">
-                                <p className="text-accent-foreground/70 mb-3">Stage bij:</p>
-                                <a
-                                    href="https://www.hq-online.nl"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="flex items-center gap-2 text-accent-foreground hover:text-primary transition-colors group"
-                                >
-                                    <span className="text-[#ed7100] font-semibold">HQ-Online</span>
-                                    <ExternalLink size={14} className="opacity-0 group-hover:opacity-100 transition-opacity" />
-                                </a>
-                            </div>
                         </div>
                     </motion.div>
 
